@@ -15,7 +15,6 @@
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>data-initialization</artifactId>
-			<version>3.1.0</version>
 		</dependency>
 
 		<dependency>
@@ -31,7 +30,7 @@
 		</dependency>
 
 	</dependencies>
-
+	
 	<profiles>
 
 		<profile>
