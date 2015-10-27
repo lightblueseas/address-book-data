@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="addressbook"
+                          transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+        <class>de.alpharogroup.address.book.entities.Addresses</class>
+        <class>de.alpharogroup.address.book.entities.Countries</class>
+        <class>de.alpharogroup.address.book.entities.Federalstates</class>
+        <class>de.alpharogroup.address.book.entities.Zipcodes</class>
+
+        <properties>
+			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/addressbook" />
+			<property name="hibernate.connection.user" value="postgres" />
+			<property name="hibernate.connection.password" value="r2SB2FvFKHLcnyL0" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>
