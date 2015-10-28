@@ -11,14 +11,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
-import de.alpharogroup.address.book.business.service.api.AddressesService;
-import de.alpharogroup.address.book.business.service.api.CountriesService;
-import de.alpharogroup.address.book.business.service.api.FederalstatesService;
-import de.alpharogroup.address.book.business.service.api.ZipcodesService;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.init.DeZipcodeBean;
+import de.alpharogroup.address.book.service.api.AddressesService;
+import de.alpharogroup.address.book.service.api.CountriesService;
+import de.alpharogroup.address.book.service.api.FederalstatesService;
+import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.file.read.ReadFileUtils;
 import de.alpharogroup.file.search.PathFinder;

@@ -16,16 +16,16 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import de.alpharogroup.address.book.application.geocoding.Geocoder;
 import de.alpharogroup.address.book.application.model.GeoPointZipcode;
-import de.alpharogroup.address.book.business.service.api.AddressesService;
-import de.alpharogroup.address.book.business.service.api.CountriesService;
-import de.alpharogroup.address.book.business.service.api.FederalstatesService;
-import de.alpharogroup.address.book.business.service.api.ZipcodesService;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.factories.AddressBookFactory;
 import de.alpharogroup.address.book.init.GermanZipcodeBean;
+import de.alpharogroup.address.book.service.api.AddressesService;
+import de.alpharogroup.address.book.service.api.CountriesService;
+import de.alpharogroup.address.book.service.api.FederalstatesService;
+import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.file.read.ReadFileUtils;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.file.write.WriteFileUtils;
@@ -51,7 +51,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	@Autowired
 	private FederalstatesService federalstatesService;
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testFindUsers()
 	{
 		Map<String, List<String>> map = countriesService.getCountriesToZipcodesAsStringMap();
@@ -333,7 +333,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		}
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void getLatestNotProcessedZipcodes()
 	{
 		List<Zipcodes> processed = new ArrayList<Zipcodes>(findExistingZipcodesFromAddresses());

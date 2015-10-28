@@ -3,7 +3,6 @@ package de.alpharogroup.address.book.service.util;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
-import de.alpharogroup.address.book.business.service.utils.HqlStringCreator;
 import de.alpharogroup.address.book.entities.Countries;
 
 

@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.business.service.utils;
+package de.alpharogroup.address.book.service.util;
 
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.jgeohash.Adjacent;

@@ -15,10 +15,10 @@
 	
 	<context:component-scan base-package="de.alpharogroup.address.book.daos" />
 	<context:component-scan base-package="de.alpharogroup.address.book.entities" />
-	<context:component-scan base-package="de.alpharogroup.address.book.business.service.api" />
-	<context:component-scan base-package="de.alpharogroup.address.book.business.service" />
-	<context:component-scan base-package="de.alpharogroup.address.book.business.service.mapper" />
-	<context:component-scan base-package="de.alpharogroup.address.book.mappers" />
+	<context:component-scan base-package="de.alpharogroup.address.book.mapper" />
+	<context:component-scan base-package="de.alpharogroup.address.book.service.api" />
+	<context:component-scan base-package="de.alpharogroup.address.book.service" />
+	<context:component-scan base-package="de.alpharogroup.address.book.service.mapper" />
 		
 	<bean id="propertyPlaceholder"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -57,8 +57,7 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-	<bean id="jpaVendorAdapter"
-		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+	<bean id="jpaVendorAdapter"	class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="generateDdl" value="true" />
 		<property name="showSql" value="true" />
 		<!-- <property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" 

@@ -6,7 +6,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
-import de.alpharogroup.address.book.business.service.mapper.AddressService;
 import de.alpharogroup.address.book.domain.Address;
 
 @ContextConfiguration(locations = "classpath:test-em-applicationContext.xml")

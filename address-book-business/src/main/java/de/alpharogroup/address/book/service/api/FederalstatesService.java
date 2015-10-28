@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.business.service.api;
+package de.alpharogroup.address.book.service.api;
 
 import java.util.List;
 

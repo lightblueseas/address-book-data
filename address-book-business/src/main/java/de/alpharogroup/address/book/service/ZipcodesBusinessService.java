@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.business.service;
+package de.alpharogroup.address.book.service;
 
 import java.util.Iterator;
 import java.util.List;
@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.address.book.business.service.api.ZipcodesService;
-import de.alpharogroup.address.book.business.service.utils.HqlStringCreator;
 import de.alpharogroup.address.book.daos.ZipcodesDao;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.factories.AddressBookFactory;
+import de.alpharogroup.address.book.service.api.ZipcodesService;
+import de.alpharogroup.address.book.service.util.HqlStringCreator;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 
 @Transactional

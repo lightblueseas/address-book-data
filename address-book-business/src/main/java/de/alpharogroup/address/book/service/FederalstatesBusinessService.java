@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.business.service;
+package de.alpharogroup.address.book.service;
 
 import java.util.List;
 
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.address.book.business.service.api.FederalstatesService;
 import de.alpharogroup.address.book.daos.FederalstatesDao;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
+import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 

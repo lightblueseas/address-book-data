@@ -8,12 +8,12 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
-import de.alpharogroup.address.book.business.service.api.AddressesService;
-import de.alpharogroup.address.book.business.service.api.CountriesService;
-import de.alpharogroup.address.book.business.service.api.FederalstatesService;
-import de.alpharogroup.address.book.business.service.api.ZipcodesService;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
+import de.alpharogroup.address.book.service.api.AddressesService;
+import de.alpharogroup.address.book.service.api.CountriesService;
+import de.alpharogroup.address.book.service.api.FederalstatesService;
+import de.alpharogroup.address.book.service.api.ZipcodesService;
 
 @ContextConfiguration(locations = "classpath:test-em-applicationContext.xml")
 public class FederalstatesBusinessServiceTest  extends AbstractTestNGSpringContextTests {

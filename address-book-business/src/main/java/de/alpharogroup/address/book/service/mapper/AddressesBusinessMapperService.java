@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.business.service.mapper;
+package de.alpharogroup.address.book.service.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import de.alpharogroup.address.book.mapper.AddressesMapper;
 import de.alpharogroup.db.service.entitymapper.AbstractBusinessMapperService;
 
 @Transactional
-@Service("addressService")
+@Service("addressesMapperService")
 public class AddressesBusinessMapperService extends
 		AbstractBusinessMapperService<Integer, Address, Addresses, AddressesDao, AddressesMapper> implements AddressService {
 	

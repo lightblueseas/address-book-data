@@ -1,9 +1,9 @@
-package de.alpharogroup.address.book.business.service.locator;
+package de.alpharogroup.address.book.service.locator;
 
-import de.alpharogroup.address.book.business.service.api.AddressesService;
-import de.alpharogroup.address.book.business.service.api.CountriesService;
-import de.alpharogroup.address.book.business.service.api.FederalstatesService;
-import de.alpharogroup.address.book.business.service.api.ZipcodesService;
+import de.alpharogroup.address.book.service.api.AddressesService;
+import de.alpharogroup.address.book.service.api.CountriesService;
+import de.alpharogroup.address.book.service.api.FederalstatesService;
+import de.alpharogroup.address.book.service.api.ZipcodesService;
 
 public interface ServiceLocator {
 	/**
