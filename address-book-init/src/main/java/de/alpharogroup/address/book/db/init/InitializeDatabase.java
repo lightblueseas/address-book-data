@@ -7,9 +7,9 @@ import java.util.Properties;
 import de.alpharogroup.lang.PropertiesUtils;
 
 /**
- * The Class {@link InitializeDbAddressbook}.
+ * The Class {@link InitializeDatabase} initialize the specific database.
  */
-public class InitializeDbAddressbook {
+public class InitializeDatabase {
 
 	/**
 	 * The main method. Initializes database for the addressbook.

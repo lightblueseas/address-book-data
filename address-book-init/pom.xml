@@ -22,15 +22,39 @@
 			<artifactId>address-book-entities</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>address-book-business</artifactId>
+			<version>3.1.0</version>
+		</dependency>
 		<!-- JDBC DEPENDENCIES -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
 		</dependency>
+		<!-- UNIT TESTS DEPENDENCIES -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>randomizer</artifactId>
+			<version>4.2.0</version>
+		</dependency>
 
 	</dependencies>
-	
+
 	<profiles>
 
 		<profile>
@@ -94,7 +118,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<mainClass>de.alpharogroup.address.book.db.init.InitializeDbAddressbook</mainClass>
+							<mainClass>de.alpharogroup.address.book.db.init.InitializeDatabase</mainClass>
 							<arguments>
 								<argument>delete</argument>
 							</arguments>
