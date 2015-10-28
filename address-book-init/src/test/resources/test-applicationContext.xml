@@ -31,7 +31,6 @@
 		</property>
 	</bean>
 
-
 	<!-- PostgreSQL tomcat.dbcp DataSource configuration -->
 	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
 		<property name="driverClassName" value="${jdbc.driver}" />
@@ -78,7 +77,6 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
 
 </beans>
 

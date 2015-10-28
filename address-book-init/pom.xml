@@ -63,21 +63,21 @@
 			<artifactId>hibernate-ehcache</artifactId>
 		</dependency>
 
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
 
-			<dependency>
-				<groupId>cglib</groupId>
-				<artifactId>cglib</artifactId>
-			</dependency>
-
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>
+		<!-- MYSTIC-CRYPT DEPENDENCIES -->
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>randomizer</artifactId>
 		</dependency>
-
+		<!-- CONNECTION-POOL DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-dbcp</artifactId>
