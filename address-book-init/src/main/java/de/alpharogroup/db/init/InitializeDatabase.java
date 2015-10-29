@@ -1,9 +1,10 @@
-package de.alpharogroup.address.book.db.init;
+package de.alpharogroup.db.init;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import de.alpharogroup.address.book.db.init.DatabaseInitialization;
 import de.alpharogroup.lang.PropertiesUtils;
 
 /**
