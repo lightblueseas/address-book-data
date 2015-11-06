@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation=" 
+	http://www.springframework.org/schema/beans  
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/aop  
+	http://www.springframework.org/schema/aop/spring-aop.xsd 
+	http://www.springframework.org/schema/security  
+	http://www.springframework.org/schema/security/spring-security-2.0.4.xsd 
+	http://cxf.apache.org/jaxrs 
+	http://cxf.apache.org/schemas/jaxrs.xsd">
+	
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<jaxrs:server id="service" address="/">
+		<jaxrs:serviceBeans>
+			<ref bean="addressesResource" />
+			<ref bean="countriesResource" />
+			<ref bean="federalstatesResource" />
+			<ref bean="zipcodesResource" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+		</jaxrs:providers>
+	</jaxrs:server>
+
+	<!-- web resources -->
+	<bean id="addressesResource" class="de.alpharogroup.address.book.rest.AddressesRestResource">
+		<property name="businessMapperService" ref="addressesMapperService"></property>
+	</bean>
+	<bean id="countriesResource" class="de.alpharogroup.address.book.rest.CountriesRestResource">
+		<property name="businessMapperService" ref="countriesMapperService"></property>
+	</bean>
+	<bean id="federalstatesResource" class="de.alpharogroup.address.book.rest.FederalstatesRestResource">
+		<property name="businessMapperService" ref="federalstatesMapperService"></property>
+	</bean>
+	<bean id="zipcodesResource" class="de.alpharogroup.address.book.rest.ZipcodesRestResource">
+		<property name="businessMapperService" ref="zipcodesMapperService"></property>
+	</bean>
+</beans>

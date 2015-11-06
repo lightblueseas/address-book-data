@@ -6,9 +6,8 @@ import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.db.service.jpa.BusinessService;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Interface ZipcodesService.
+ * The Interface {@link ZipcodesService}.
  */
 public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 

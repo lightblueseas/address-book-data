@@ -79,4 +79,3 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 </beans>
-

@@ -6,6 +6,9 @@ import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.db.service.jpa.BusinessService;
 
+/**
+ * The Interface {@link FederalstatesService}.
+ */
 public interface FederalstatesService extends BusinessService<Federalstates, Integer>{
 
 	/**

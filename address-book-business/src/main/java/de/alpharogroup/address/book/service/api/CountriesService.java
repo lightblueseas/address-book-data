@@ -10,7 +10,7 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.db.service.jpa.BusinessService;
 
 /**
- * The Interface CountriesService.
+ * The Interface {@link CountriesService}.
  */
 public interface CountriesService extends BusinessService<Countries, Integer> {
 
@@ -54,6 +54,11 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	 */
 	Map<Countries, List<Zipcodes>> getGermanCountriesToZipcodesMap();
 	
+	/**
+	 * Gets the german countries to zipcodes as string map.
+	 *
+	 * @return the german countries to zipcodes as string map
+	 */
 	Map<String, List<String>> getGermanCountriesToZipcodesAsStringMap();
 	
 	/**
@@ -64,14 +69,47 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	 */
 	Map<String, List<String>> getCountriesToZipcodesAndCitiesAsStringMap();
 	
+	/**
+	 * Gets the german countries to zipcodes and cities as string map.
+	 *
+	 * @return the german countries to zipcodes and cities as string map
+	 */
 	Map<String, List<String>> getGermanCountriesToZipcodesAndCitiesAsStringMap();
 	
+	/**
+	 * Find all.
+	 *
+	 * @param iso3166A2name the iso3166 a2name
+	 * @param iso3166A3name the iso3166 a3name
+	 * @param iso3166Number the iso3166 number
+	 * @param name the name
+	 * @return the list
+	 */
 	List<Countries> findAll(String iso3166A2name, String iso3166A3name,
 			String iso3166Number, String name);
 	
+	/**
+	 * Find.
+	 *
+	 * @param iso3166A2name the iso3166 a2name
+	 * @return the countries
+	 */
 	Countries find(String iso3166A2name);
 	
+	/**
+	 * Find by name.
+	 *
+	 * @param name the name
+	 * @return the countries
+	 */
 	Countries findByName(String name);
 	
+	/**
+	 * Sets the location model.
+	 *
+	 * @param modelObject the model object
+	 * @param zc the zc
+	 * @return the string
+	 */
 	String setLocationModel(LocationModel modelObject, String zc);
 }

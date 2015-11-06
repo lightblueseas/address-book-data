@@ -1,5 +1,9 @@
 package de.alpharogroup.address.book.service.mapper;
 
+import java.util.List;
+
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,5 +27,21 @@ public class AddressesBusinessMapperService extends
 	@Autowired
 	public void setAddressesMapper(AddressesMapper addressesMapper) {
 		setMapper(addressesMapper);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Address> find(String geohash)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("select a from Addresses a");
+		sb.append(" ");
+		sb.append("where a.geohash like :geohash");
+		final String hqlString = sb.toString();
+		final Query query = getDao().getQuery(hqlString);
+		query.setParameter("geohash", geohash + "%");
+		List<Addresses> entities = query.getResultList();
+		List<Address>addresses = getMapper().toBusinessObjects(entities);
+		return addresses;
 	}
 }

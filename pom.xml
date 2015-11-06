@@ -1,12 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>2.2.0</version>
-		<relativePath></relativePath>
+		<version>2.4.0</version>
+		<relativePath/>
 	</parent>
 
 	<artifactId>address-book-data</artifactId>
@@ -42,7 +42,10 @@
 		<module>address-book-entities</module>
 		<module>address-book-business</module>
 		<module>address-book-init</module>
-	</modules>
+		<module>address-book-rest-client</module>
+		<module>address-book-rest-api</module>
+    <module>address-book-cxf-web</module>
+  </modules>
 
 	<properties>
 		<!-- MYSTIC-CRYPT versions -->
@@ -50,7 +53,6 @@
 		<randomizer.version>${mystic-crypt.version}</randomizer.version>
 		<!-- JGEOHASH version -->
 		<jgeohash.version>2.0.0</jgeohash.version>
-
 	</properties>
 
 	<dependencyManagement>
@@ -67,6 +69,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>address-book-business</artifactId>
 				<version>${project.version}</version>
+			</dependency>	
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>address-book-rest-api</artifactId>
+				<version>${project.version}</version>
 			</dependency>			
 			<!-- MYSTIC-CRYPT DEPENDENCIES -->
 			<dependency>
@@ -79,7 +87,7 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>jgeohash</artifactId>
 				<version>${jgeohash.version}</version>
-			</dependency>
+			</dependency>		
 
 		</dependencies>
 
