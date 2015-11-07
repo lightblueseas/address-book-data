@@ -5,8 +5,7 @@ import de.alpharogroup.jgeohash.Adjacent;
 
 public class HqlStringCreator
 {
-
-	public static String forZipcodes(Countries country, String zipcode, String city)
+	public static String forZipcodes(String country, String zipcode, String city)
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select zc from Zipcodes zc");

@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import de.alpharogroup.db.entity.BaseEntity;
@@ -17,14 +21,27 @@ import lombok.Setter;
  * The Entity class {@link Federalstates} is keeping the information
  * for the federal states from the countries.
  */
+
 @Entity
 @Table(name = "federalstates")
 @Getter
 @Setter
 @NoArgsConstructor
+@NamedNativeQueries({ @NamedNativeQuery(
+	name = Federalstates.FIND_FEDERALSTATES_FROM_COUNTRY, 
+	query = "select * from federalstates fs where fs.country_id=:country", 
+	resultClass = Federalstates.class) })
+@NamedQueries({ @NamedQuery(name = Federalstates.FIND_FEDERALSTATE_FROM_COUNTRY_AND_NAME, 
+query = "select fs from Federalstates fs"
+	+ " where fs.country=:country"
+	+ " and fs.name=:name") })
 public class Federalstates 
 extends BaseEntity<Integer>
 implements Cloneable {
+	
+	public static final String FIND_FEDERALSTATE_FROM_COUNTRY_AND_NAME = "findFederalstateFromCountryAndName";
+
+	public static final String FIND_FEDERALSTATES_FROM_COUNTRY = "findFederalstatesFromCountry";
 
 	/** The serial Version UID */
 	private static final long serialVersionUID = -2105692517269551804L;

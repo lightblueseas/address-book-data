@@ -7,6 +7,7 @@ import de.alpharogroup.address.book.daos.CountriesDao;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.mapper.CountriesMapper;
+import de.alpharogroup.address.book.service.mapper.api.CountryService;
 import de.alpharogroup.db.service.entitymapper.AbstractBusinessMapperService;
 
 

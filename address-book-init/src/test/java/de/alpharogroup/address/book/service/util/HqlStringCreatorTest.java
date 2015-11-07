@@ -17,23 +17,23 @@ public class HqlStringCreatorTest {
 		expected = "select zc from Zipcodes zc";		
 		AssertJUnit.assertEquals(expected, actual);
 		
-		actual = HqlStringCreator.forZipcodes(new Countries(), null, null);
+		actual = HqlStringCreator.forZipcodes("IT", null, null);
 		expected = "select zc from Zipcodes zc where zc.country=:country";		
 		AssertJUnit.assertEquals(expected, actual);
 		
-		actual = HqlStringCreator.forZipcodes(new Countries(), "", null);
+		actual = HqlStringCreator.forZipcodes("IT", "", null);
 		expected = "select zc from Zipcodes zc where zc.country=:country";		
 		AssertJUnit.assertEquals(expected, actual);
 		
-		actual = HqlStringCreator.forZipcodes(new Countries(), null, "");
+		actual = HqlStringCreator.forZipcodes("IT", null, "");
 		expected = "select zc from Zipcodes zc where zc.country=:country";		
 		AssertJUnit.assertEquals(expected, actual);
 		
-		actual = HqlStringCreator.forZipcodes(new Countries(), "", "");
+		actual = HqlStringCreator.forZipcodes("IT", "", "");
 		expected = "select zc from Zipcodes zc where zc.country=:country";		
 		AssertJUnit.assertEquals(expected, actual);
 		
-		actual = HqlStringCreator.forZipcodes(new Countries(), "10827", null);
+		actual = HqlStringCreator.forZipcodes("IT", "10827", null);
 		expected = "select zc from Zipcodes zc where zc.country=:country and zc.zipcode=:zipcode";		
 		AssertJUnit.assertEquals(expected, actual);
 		
@@ -41,7 +41,7 @@ public class HqlStringCreatorTest {
 		expected = "select zc from Zipcodes zc where zc.zipcode=:zipcode";		
 		AssertJUnit.assertEquals(expected, actual);
 		
-		actual = HqlStringCreator.forZipcodes(new Countries(), "10827", "Berlin");
+		actual = HqlStringCreator.forZipcodes("IT", "10827", "Berlin");
 		expected = "select zc from Zipcodes zc where zc.country=:country and zc.zipcode=:zipcode and zc.city=:city";		
 		AssertJUnit.assertEquals(expected, actual);		
 	}

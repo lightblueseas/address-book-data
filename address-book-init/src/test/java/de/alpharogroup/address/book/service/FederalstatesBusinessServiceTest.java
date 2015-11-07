@@ -10,20 +10,14 @@ import org.testng.annotations.Test;
 
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
-import de.alpharogroup.address.book.service.api.AddressesService;
 import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
-import de.alpharogroup.address.book.service.api.ZipcodesService;
 
-@ContextConfiguration(locations = "classpath:test-em-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
 public class FederalstatesBusinessServiceTest  extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	private CountriesService countriesService;
-	@Autowired
-	private ZipcodesService zipcodesService;
-	@Autowired
-	private AddressesService addressesService;
 	@Autowired
 	private FederalstatesService federalstatesService;
 	@Test
@@ -34,7 +28,15 @@ public class FederalstatesBusinessServiceTest  extends AbstractTestNGSpringConte
 		Federalstates federalstate = federalstatesService.findFederalstate(germany, "Hamburg");
 		AssertJUnit.assertNotNull(federalstate);
 		AssertJUnit.assertEquals("Hamburg", federalstate.getName());
+		federalstates = federalstatesService.findFederalstatesFromCountry(germany);
+		System.out.println(federalstates);
 		
+	}
+	@Test
+	public void testFindFederalstatesFromCountryCountries() {
+		Countries germany = countriesService.find("DE");
+		List<Federalstates> federalstates = federalstatesService.findFederalstatesFromCountry(germany);
+		AssertJUnit.assertEquals(16, federalstates.size());		
 	}
 
 }

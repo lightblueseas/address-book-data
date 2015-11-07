@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.mapper;
+package de.alpharogroup.address.book.service.mapper.api;
 
 import java.util.List;
 

@@ -3,6 +3,7 @@ package de.alpharogroup.address.book.service;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,28 +67,26 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Federalstates> findFederalstatesFromCountry(
 			final Countries country) {
-		final String hqlString = "select fs from Federalstates fs where fs.country=:country";
-		final Query query = getQuery(hqlString);
-		query.setParameter("country", country);
-		List<Federalstates> federalstates = query.getResultList();
+		final TypedQuery<Federalstates> typedQuery = getDao()
+			.getEntityManager()
+			.createNamedQuery(Federalstates.FIND_FEDERALSTATES_FROM_COUNTRY, Federalstates.class)
+			.setParameter("country", country);
+		List<Federalstates> federalstates = typedQuery.getResultList();
 		return federalstates;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Federalstates> findFederalstatesFromCountry(final Countries country, String name) {
-		final String hqlString = "select fs from Federalstates fs"
-				+ " where fs.country=:country"
-				+ " and fs.name=:name";
-		final Query query = getQuery(hqlString);
-		query.setParameter("country", country);
-		query.setParameter("name", name);
-		List<Federalstates> federalstates = query.getResultList();
+		final TypedQuery<Federalstates> typedQuery = getDao()
+			.getEntityManager()
+			.createNamedQuery(Federalstates.FIND_FEDERALSTATE_FROM_COUNTRY_AND_NAME, Federalstates.class)
+			.setParameter("country", country)
+			.setParameter("name", name);
+		List<Federalstates> federalstates = typedQuery.getResultList();
 		return federalstates;
 	}
 

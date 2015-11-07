@@ -12,6 +12,7 @@ import de.alpharogroup.address.book.daos.AddressesDao;
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.mapper.AddressesMapper;
+import de.alpharogroup.address.book.service.mapper.api.AddressService;
 import de.alpharogroup.db.service.entitymapper.AbstractBusinessMapperService;
 
 @Transactional
