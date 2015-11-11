@@ -13,6 +13,11 @@
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
+			<artifactId>rest-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
 			<artifactId>address-book-business</artifactId>
 		</dependency>
 

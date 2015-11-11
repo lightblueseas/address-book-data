@@ -6,7 +6,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.db.service.rs.RestfulResource;
+import de.alpharogroup.service.rs.RestfulResource;
 
 @Path("/country/")
 @Produces(MediaType.APPLICATION_JSON)

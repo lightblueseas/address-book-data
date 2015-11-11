@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import de.alpharogroup.address.book.domain.Address;
-import de.alpharogroup.db.service.rs.RestfulResource;
+import de.alpharogroup.service.rs.RestfulResource;
 
 @Path("/address/")
 @Produces(MediaType.APPLICATION_JSON)
