@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
 		<version>2.5.0</version>
-		<relativePath/>
+		<relativePath />
 	</parent>
 
 	<artifactId>address-book-data</artifactId>
@@ -39,13 +40,13 @@
 	</issueManagement>
 
 	<modules>
-		<module>address-book-entities</module>
 		<module>address-book-business</module>
+		<module>address-book-entities</module>
 		<module>address-book-init</module>
-		<module>address-book-rest-client</module>
 		<module>address-book-rest-api</module>
-    <module>address-book-cxf-web</module>
-  </modules>
+		<module>address-book-rest-client</module>
+		<module>address-book-rest-web</module>
+	</modules>
 
 	<properties>
 		<!-- MYSTIC-CRYPT versions -->
@@ -69,25 +70,25 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>address-book-business</artifactId>
 				<version>${project.version}</version>
-			</dependency>	
+			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>address-book-rest-api</artifactId>
 				<version>${project.version}</version>
-			</dependency>			
+			</dependency>
 			<!-- MYSTIC-CRYPT DEPENDENCIES -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>randomizer</artifactId>
 				<version>${randomizer.version}</version>
-			</dependency>			
+			</dependency>
 			<!-- JGEOHASH DEPENDENCIES -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>jgeohash</artifactId>
 				<version>${jgeohash.version}</version>
-			</dependency>		
+			</dependency>
 
 		</dependencies>
 
