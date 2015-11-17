@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
-import de.alpharogroup.address.book.service.mapper.api.AddressService;
+import de.alpharogroup.address.book.service.domain.api.AddressService;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 public class AddressesRestResource extends AbstractRestfulResource<Integer, Address, AddressService>
@@ -12,7 +12,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 {
 	
 	public List<Address> find(String geohash) {
-		List<Address> addresses = getBusinessMapperService().find(geohash);
+		List<Address> addresses = getDomainService().find(geohash);
 		return addresses;		
 	}
 }

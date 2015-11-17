@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.mapper;
+package de.alpharogroup.address.book.service.domain;
 
 import java.util.List;
 
@@ -13,18 +13,18 @@ import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.mapper.FederalstatesMapper;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
-import de.alpharogroup.address.book.service.mapper.api.FederalstateService;
-import de.alpharogroup.db.service.entitymapper.AbstractBusinessMapperService;
+import de.alpharogroup.address.book.service.domain.api.FederalstateService;
+import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The class {@link FederalstatesBusinessMapperService}.
+ * The class {@link FederalstatesDomainService}.
  */
 @Transactional
-@Service("federalstatesMapperService")
-public class FederalstatesBusinessMapperService extends
-		AbstractBusinessMapperService<Integer, Federalstate, Federalstates, FederalstatesDao, FederalstatesMapper>
+@Service("federalstatesDomainService")
+public class FederalstatesDomainService extends
+AbstractDomainService<Integer, Federalstate, Federalstates, FederalstatesDao, FederalstatesMapper>
 		implements FederalstateService {
 	
 	/** The {@link FederalstatesService}. */
@@ -47,7 +47,7 @@ public class FederalstatesBusinessMapperService extends
 	 */
 	@Override
 	public Federalstate findFederalstateFromIso3166A2code(final String iso3166a2code) {
-		return getMapper().toBusinessObject(federalstatesService.findFederalstateFromIso3166A2code(iso3166a2code));
+		return getMapper().toDomainObject(federalstatesService.findFederalstateFromIso3166A2code(iso3166a2code));
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class FederalstatesBusinessMapperService extends
 	@Override
 	public List<Federalstate> findFederalstatesFromCountry(Country country) {
 		Countries c = getMapper().getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(federalstatesService.findFederalstatesFromCountry(c));
+		return getMapper().toDomainObjects(federalstatesService.findFederalstatesFromCountry(c));
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class FederalstatesBusinessMapperService extends
 	@Override
 	public List<Federalstate> findFederalstatesFromCountry(Country country, String name) {
 		Countries c = getMapper().getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(federalstatesService.findFederalstatesFromCountry(c, name));
+		return getMapper().toDomainObjects(federalstatesService.findFederalstatesFromCountry(c, name));
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class FederalstatesBusinessMapperService extends
 	 */
 	@Override
 	public Federalstate findFederalstate(Country country, String name) {
-		return getMapper().toBusinessObject(
+		return getMapper().toDomainObject(
 				federalstatesService.findFederalstate(getMapper().getMapper().map(country, Countries.class), name));
 	}
 
@@ -90,7 +90,7 @@ public class FederalstatesBusinessMapperService extends
 	 */
 	@Override
 	public Federalstate getFederalstate(String string) {
-		return getMapper().toBusinessObject(federalstatesService.getFederalstate(string));
+		return getMapper().toDomainObject(federalstatesService.getFederalstate(string));
 	}
 
 }

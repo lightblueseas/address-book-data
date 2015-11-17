@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.mapper.api;
+package de.alpharogroup.address.book.service.domain.api;
 
 import java.util.List;
 import java.util.Map;
@@ -7,9 +7,9 @@ import de.alpharogroup.address.book.application.model.LocationModel;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.db.service.entitymapper.BusinessMapperService;
+import de.alpharogroup.service.domain.DomainService;
 
-public interface CountryService extends BusinessMapperService<Integer, Country>
+public interface CountryService extends DomainService<Integer, Country>
 {
 
 	/**

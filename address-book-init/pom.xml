@@ -24,6 +24,11 @@
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
+			<artifactId>address-book-domain</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
 			<artifactId>address-book-business</artifactId>
 		</dependency>
 		<!-- JDBC DEPENDENCIES -->

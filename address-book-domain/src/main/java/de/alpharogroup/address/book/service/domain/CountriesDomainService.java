@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.mapper;
+package de.alpharogroup.address.book.service.domain;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,18 +19,18 @@ import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.CountriesMapper;
 import de.alpharogroup.address.book.service.api.CountriesService;
-import de.alpharogroup.address.book.service.mapper.api.CountryService;
-import de.alpharogroup.db.service.entitymapper.AbstractBusinessMapperService;
+import de.alpharogroup.address.book.service.domain.api.CountryService;
+import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The class {@link CountriesBusinessMapperService}.
+ * The class {@link CountriesDomainService}.
  */
 @Transactional
-@Service("countriesMapperService")
-public class CountriesBusinessMapperService extends
-AbstractBusinessMapperService<Integer, Country, Countries, CountriesDao, CountriesMapper> implements CountryService
+@Service("countriesDomainService")
+public class CountriesDomainService extends
+AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper> implements CountryService
 {
 
 	/** The {@link CountriesService}. */
@@ -68,7 +68,7 @@ AbstractBusinessMapperService<Integer, Country, Countries, CountriesDao, Countri
 			this.countryToFederalstateMap = new LinkedHashMap<>();
 			final Map<Countries, List<Federalstates>> countriesToFederalstatesMap = countriesService.getCountriesToFederalstatesMap();
 			for(Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap.entrySet()) {
-				this.countryToFederalstateMap.put(getMapper().toBusinessObject(entry.getKey()), getMapper().map(entry.getValue(), Federalstate.class));
+				this.countryToFederalstateMap.put(getMapper().toDomainObject(entry.getKey()), getMapper().map(entry.getValue(), Federalstate.class));
 			}			
 		}
 		return this.countryToFederalstateMap;
@@ -91,7 +91,7 @@ AbstractBusinessMapperService<Integer, Country, Countries, CountriesDao, Countri
 			this.countryToZipcodeMap = new LinkedHashMap<>();
 			final Map<Countries, List<Zipcodes>> countriesToZipcodesMap = countriesService.getCountriesToZipcodesMap();
 			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodesMap.entrySet()) {
-				countryToZipcodeMap.put(getMapper().toBusinessObject(entry.getKey()), getMapper().map(entry.getValue(), Zipcode.class));
+				countryToZipcodeMap.put(getMapper().toDomainObject(entry.getKey()), getMapper().map(entry.getValue(), Zipcode.class));
 			}
 		}
 		return this.countryToZipcodeMap;
@@ -114,7 +114,7 @@ AbstractBusinessMapperService<Integer, Country, Countries, CountriesDao, Countri
 			this.germanCountryToZipcodeMap = new LinkedHashMap<>();
 			Map<Countries, List<Zipcodes>> germanCountriesToZipcodesMap = countriesService.getGermanCountriesToZipcodesMap();
 			for (Entry<Countries, List<Zipcodes>> entry : germanCountriesToZipcodesMap.entrySet()) {
-				this.germanCountryToZipcodeMap.put(getMapper().toBusinessObject(entry.getKey()), getMapper().map(entry.getValue(), Zipcode.class));				
+				this.germanCountryToZipcodeMap.put(getMapper().toDomainObject(entry.getKey()), getMapper().map(entry.getValue(), Zipcode.class));				
 			}
 		}
 		return this.germanCountryToZipcodeMap;
@@ -149,7 +149,7 @@ AbstractBusinessMapperService<Integer, Country, Countries, CountriesDao, Countri
 	 */
 	@Override
 	public List<Country> findAll(String iso3166a2name, String iso3166a3name, String iso3166Number, String name) {
-		return getMapper().toBusinessObjects(countriesService.findAll(iso3166a2name, iso3166a3name, iso3166Number, name));
+		return getMapper().toDomainObjects(countriesService.findAll(iso3166a2name, iso3166a3name, iso3166Number, name));
 	}
 
 	/**
@@ -157,7 +157,7 @@ AbstractBusinessMapperService<Integer, Country, Countries, CountriesDao, Countri
 	 */
 	@Override
 	public Country find(String iso3166a2name) {
-		return getMapper().toBusinessObject(countriesService.find(iso3166a2name));
+		return getMapper().toDomainObject(countriesService.find(iso3166a2name));
 	}
 
 	/**
@@ -165,7 +165,7 @@ AbstractBusinessMapperService<Integer, Country, Countries, CountriesDao, Countri
 	 */
 	@Override
 	public Country findByName(String name) {
-		return getMapper().toBusinessObject(countriesService.findByName(name));
+		return getMapper().toDomainObject(countriesService.findByName(name));
 	}
 
 	/**

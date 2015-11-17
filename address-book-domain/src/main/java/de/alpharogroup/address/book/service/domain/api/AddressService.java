@@ -1,16 +1,16 @@
-package de.alpharogroup.address.book.service.mapper.api;
+package de.alpharogroup.address.book.service.domain.api;
 
 import java.util.List;
 
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.db.service.entitymapper.BusinessMapperService;
+import de.alpharogroup.service.domain.DomainService;
 
 /**
  * The interface {@link AddressService}.
  */
-public interface AddressService extends BusinessMapperService<Integer, Address>{
+public interface AddressService extends DomainService<Integer, Address>{
 	
 	/**
 	 * Finds a list of {@link Address} from the given arguments.

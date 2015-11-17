@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.mapper;
+package de.alpharogroup.address.book.service.domain;
 
 import java.util.List;
 
@@ -17,18 +17,18 @@ import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.AddressesMapper;
 import de.alpharogroup.address.book.service.api.AddressesService;
-import de.alpharogroup.address.book.service.mapper.api.AddressService;
-import de.alpharogroup.db.service.entitymapper.AbstractBusinessMapperService;
+import de.alpharogroup.address.book.service.domain.api.AddressService;
+import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The class {@link AddressesBusinessMapperService}.
+ * The class {@link AddressesDomainService}.
  */
 @Transactional
-@Service("addressesMapperService")
-public class AddressesBusinessMapperService
-		extends AbstractBusinessMapperService<Integer, Address, Addresses, AddressesDao, AddressesMapper>
+@Service("addressesDomainService")
+public class AddressesDomainService
+		extends AbstractDomainService<Integer, Address, Addresses, AddressesDao, AddressesMapper>
 		implements AddressService {
 
 	/** The {@link AddressesService}. */
@@ -73,7 +73,7 @@ public class AddressesBusinessMapperService
 		final Query query = getDao().getQuery(hqlString);
 		query.setParameter("geohash", geohash + "%");
 		List<Addresses> entities = query.getResultList();
-		List<Address> addresses = getMapper().toBusinessObjects(entities);
+		List<Address> addresses = getMapper().toDomainObjects(entities);
 		return addresses;
 	}
 
@@ -82,7 +82,7 @@ public class AddressesBusinessMapperService
 	 */
 	@Override
 	public List<Address> find(String geohash, String latitude, String longitude) {
-		return getMapper().toBusinessObjects(addressesService.find(geohash, latitude, longitude));
+		return getMapper().toDomainObjects(addressesService.find(geohash, latitude, longitude));
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class AddressesBusinessMapperService
 	 */
 	@Override
 	public List<Address> findNeighbourhood(String geohash) {		
-		return getMapper().toBusinessObjects(addressesService.findNeighbourhood(geohash));
+		return getMapper().toDomainObjects(addressesService.findNeighbourhood(geohash));
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class AddressesBusinessMapperService
 	 */
 	@Override
 	public List<Address> findFirstRingNeighbourhood(String geohash) {
-		return getMapper().toBusinessObjects(addressesService.findFirstRingNeighbourhood(geohash));
+		return getMapper().toDomainObjects(addressesService.findFirstRingNeighbourhood(geohash));
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> findFirstAndSecondRingNeighbourhood(String geohash) {
 		return 
-				getMapper().toBusinessObjects(addressesService.findFirstAndSecondRingNeighbourhood(geohash));
+				getMapper().toDomainObjects(addressesService.findFirstAndSecondRingNeighbourhood(geohash));
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> find(String latitude, String longitude) {
 		return 
-				getMapper().toBusinessObjects(addressesService.find(latitude, longitude));
+				getMapper().toDomainObjects(addressesService.find(latitude, longitude));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class AddressesBusinessMapperService
 	 */
 	@Override
 	public Address contains(String latitude, String longitude) {		
-		return getMapper().toBusinessObject(addressesService.contains(latitude, longitude));
+		return getMapper().toDomainObject(addressesService.contains(latitude, longitude));
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public Address contains(Zipcode zipcode) {
 		Zipcodes z = getMapper().map(zipcode, Zipcodes.class);
-		return getMapper().toBusinessObject(addressesService.contains(z));
+		return getMapper().toDomainObject(addressesService.contains(z));
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> find(Zipcode zipcode) {
 		Zipcodes z = getMapper().map(zipcode, Zipcodes.class);
-		return getMapper().toBusinessObjects(addressesService.find(z));
+		return getMapper().toDomainObjects(addressesService.find(z));
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> findAll(Country country) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(addressesService.findAll(c));
+		return getMapper().toDomainObjects(addressesService.findAll(c));
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class AddressesBusinessMapperService
 	 */
 	@Override
 	public List<Address> findGeohashIsNull() {
-		return getMapper().toBusinessObjects(addressesService.findGeohashIsNull());
+		return getMapper().toDomainObjects(addressesService.findGeohashIsNull());
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> find(Country country, String zipcode) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(addressesService.find(c, zipcode));
+		return getMapper().toDomainObjects(addressesService.find(c, zipcode));
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> find(Country country, String zipcode, String city) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(addressesService.find(c, zipcode, city));
+		return getMapper().toDomainObjects(addressesService.find(c, zipcode, city));
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public Address findFirst(Country country, String zipcode) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObject(addressesService.findFirst(c, zipcode));
+		return getMapper().toDomainObject(addressesService.findFirst(c, zipcode));
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> findInvalidAddresses(Country country, String geohash) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(addressesService.findInvalidAddresses(c, geohash));
+		return getMapper().toDomainObjects(addressesService.findInvalidAddresses(c, geohash));
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> findInvalidAddresses(Country country, String geohash, boolean not) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(addressesService.findInvalidAddresses(c, geohash, not));
+		return getMapper().toDomainObjects(addressesService.findInvalidAddresses(c, geohash, not));
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> findAddressesWithSameCityname(Country country, String city) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(addressesService.findAddressesWithSameCityname(c, city));
+		return getMapper().toDomainObjects(addressesService.findAddressesWithSameCityname(c, city));
 	}
 
 	/**
@@ -232,6 +232,6 @@ public class AddressesBusinessMapperService
 	@Override
 	public List<Address> findAddressesWithSameZipcode(Country country, String zipcode) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(addressesService.find(c, zipcode));
+		return getMapper().toDomainObjects(addressesService.find(c, zipcode));
 	}
 }

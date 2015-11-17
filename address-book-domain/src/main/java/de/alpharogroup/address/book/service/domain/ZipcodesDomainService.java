@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.mapper;
+package de.alpharogroup.address.book.service.domain;
 
 import java.util.List;
 
@@ -15,19 +15,19 @@ import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.ZipcodesMapper;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
-import de.alpharogroup.address.book.service.mapper.api.ZipcodeService;
+import de.alpharogroup.address.book.service.domain.api.ZipcodeService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
-import de.alpharogroup.db.service.entitymapper.AbstractBusinessMapperService;
+import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The class {@link ZipcodesBusinessMapperService}.
+ * The class {@link ZipcodesDomainService}.
  */
 @Transactional
-@Service("zipcodesMapperService")
-public class ZipcodesBusinessMapperService extends
-	AbstractBusinessMapperService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
+@Service("zipcodesDomainService")
+public class ZipcodesDomainService extends
+AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
 	implements ZipcodeService
 {
 	
@@ -69,7 +69,7 @@ public class ZipcodesBusinessMapperService extends
 		}
 
 		final List<Zipcodes> entities = query.getResultList();
-		final List<Zipcode> bos = getMapper().toBusinessObjects(entities);		
+		final List<Zipcode> bos = getMapper().toDomainObjects(entities);		
 		return bos;
 	}
 
@@ -79,7 +79,7 @@ public class ZipcodesBusinessMapperService extends
 	@Override
 	public List<Zipcode> findAll(Country country, String zipcode, String city) {
 		Countries c = getMapper().map(country, Countries.class);
-		return getMapper().toBusinessObjects(zipcodesService.findAll(c, zipcode, city));
+		return getMapper().toDomainObjects(zipcodesService.findAll(c, zipcode, city));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class ZipcodesBusinessMapperService extends
 	 */
 	@Override
 	public List<Zipcode> findZipcodes(String zipcode) {
-		return getMapper().toBusinessObjects(zipcodesService.findZipcodes(zipcode));
+		return getMapper().toDomainObjects(zipcodesService.findZipcodes(zipcode));
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class ZipcodesBusinessMapperService extends
 	 */
 	@Override
 	public Zipcode getZipcode(String zipcode, String city) {
-		return getMapper().toBusinessObject(zipcodesService.getZipcode(zipcode, city));
+		return getMapper().toDomainObject(zipcodesService.getZipcode(zipcode, city));
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class ZipcodesBusinessMapperService extends
 	 */
 	@Override
 	public List<Zipcode> find(Country country) {
-		return getMapper().toBusinessObjects(zipcodesService.find(getMapper().map(country, Countries.class)));
+		return getMapper().toDomainObjects(zipcodesService.find(getMapper().map(country, Countries.class)));
 	}
 
 	/**
@@ -127,6 +127,6 @@ public class ZipcodesBusinessMapperService extends
 	 */
 	@Override
 	public Zipcode findCityFromZipcode(Country country, String zipcode) {
-		return getMapper().toBusinessObject(zipcodesService.findCityFromZipcode(getMapper().map(country, Countries.class), zipcode));
+		return getMapper().toDomainObject(zipcodesService.findCityFromZipcode(getMapper().map(country, Countries.class), zipcode));
 	}
 }

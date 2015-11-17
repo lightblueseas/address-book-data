@@ -26,7 +26,7 @@ public class MapperTest {
 	public void testToBusinessObject() {
 		Countries country = AddressBookFactory.getInstance().newCountries(1,"DE","DEU","276","de.deu");
 		CountriesMapper mapper = new CountriesMapper();
-		Country bo = mapper.toBusinessObject(country);
+		Country bo = mapper.toDomainObject(country);
 		AssertJUnit.assertEquals(country.getIso3166A2name(), bo.getIso3166A2name());
 		AssertJUnit.assertEquals(country.getIso3166A3name(), bo.getIso3166A3name());
 		AssertJUnit.assertEquals(country.getIso3166Number(), bo.getIso3166Number());
@@ -35,7 +35,7 @@ public class MapperTest {
 		
 		Federalstates federalstates = AddressBookFactory.getInstance().newFederalstates(country, 2636, "de.hh", "Hamburg", null, null);
 		FederalstatesMapper federalstatesMapper = new FederalstatesMapper();
-		Federalstate federalstate = federalstatesMapper.toBusinessObject(federalstates);
+		Federalstate federalstate = federalstatesMapper.toDomainObject(federalstates);
 		AssertJUnit.assertEquals(federalstates.getId(), federalstate.getId());
 		AssertJUnit.assertEquals(federalstates.getIso3166A2code(), federalstate.getIso3166A2code());
 		AssertJUnit.assertEquals(federalstates.getName(), federalstate.getName());
@@ -47,7 +47,7 @@ public class MapperTest {
 		
 		Zipcodes zipcodes = AddressBookFactory.getInstance().newZipcodes(1, country, "Endingen am Kaiserstuhl", "79344");
 		ZipcodesMapper zipcodesMapper = new ZipcodesMapper();
-		Zipcode zipcode = zipcodesMapper.toBusinessObject(zipcodes);
+		Zipcode zipcode = zipcodesMapper.toDomainObject(zipcodes);
 		AssertJUnit.assertEquals(zipcodes.getId(), zipcode.getId());
 		AssertJUnit.assertEquals(zipcodes.getCity(), zipcode.getCity());
 		AssertJUnit.assertEquals(zipcodes.getZipcode(), zipcode.getZipcode());
@@ -59,7 +59,7 @@ public class MapperTest {
 		
 		Addresses addresses =AddressBookFactory.getInstance().newAddresses(0, "comment", federalstates, "u0vf2w1s5tsy", BigDecimal.valueOf(49.647934), BigDecimal.valueOf(8.110127), "blue street", "23", zipcodes);
 		AddressesMapper addressesMapper = new AddressesMapper();
-		Address address = addressesMapper.toBusinessObject(addresses);
+		Address address = addressesMapper.toDomainObject(addresses);
 		AssertJUnit.assertEquals(addresses.getId(), address.getId());
 		AssertJUnit.assertEquals(addresses.getAddressComment(), address.getAddressComment());
 		AssertJUnit.assertEquals(addresses.getGeohash(), address.getGeohash());
@@ -89,7 +89,7 @@ public class MapperTest {
 	public void testToEntity() {
 		Countries country = AddressBookFactory.getInstance().newCountries(1,"DE","DEU","276","de.deu");
 		CountriesMapper mapper = new CountriesMapper();
-		Country bo = mapper.toBusinessObject(country);
+		Country bo = mapper.toDomainObject(country);
 		country = mapper.toEntity(bo);
 		AssertJUnit.assertEquals(country.getIso3166A2name(), bo.getIso3166A2name());
 		AssertJUnit.assertEquals(country.getIso3166A3name(), bo.getIso3166A3name());
@@ -99,7 +99,7 @@ public class MapperTest {
 		
 		Federalstates federalstates = AddressBookFactory.getInstance().newFederalstates(country, 2636, "de.hh", "Hamburg", null, null);
 		FederalstatesMapper federalstatesMapper = new FederalstatesMapper();
-		Federalstate federalstate = federalstatesMapper.toBusinessObject(federalstates);
+		Federalstate federalstate = federalstatesMapper.toDomainObject(federalstates);
 		federalstates = federalstatesMapper.toEntity(federalstate);
 		AssertJUnit.assertEquals(federalstates.getId(), federalstate.getId());
 		AssertJUnit.assertEquals(federalstates.getIso3166A2code(), federalstate.getIso3166A2code());
@@ -112,7 +112,7 @@ public class MapperTest {
 		
 		Zipcodes zipcodes = AddressBookFactory.getInstance().newZipcodes(1, country, "Endingen am Kaiserstuhl", "79344");
 		ZipcodesMapper zipcodesMapper = new ZipcodesMapper();
-		Zipcode zipcode = zipcodesMapper.toBusinessObject(zipcodes);
+		Zipcode zipcode = zipcodesMapper.toDomainObject(zipcodes);
 		zipcodes = zipcodesMapper.toEntity(zipcode);
 		AssertJUnit.assertEquals(zipcodes.getId(), zipcode.getId());
 		AssertJUnit.assertEquals(zipcodes.getCity(), zipcode.getCity());
@@ -125,7 +125,7 @@ public class MapperTest {
 		
 		Addresses addresses = AddressBookFactory.getInstance().newAddresses(0, "comment", federalstates, "u0vf2w1s5tsy", BigDecimal.valueOf(49.647934), BigDecimal.valueOf(8.110127), "blue street", "23", zipcodes);
 		AddressesMapper addressesMapper = new AddressesMapper();
-		Address address = addressesMapper.toBusinessObject(addresses);
+		Address address = addressesMapper.toDomainObject(addresses);
 		addresses = addressesMapper.toEntity(address);
 		AssertJUnit.assertEquals(addresses.getId(), address.getId());
 		AssertJUnit.assertEquals(addresses.getAddressComment(), address.getAddressComment());

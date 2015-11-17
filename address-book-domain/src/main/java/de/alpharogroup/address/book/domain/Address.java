@@ -1,6 +1,6 @@
 package de.alpharogroup.address.book.domain;
 
-import de.alpharogroup.db.domain.BaseBusinessObject;
+import de.alpharogroup.domain.BaseDomainObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Address extends BaseBusinessObject<Integer> {
+public class Address extends BaseDomainObject<Integer> {
  
 	/**
 	 * The serialVersionUID.

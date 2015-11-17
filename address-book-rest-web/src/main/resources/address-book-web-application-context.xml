@@ -31,15 +31,15 @@
 
 	<!-- web resources -->
 	<bean id="addressesResource" class="de.alpharogroup.address.book.rest.AddressesRestResource">
-		<property name="businessMapperService" ref="addressesMapperService"></property>
+		<property name="domainService" ref="addressesDomainService"></property>
 	</bean>
 	<bean id="countriesResource" class="de.alpharogroup.address.book.rest.CountriesRestResource">
-		<property name="businessMapperService" ref="countriesMapperService"></property>
+		<property name="domainService" ref="countriesDomainService"></property>
 	</bean>
 	<bean id="federalstatesResource" class="de.alpharogroup.address.book.rest.FederalstatesRestResource">
-		<property name="businessMapperService" ref="federalstatesMapperService"></property>
+		<property name="domainService" ref="federalstatesDomainService"></property>
 	</bean>
 	<bean id="zipcodesResource" class="de.alpharogroup.address.book.rest.ZipcodesRestResource">
-		<property name="businessMapperService" ref="zipcodesMapperService"></property>
+		<property name="domainService" ref="zipcodesDomainService"></property>
 	</bean>
 </beans>

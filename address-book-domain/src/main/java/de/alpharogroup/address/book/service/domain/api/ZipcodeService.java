@@ -1,15 +1,15 @@
-package de.alpharogroup.address.book.service.mapper.api;
+package de.alpharogroup.address.book.service.domain.api;
 
 import java.util.List;
 
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.db.service.entitymapper.BusinessMapperService;
+import de.alpharogroup.service.domain.DomainService;
 
 /**
  * The interface {@link ZipcodeService}.
  */
-public interface ZipcodeService extends BusinessMapperService<Integer, Zipcode> {
+public interface ZipcodeService extends DomainService<Integer, Zipcode> {
 
 	/**
 	 * Gets a List of {@link Zipcode} with the given parameters that can be null if

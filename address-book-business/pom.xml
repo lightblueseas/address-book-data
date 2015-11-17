@@ -17,6 +17,7 @@
 			<artifactId>business-api</artifactId>
 		</dependency>
 
+
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>address-book-entities</artifactId>
