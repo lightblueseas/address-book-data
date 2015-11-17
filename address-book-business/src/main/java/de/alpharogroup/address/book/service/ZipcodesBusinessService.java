@@ -17,15 +17,22 @@ import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 
+/**
+ * The class {@link ZipcodesBusinessService}.
+ */
 @Transactional
 @Service("zipcodesService")
 public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, Integer, ZipcodesDao> implements ZipcodesService {
-	
-	/**
-	 * 
-	 */
+
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Sets the specific {@link ZipcodesDao}.
+	 *
+	 * @param countriesDao the new {@link ZipcodesDao}.
+	 */
 	@Autowired
 	public void setZipcodesDao(ZipcodesDao zipcodesDao) {
 		setDao(zipcodesDao);
@@ -34,6 +41,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	/**
 	 * {@inheritDoc}.
 	 */
+	@Override
 	public void deleteAllZipcodes() {
 		final List<Zipcodes> zipcodes = this.findAll();
 		for (final Iterator<Zipcodes> iterator = zipcodes.iterator(); iterator
@@ -46,6 +54,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	/**
 	 * {@inheritDoc}.
 	 */
+	@Override
 	public boolean existsZipcode(final String zipcode) {
 		final List<Zipcodes> zipcodes = findAll(null, zipcode, null);
 		findAll(null, zipcode, null);
@@ -58,6 +67,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	/**
 	 * {@inheritDoc}.
 	 */
+	@Override
 	public List<Zipcodes> findZipcodes(final String zipcode) {
 		return findAll(null, zipcode, null);
 	}
@@ -65,6 +75,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	/**
 	 * {@inheritDoc}.
 	 */
+	@Override
 	public Zipcodes getZipcode(String zipcode, final String city) {
 		final Zipcodes zc;
 		final List<Zipcodes> zipcodes = findZipcodes(zipcode);
@@ -80,6 +91,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	/**
 	 * {@inheritDoc}.
 	 */
+	@Override
 	public List<Zipcodes> find(final Countries country) {
 		return findAll(country, null, null);		
 	}
@@ -87,6 +99,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	/**
 	 * {@inheritDoc}.
 	 */
+	@Override
 	public Zipcodes findCityFromZipcode(Countries country, String zipcode) {
 		List<Zipcodes> zipcodes = findAll(country, zipcode, null);
 		if(zipcodes != null && !zipcodes.isEmpty()){
@@ -99,6 +112,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	/**
 	 * {@inheritDoc}.
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Zipcodes> findAll(Countries country, String zipcode, String city) {
 		String c = country == null ? null : country.getName();

@@ -16,25 +16,30 @@ import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 
-
+/**
+ * The class {@link FederalstatesBusinessService}.
+ */
 @Transactional
 @Service("federalstatesService")
 public class FederalstatesBusinessService extends AbstractBusinessService<Federalstates, Integer, FederalstatesDao> implements FederalstatesService {
-	
-	/**
-	 * 
-	 */
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Sets the specific {@link FederalstatesDao}.
+	 *
+	 * @param countriesDao the new {@link FederalstatesDao}.
+	 */
 	@Autowired
 	public void setFederalstatesDao(FederalstatesDao federalstatesDao) {
 		setDao(federalstatesDao);
-	}
-	
+	}	
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Federalstates findFederalstateFromIso3166A2code(
 			final String iso3166A2code) {
 		final String hqlString = "select fs from Federalstates fs where fs.iso3166A2code=:iso3166A2code";
@@ -51,6 +56,7 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String findFederalstateNameFromIso3166A2code(
 			final String iso3166A2code) {
 		final String hqlString = "select fs.name from Federalstates fs where fs.iso3166A2code=:iso3166A2code";
@@ -67,6 +73,7 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<Federalstates> findFederalstatesFromCountry(
 			final Countries country) {
 		final TypedQuery<Federalstates> typedQuery = getDao()
@@ -80,6 +87,7 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<Federalstates> findFederalstatesFromCountry(final Countries country, String name) {
 		final TypedQuery<Federalstates> typedQuery = getDao()
 			.getEntityManager()
@@ -93,6 +101,7 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Federalstates findFederalstate(final Countries country, String name) {
 		return ListExtensions.getFirst(findFederalstatesFromCountry(country, name));
 	}
@@ -100,6 +109,7 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Federalstates getFederalstate(final String string) {
 		String seperatedString = "=>";
 		String[] splittedString = string.split(seperatedString);

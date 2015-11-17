@@ -26,229 +26,255 @@ import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
+import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
+import lombok.Getter;
+import lombok.Setter;
 
-
+/**
+ * The class {@link CountriesBusinessService}.
+ */
 @Transactional
 @Service("countriesService")
 public class CountriesBusinessService extends
 		AbstractBusinessService<Countries, Integer, CountriesDao> implements
 		CountriesService {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	/** The Federal states business service. */
-	@Autowired
+	/** The {@link FederalstatesService}. */
+	@Autowired @Getter @Setter
 	private FederalstatesService federalstatesService;
-	/** The Zipcodes business service. */
-	@Autowired
+	/** The {@link ZipcodesService}. */
+	@Autowired @Getter @Setter
 	private ZipcodesService zipcodesService;
-	/** The Addresses business service. */
-	@Autowired
-	private AddressesService addressesService;
+	/** The {@link AddressesService}. */
+	@Autowired @Getter @Setter
+	private AddressesService addressesService;	
+	/** The countries to federalstates map. */
+	private Map<Countries, List<Federalstates>> countriesToFederalstatesMap;	
+	/** The countries to federalstates as string map. */
+	private Map<String, List<String>> countriesToFederalstatesAsStringMap;	
+	/** The countries to zipcodes map. */
+	private Map<Countries, List<Zipcodes>> countriesToZipcodesMap;	
+	/** The german speaking countries to zipcodes map. */
+	private Map<Countries, List<Zipcodes>> germanCountriesToZipcodesMap;	
+	/** The german countries to zipcodes as string map. */
+	private Map<String, List<String>> germanCountriesToZipcodesAsStringMap;	
+	/** The countries to zipcodes as string map. */
+	private Map<String, List<String>> countriesToZipcodesAsStringMap;	
+	/** The countries to zipcodes and cities as string map. */
+	private Map<String, List<String>> countriesToZipcodesAndCitiesAsStringMap;	
+	/** The german countries to zipcodes and cities as string map. */
+	private Map<String, List<String>> germanCountriesToZipcodesAndCitiesAsStringMap;
 
-	public AddressesService getAddressesService() {
-		return addressesService;
-	}
-
-	public void setAddressesService(AddressesService addressesService) {
-		this.addressesService = addressesService;
-	}
-
-	public ZipcodesService getZipcodesService() {
-		return zipcodesService;
-	}
-
-	public void setZipcodesService(ZipcodesService zipcodesService) {
-		this.zipcodesService = zipcodesService;
-	}
-
-	public FederalstatesService getFederalstatesService() {
-		return federalstatesService;
-	}
-
-	public void setFederalstatesService(
-			FederalstatesService federalstatesService) {
-		this.federalstatesService = federalstatesService;
-	}
-
+	/**
+	 * Sets the specific {@link CountriesDao}.
+	 *
+	 * @param countriesDao the new {@link CountriesDao}.
+	 */
 	@Autowired
 	public void setCountriesDao(CountriesDao countriesDao) {
 		setDao(countriesDao);
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Map<Countries, List<Federalstates>> getCountriesToFederalstatesMap() {
-		Map<Countries, List<Federalstates>> countriesMap = new LinkedHashMap<Countries, List<Federalstates>>();
-		List<Countries> countries = findAll();
-		Collections.sort(countries, new Comparator<Countries>() {
-			@Override
-			public int compare(Countries o1, Countries o2) {
-				return o1.getName().compareTo(o2.getName());
+		if(this.countriesToFederalstatesMap == null) {
+			this.countriesToFederalstatesMap = new LinkedHashMap<Countries, List<Federalstates>>();
+			List<Countries> countries = findAll();
+			Collections.sort(countries, new Comparator<Countries>() {
+				@Override
+				public int compare(Countries o1, Countries o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+			});
+			for (Countries country : countries) {
+				List<Federalstates> federalstates = federalstatesService
+						.findFederalstatesFromCountry(country);
+				this.countriesToFederalstatesMap.put(country, federalstates);
 			}
-		});
-		for (Countries country : countries) {
-			List<Federalstates> federalstates = federalstatesService
-					.findFederalstatesFromCountry(country);
-			countriesMap.put(country, federalstates);
 		}
-		return countriesMap;
+		return this.countriesToFederalstatesMap;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Map<String, List<String>> getCountriesToFederalstatesAsStringMap() {
-		final Map<String, List<String>> map = new HashMap<String, List<String>>();
-		Map<Countries, List<Federalstates>> countriesToFederalstatesMap = getCountriesToFederalstatesMap();
+		if(this.countriesToFederalstatesAsStringMap == null) {
+			this.countriesToFederalstatesAsStringMap = new HashMap<String, List<String>>();
+			Map<Countries, List<Federalstates>> countriesToFederalstatesMap = getCountriesToFederalstatesMap();
 
-		for (Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap
-				.entrySet()) {
-			Countries country = entry.getKey();
-			List<Federalstates> federalstates = entry.getValue();
-			List<String> fd = new ArrayList<String>();
-			for (Federalstates federalstate : federalstates) {
-				fd.add(federalstate.getIso3166A2code());
-			}
-			map.put(country.getName(), fd);
+			for (Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap
+					.entrySet()) {
+				Countries country = entry.getKey();
+				List<Federalstates> federalstates = entry.getValue();
+				List<String> fd = new ArrayList<String>();
+				for (Federalstates federalstate : federalstates) {
+					fd.add(federalstate.getIso3166A2code());
+				}
+				this.countriesToFederalstatesAsStringMap.put(country.getName(), fd);
+			}			
 		}
-		return map;
+		return this.countriesToFederalstatesAsStringMap;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Map<Countries, List<Zipcodes>> getCountriesToZipcodesMap() {
-		Map<Countries, List<Zipcodes>> countriesToZipcodeMap = new LinkedHashMap<Countries, List<Zipcodes>>();
-		List<Countries> countries = findAll();
-		Collections.sort(countries, new Comparator<Countries>() {
-			@Override
-			public int compare(Countries o1, Countries o2) {
-				return o1.getName().compareTo(o2.getName());
+		if(this.countriesToZipcodesMap == null) {
+			this.countriesToZipcodesMap = new LinkedHashMap<Countries, List<Zipcodes>>();
+			List<Countries> countries = findAll();
+			Collections.sort(countries, new Comparator<Countries>() {
+				@Override
+				public int compare(Countries o1, Countries o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+			});
+			for (Countries country : countries) {
+				List<Zipcodes> zipcodes = zipcodesService.find(country);
+				this.countriesToZipcodesMap.put(country, zipcodes);
 			}
-		});
-		for (Countries country : countries) {
-			List<Zipcodes> zipcodes = zipcodesService.find(country);
-			countriesToZipcodeMap.put(country, zipcodes);
 		}
-		return countriesToZipcodeMap;
+		return this.countriesToZipcodesMap;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */	
+	@Override
 	public Map<Countries, List<Zipcodes>> getGermanCountriesToZipcodesMap() {
-		Map<Countries, List<Zipcodes>> countriesToZipcodeMap = new LinkedHashMap<Countries, List<Zipcodes>>();
-		List<Countries> countries = new ArrayList<Countries>();
-		countries.add(find("DE"));
-		countries.add(find("AT"));
-		countries.add(find("CH"));
-		Collections.sort(countries, new Comparator<Countries>() {
-			@Override
-			public int compare(Countries object, Countries compareWithObject) {
-				// Check if one of the objects are null
-				if ((object != null) && (compareWithObject == null)) {
-					return 1;// compareWithObject is null so its bigger
-				}  
-				if ((object == null) && (compareWithObject != null)) {
-					return -1; // object is null so its smaller
-				}  
-				if (object == compareWithObject) {
-					return 0;// it is the same Object
+		if(this.germanCountriesToZipcodesMap == null) {
+			this.germanCountriesToZipcodesMap = new LinkedHashMap<>();
+			List<Countries> countries = new ArrayList<Countries>();
+			countries.add(find("DE"));
+			countries.add(find("AT"));
+			countries.add(find("CH"));
+			Collections.sort(countries, new Comparator<Countries>() {
+				@Override
+				public int compare(Countries object, Countries compareWithObject) {
+					// Check if one of the objects are null
+					if ((object != null) && (compareWithObject == null)) {
+						return 1;// compareWithObject is null so its bigger
+					}  
+					if ((object == null) && (compareWithObject != null)) {
+						return -1; // object is null so its smaller
+					}  
+					if (object == compareWithObject) {
+						return 0;// it is the same Object
+					}
+					// Null check completed so we can compare the objects 
+					return object.getName().compareTo(compareWithObject.getName());
 				}
-				// Null check completed so we can compare the objects 
-				return object.getName().compareTo(compareWithObject.getName());
+			});
+			for (Countries country : countries) {
+				List<Zipcodes> zipcodes = zipcodesService.find(country);
+				this.germanCountriesToZipcodesMap.put(country, zipcodes);
 			}
-		});
-		for (Countries country : countries) {
-			List<Zipcodes> zipcodes = zipcodesService.find(country);
-			countriesToZipcodeMap.put(country, zipcodes);
-		}
-		return countriesToZipcodeMap;
+		}		
+		return this.germanCountriesToZipcodesMap;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Map<String, List<String>> getGermanCountriesToZipcodesAsStringMap() {
-		final Map<String, List<String>> map = new HashMap<String, List<String>>();
-		Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
-		for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap
-				.entrySet()) {
-			Countries country = entry.getKey();
-			List<Zipcodes> zipcodes = entry.getValue();
-			List<String> zc = new ArrayList<String>();
-			for (Zipcodes zipcode : zipcodes) {
-				zc.add(zipcode.getZipcode());
-			}
-			map.put(country.getName(), zc);
+		if(this.germanCountriesToZipcodesAsStringMap == null) {
+			this.germanCountriesToZipcodesAsStringMap = new HashMap<String, List<String>>();
+			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap
+					.entrySet()) {
+				Countries country = entry.getKey();
+				List<Zipcodes> zipcodes = entry.getValue();
+				List<String> zc = new ArrayList<String>();
+				for (Zipcodes zipcode : zipcodes) {
+					zc.add(zipcode.getZipcode());
+				}
+				this.germanCountriesToZipcodesAsStringMap.put(country.getName(), zc);
+			}			
 		}
-		return map;
+		return this.germanCountriesToZipcodesAsStringMap;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Map<String, List<String>> getCountriesToZipcodesAsStringMap() {
-		final Map<String, List<String>> map = new HashMap<String, List<String>>();
-		Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
-		for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap
-				.entrySet()) {
-			Countries country = entry.getKey();
-			List<Zipcodes> zipcodes = entry.getValue();
-			List<String> zc = new ArrayList<String>();
-			for (Zipcodes zipcode : zipcodes) {
-				zc.add(zipcode.getZipcode());
-			}
-			map.put(country.getName(), zc);
+		if(this.countriesToZipcodesAsStringMap == null) {
+			this.countriesToZipcodesAsStringMap = new HashMap<String, List<String>>();
+			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap
+					.entrySet()) {
+				Countries country = entry.getKey();
+				List<Zipcodes> zipcodes = entry.getValue();
+				List<String> zc = new ArrayList<String>();
+				for (Zipcodes zipcode : zipcodes) {
+					zc.add(zipcode.getZipcode());
+				}
+				this.countriesToZipcodesAsStringMap.put(country.getName(), zc);
+			}			
 		}
-		return map;
+		return this.countriesToZipcodesAsStringMap;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Map<String, List<String>> getCountriesToZipcodesAndCitiesAsStringMap() {
-		final Map<String, List<String>> map = new HashMap<String, List<String>>();
-		Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
-		for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap
-				.entrySet()) {
-			Countries country = entry.getKey();
-			List<Zipcodes> zipcodes = entry.getValue();
-			List<String> zc = new ArrayList<String>();
-			for (Zipcodes zipcode : zipcodes) {
-				zc.add(zipcode.getZipcode()+ " "+zipcode.getCity());
-				zc.add(zipcode.getCity()+ " "+zipcode.getZipcode());
+		if(this.countriesToZipcodesAndCitiesAsStringMap == null) {
+			this.countriesToZipcodesAndCitiesAsStringMap = new HashMap<String, List<String>>();
+			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap
+					.entrySet()) {
+				Countries country = entry.getKey();
+				List<Zipcodes> zipcodes = entry.getValue();
+				List<String> zc = new ArrayList<String>();
+				for (Zipcodes zipcode : zipcodes) {
+					zc.add(zipcode.getZipcode()+ " "+zipcode.getCity());
+					zc.add(zipcode.getCity()+ " "+zipcode.getZipcode());
+				}
+				this.countriesToZipcodesAndCitiesAsStringMap.put(country.getName(), zc);
 			}
-			map.put(country.getName(), zc);
 		}
-		return map;
+		return this.countriesToZipcodesAndCitiesAsStringMap;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Map<String, List<String>> getGermanCountriesToZipcodesAndCitiesAsStringMap() {
-		final Map<String, List<String>> map = new HashMap<String, List<String>>();
-		Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
-		for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap
-				.entrySet()) {
-			Countries country = entry.getKey();
-			List<Zipcodes> zipcodes = entry.getValue();
-			List<String> zc = new ArrayList<String>();
-			for (Zipcodes zipcode : zipcodes) {
-				zc.add(zipcode.getZipcode()+ " "+zipcode.getCity());
-				zc.add(zipcode.getCity()+ " "+zipcode.getZipcode());
-			}
-			map.put(country.getName(), zc);
+		if(this.germanCountriesToZipcodesAndCitiesAsStringMap == null) {
+			this.germanCountriesToZipcodesAndCitiesAsStringMap = new HashMap<String, List<String>>();
+			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap
+					.entrySet()) {
+				Countries country = entry.getKey();
+				List<Zipcodes> zipcodes = entry.getValue();
+				List<String> zc = new ArrayList<String>();
+				for (Zipcodes zipcode : zipcodes) {
+					zc.add(zipcode.getZipcode()+ " "+zipcode.getCity());
+					zc.add(zipcode.getCity()+ " "+zipcode.getZipcode());
+				}
+				this.germanCountriesToZipcodesAndCitiesAsStringMap.put(country.getName(), zc);
+			}			
 		}
-		return map;
+		return this.germanCountriesToZipcodesAndCitiesAsStringMap;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Countries> findAll(String iso3166A2name, String iso3166A3name,
 			String iso3166Number, String name) {
@@ -271,23 +297,26 @@ public class CountriesBusinessService extends
 		return countries;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Countries find(String iso3166A2name) {
-		List<Countries> countries = findAll(iso3166A2name, null, null, null);
-		if(countries != null && !countries.isEmpty()){
-			return countries.get(0);
-		}
-		return null;
+		return ListExtensions.getFirst(findAll(iso3166A2name, null, null, null));
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Countries findByName(String name) {
-		List<Countries> countries = findAll(null, null, null, name);
-		if(countries != null && !countries.isEmpty()){
-			return countries.get(0);
-		}
-		return null;
-	}
-	
+		return ListExtensions.getFirst(findAll(null, null, null, name));
+	}	
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String setLocationModel(LocationModel modelObject, String zc) {
 		String errorKey = null;
 		if(zc == null) {
@@ -298,7 +327,7 @@ public class CountriesBusinessService extends
 			if(zipcode != null){
 				List<Addresses> addresses = getAddressesService().find(zipcode);
 				Addresses address = null;
-				if(addresses != null && !addresses.isEmpty()){
+				if(addresses != null && !addresses.isEmpty()) {
 					address = addresses.get(0);
 					modelObject.setAddress(address);
 				} else {

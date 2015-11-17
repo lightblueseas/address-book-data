@@ -1,10 +1,21 @@
 package de.alpharogroup.address.book.service.util;
 
-import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.jgeohash.Adjacent;
 
+/**
+ * The class {@link HqlStringCreator}.
+ */
 public class HqlStringCreator
 {
+	
+	/**
+	 * Generates hql script for zipcodes.
+	 *
+	 * @param country the country
+	 * @param zipcode the zipcode
+	 * @param city the city
+	 * @return the string
+	 */
 	public static String forZipcodes(String country, String zipcode, String city)
 	{
 		StringBuilder sb = new StringBuilder();
@@ -44,6 +55,15 @@ public class HqlStringCreator
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Generates hql script for countries.
+	 *
+	 * @param iso3166A2name the iso3166 a2name
+	 * @param iso3166A3name the iso3166 a3name
+	 * @param iso3166Number the iso3166 number
+	 * @param name the name
+	 * @return the string
+	 */
 	public static String forCountries(String iso3166A2name, String iso3166A3name,
 		String iso3166Number, String name)
 	{
@@ -97,6 +117,14 @@ public class HqlStringCreator
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Generates hql script for addresses.
+	 *
+	 * @param geohash the geohash
+	 * @param latitude the latitude
+	 * @param longitude the longitude
+	 * @return the string
+	 */
 	public String forAddresses(
 	// String addressComment,
 	// Federalstates federalstate,
@@ -111,6 +139,11 @@ public class HqlStringCreator
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Gets the geohash sub query.
+	 *
+	 * @return the geohash sub query
+	 */
 	public static String getGeohashSubQuery()
 	{
 		final StringBuilder sb = new StringBuilder();
@@ -122,6 +155,11 @@ public class HqlStringCreator
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Gets the geohash query.
+	 *
+	 * @return the geohash query
+	 */
 	public static String getGeohashQuery()
 	{
 		final StringBuilder sb = new StringBuilder();
@@ -130,6 +168,11 @@ public class HqlStringCreator
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Gets the geohash first ring sub query.
+	 *
+	 * @return the geohash first ring sub query
+	 */
 	public static String getGeohashFirstRingSubQuery()
 	{
 		final StringBuilder sb = new StringBuilder();
@@ -141,6 +184,11 @@ public class HqlStringCreator
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Gets the geohash first ring query.
+	 *
+	 * @return the geohash first ring query
+	 */
 	public static String getGeohashFirstRingQuery()
 	{
 		final StringBuilder sb = new StringBuilder();
@@ -156,6 +204,11 @@ public class HqlStringCreator
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Gets the geohash first and second ring sub query.
+	 *
+	 * @return the geohash first and second ring sub query
+	 */
 	public static String getGeohashFirstAndSecondRingSubQuery()
 	{
 		final StringBuilder sb = new StringBuilder();
@@ -167,6 +220,11 @@ public class HqlStringCreator
 		return sb.toString().trim();
 	}
 
+	/**
+	 * Gets the geohash first and second ring query.
+	 *
+	 * @return the geohash first and second ring query
+	 */
 	public static String getGeohashFirstAndSecondRingQuery()
 	{
 		final StringBuilder sb = new StringBuilder();

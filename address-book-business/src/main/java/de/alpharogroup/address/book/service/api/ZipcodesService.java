@@ -7,7 +7,7 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.db.service.jpa.BusinessService;
 
 /**
- * The Interface {@link ZipcodesService}.
+ * The interface {@link ZipcodesService}.
  */
 public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 
@@ -17,7 +17,7 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 	void deleteAllZipcodes();
 
 	/**
-	 * Exists zipcode.
+	 * Checks if the given zipcode string exists.
 	 * 
 	 * @param zipcode
 	 *            the zipcode
@@ -26,31 +26,31 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 	boolean existsZipcode(final String zipcode);
 
 	/**
-	 * Find zipcodes.
+	 * Find {@link Zipcodes} objects from the given zipcode string.
 	 * 
 	 * @param zipcode
 	 *            the zipcode
-	 * @return the list
+	 * @return the list of {@link Zipcodes}
 	 */
 	List<Zipcodes> findZipcodes(final String zipcode);
 
 	/**
-	 * Gets the Zipcodes object from the given zipcode string and city. If it
-	 * does not exist it will be create a new Zipcodes object.
+	 * Gets the {@link Zipcodes} object from the given zipcode string and city. If it
+	 * does not exist it will be create a new {@link Zipcodes} object.
 	 * 
 	 * @param zipcode
 	 *            the zipcode
 	 * @param city
 	 *            the city
-	 * @return the zipcode
+	 * @return the {@link Zipcodes}
 	 */
 	Zipcodes getZipcode(final String zipcode, final String city);
 	
 	/**
-	 * Finds all Zipcodes from the given Countries object.
+	 * Finds all {@link Zipcodes} from the given Countries object.
 	 *
 	 * @param country the country
-	 * @return the list
+	 * @return the list of {@link Zipcodes}
 	 */
 	List<Zipcodes> find(final Countries country);
 	
@@ -59,7 +59,7 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 	 *
 	 * @param country the country
 	 * @param zipcode the zipcode
-	 * @return the list
+	 * @return the {@link Zipcodes}
 	 */
 	Zipcodes findCityFromZipcode(Countries country, String zipcode);
 	
@@ -70,7 +70,7 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 	 * @param country the country
 	 * @param zipcode the zipcode
 	 * @param city the city
-	 * @return the list
+	 * @return the list of {@link Zipcodes}
 	 */
 	List<Zipcodes> findAll(Countries country, String zipcode, String city);
 }

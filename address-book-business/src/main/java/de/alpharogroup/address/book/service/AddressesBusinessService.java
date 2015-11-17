@@ -22,7 +22,12 @@ import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 import de.alpharogroup.jgeohash.GeoHashUtils;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ * The class {@link AddressesBusinessService}.
+ */
 @Transactional
 @Service("addressesService")
 public class AddressesBusinessService
@@ -30,11 +35,14 @@ public class AddressesBusinessService
 		AbstractBusinessService<Addresses, Integer, AddressesDao> implements AddressesService
 {
 
-	/**
-	 * The serialVersionUID.
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Sets the specific {@link AddressesDao}.
+	 *
+	 * @param addressesDao the new {@link AddressesDao}.
+	 */
 	@Autowired
 	public void setAddressesDao(AddressesDao addressesDao)
 	{
@@ -42,17 +50,18 @@ public class AddressesBusinessService
 	}
 
 
-	/** The zipcode business service. */
-	@Autowired
+	/** The {@link ZipcodesService}. */
+	@Autowired @Getter @Setter
 	private ZipcodesService zipcodesService;
 
-	/** The federalstates business service. */
-	@Autowired
+	/** The {@link FederalstatesService}. */
+	@Autowired @Getter @Setter
 	private FederalstatesService federalstatesService;
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Addresses createAddress(final String street, final String streetnumber,
 		final String addressComment, final String zipcode, final String city,
 		final String federalstate)
@@ -77,6 +86,7 @@ public class AddressesBusinessService
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Addresses createAddress(final String street, final String streetnumber,
 		final String addressComment, final String zipcode, final String city,
 		final String federalstate, final String geohash, final java.math.BigDecimal latitude,
@@ -100,6 +110,10 @@ public class AddressesBusinessService
 	}
 
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(String geohash, String latitude, String longitude)
 	{
@@ -120,6 +134,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Zipcodes> findAllAddressesWithCountry(Countries country)
 	{
@@ -134,6 +152,10 @@ public class AddressesBusinessService
 		return zipcodes;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findAll(Countries country)
 	{
@@ -148,6 +170,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findGeohashIsNull()
 	{
@@ -162,6 +188,10 @@ public class AddressesBusinessService
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(String geohash)
 	{
@@ -176,6 +206,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findNeighbourhood(String geohash)
 	{
@@ -186,6 +220,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findFirstRingNeighbourhood(String geohash)
 	{
@@ -204,6 +242,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findFirstAndSecondRingNeighbourhood(String geohash)
 	{
@@ -222,6 +264,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(String latitude, String longitude)
 	{
@@ -239,6 +285,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Addresses contains(String latitude, String longitude)
 	{
 		List<Addresses> addresses = find(latitude, longitude);
@@ -249,6 +299,10 @@ public class AddressesBusinessService
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Addresses contains(Zipcodes zipcode)
 	{
 		List<Addresses> addresses = find(zipcode);
@@ -259,6 +313,10 @@ public class AddressesBusinessService
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(Zipcodes zipcode)
 	{
@@ -273,6 +331,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(Countries country, String zipcode)
 	{
@@ -290,6 +352,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(Countries country, String zipcode, String city)
 	{
@@ -310,11 +376,19 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Addresses> findInvalidAddresses(Countries country, String geohash)
 	{
 		return findInvalidAddresses(country, geohash, true);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findInvalidAddresses(Countries country, String geohash, boolean not)
 	{
@@ -337,6 +411,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findAddressesWithSameCityname(Countries country, String city)
 	{
@@ -354,6 +432,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findAddressesWithSameZipcode(Countries country, String zipcode)
 	{
@@ -371,6 +453,10 @@ public class AddressesBusinessService
 		return addresses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Addresses findFirst(Countries country, String zipcode)
 	{
 		List<Addresses> addresses = find(country, zipcode);
@@ -379,26 +465,6 @@ public class AddressesBusinessService
 			return addresses.get(0);
 		}
 		return null;
-	}
-
-	public ZipcodesService getZipcodesService()
-	{
-		return zipcodesService;
-	}
-
-	public void setZipcodesService(ZipcodesService zipcodesService)
-	{
-		this.zipcodesService = zipcodesService;
-	}
-
-	public FederalstatesService getFederalstatesService()
-	{
-		return federalstatesService;
-	}
-
-	public void setFederalstatesService(FederalstatesService federalstatesService)
-	{
-		this.federalstatesService = federalstatesService;
 	}
 
 }
