@@ -317,7 +317,7 @@ public class CountriesBusinessService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String setLocationModel(LocationModel modelObject, String zc) {
+	public String setLocationModel(LocationModel<Addresses> modelObject, String zc) {
 		String errorKey = null;
 		if(zc == null) {
 			errorKey = "global.location.error.label";						

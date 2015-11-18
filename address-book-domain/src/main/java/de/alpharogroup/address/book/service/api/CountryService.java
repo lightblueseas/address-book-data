@@ -1,9 +1,10 @@
-package de.alpharogroup.address.book.service.domain.api;
+package de.alpharogroup.address.book.service.api;
 
 import java.util.List;
 import java.util.Map;
 
 import de.alpharogroup.address.book.application.model.LocationModel;
+import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
@@ -109,5 +110,5 @@ public interface CountryService extends DomainService<Integer, Country>
 	 * @param zc the zipcode as string
 	 * @return null if everything is ok otherwise an error property string
 	 */
-	String setLocationModel(LocationModel modelObject, String zc);
+	String setLocationModel(LocationModel<Address> modelObject, String zc);
 }

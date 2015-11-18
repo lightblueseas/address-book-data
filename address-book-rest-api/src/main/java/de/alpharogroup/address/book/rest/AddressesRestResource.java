@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
-import de.alpharogroup.address.book.service.domain.api.AddressService;
+import de.alpharogroup.address.book.service.api.AddressService;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 public class AddressesRestResource extends AbstractRestfulResource<Integer, Address, AddressService>

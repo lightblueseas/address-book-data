@@ -24,11 +24,6 @@
 			<artifactId>address-book-business</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>de.alpharogroup</groupId>
-			<artifactId>jgeohash</artifactId>
-		</dependency>
-
 	</dependencies>
 	
 </project>

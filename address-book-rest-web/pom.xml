@@ -178,7 +178,7 @@
 				<configuration>
 					<wtpmanifest>true</wtpmanifest>
 					<wtpapplicationxml>true</wtpapplicationxml>
-					<wtpversion>2.0</wtpversion>
+					<wtpversion>${wtp.version}</wtpversion>
 				</configuration>
 			</plugin>
 			<plugin>

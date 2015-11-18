@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.alpharogroup.address.book.application.model.LocationModel;
+import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.entities.Zipcodes;
@@ -111,5 +112,5 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	 * @param zc the zipcode as string
 	 * @return null if everything is ok otherwise an error property string
 	 */
-	String setLocationModel(LocationModel modelObject, String zc);
+	String setLocationModel(LocationModel<Addresses> modelObject, String zc);
 }

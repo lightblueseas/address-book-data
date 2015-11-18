@@ -2,13 +2,10 @@ package de.alpharogroup.address.book.application.model;
 
 import java.io.Serializable;
 
-import de.alpharogroup.address.book.entities.Addresses;
-
 /**
  * The interface {@link LocationModel}.
  */
-// TODO generify the entity object to make it posible domain object...
-public interface LocationModel extends Serializable {
+public interface LocationModel<T> extends Serializable {
 	
 	/**
 	 * Gets the location.
@@ -43,13 +40,13 @@ public interface LocationModel extends Serializable {
 	 *
 	 * @return the address
 	 */
-	Addresses getAddress();
+	T getAddress();
 	
 	/**
 	 * Sets the address.
 	 *
 	 * @param address the new address
 	 */
-	void setAddress(Addresses address);
+	void setAddress(T address);
 
 }

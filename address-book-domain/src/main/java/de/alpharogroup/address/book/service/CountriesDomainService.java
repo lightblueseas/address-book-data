@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.domain;
+package de.alpharogroup.address.book.service;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,15 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.address.book.application.model.LocationModel;
 import de.alpharogroup.address.book.daos.CountriesDao;
+import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.CountriesMapper;
 import de.alpharogroup.address.book.service.api.CountriesService;
-import de.alpharogroup.address.book.service.domain.api.CountryService;
+import de.alpharogroup.address.book.service.api.CountryService;
+import de.alpharogroup.lang.ObjectExtensions;
 import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
@@ -171,8 +174,12 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public String setLocationModel(LocationModel modelObject, String zc) {
-		return countriesService.setLocationModel(modelObject, zc);
+	public String setLocationModel(LocationModel<Address> modelObject, String zc) {
+		LocationModel<Addresses> locationModel = getMapper().map(modelObject, LocationModel.class);
+		String result = countriesService.setLocationModel(locationModel, zc);
+		ObjectExtensions.copyQuietly(modelObject, locationModel);
+		return result;
 	}
 }

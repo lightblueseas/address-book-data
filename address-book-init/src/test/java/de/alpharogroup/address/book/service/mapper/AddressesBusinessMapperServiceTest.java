@@ -7,7 +7,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 import de.alpharogroup.address.book.domain.Address;
-import de.alpharogroup.address.book.service.domain.api.AddressService;
+import de.alpharogroup.address.book.service.api.AddressService;
 
 @ContextConfiguration(locations = "classpath:test-em-applicationContext.xml")
 public class AddressesBusinessMapperServiceTest extends AbstractTestNGSpringContextTests

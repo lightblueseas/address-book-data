@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.domain;
+package de.alpharogroup.address.book.service;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.ZipcodesMapper;
+import de.alpharogroup.address.book.service.api.ZipcodeService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
-import de.alpharogroup.address.book.service.domain.api.ZipcodeService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
 import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;

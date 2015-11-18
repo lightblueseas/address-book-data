@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.service.domain;
+package de.alpharogroup.address.book.service;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.mapper.FederalstatesMapper;
+import de.alpharogroup.address.book.service.api.FederalstateService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
-import de.alpharogroup.address.book.service.domain.api.FederalstateService;
 import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
