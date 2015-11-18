@@ -16,9 +16,19 @@ import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletContextHandlerConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletHolderConfiguration;
 import de.alpharogroup.jetty9.runner.factories.ServletContextHandlerFactory;
+import de.alpharogroup.log.LoggerExtensions;
 
+/**
+ * The Class {@link ApplicationJettyRunner} holds the main method that starts a jetty server with the rest services for the address-book-data.
+ */
 public class ApplicationJettyRunner {
 
+	/**
+	 * The main method starts a jetty server with the rest services for the address-book-data.
+	 *
+	 * @param args the arguments
+	 * @throws Exception the exception
+	 */
     public static void main(String[] args) throws Exception {
         int sessionTimeout = 1800;// set timeout to 30min(60sec * 30min=1800sec)...
         String projectname = "address-book-rest-web";
@@ -36,9 +46,9 @@ public class ApplicationJettyRunner {
                 Logger.getRootLogger().error("logfile could not deleted.", e);
             }
         }
-//		String absolutePathFromLogfile = logfile.getAbsolutePath();
-        // Add a file appender to the logger programatically
-//		Logger.getRootLogger().addFileAppender(LoggerExtensions.newFileAppender(absolutePathFromLogfile));
+		// Add a file appender to the logger programatically
+		LoggerExtensions.addFileAppender(Logger.getRootLogger(), 
+				LoggerExtensions.newFileAppender(logfile.getAbsolutePath()));
 
         ServletContextHandler servletContextHandler = ServletContextHandlerFactory.getNewServletContextHandler(
                 ServletContextHandlerConfiguration.builder()

@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/beans 
-		http://www.springframework.org/schema/beans/spring-beans.xsd 
-		http://www.springframework.org/schema/context 
-		http://www.springframework.org/schema/context/spring-context.xsd 
-		http://www.springframework.org/schema/tx 
-		http://www.springframework.org/schema/tx/spring-tx.xsd
-        http://www.springframework.org/schema/jdbc
-        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-		http://cxf.apache.org/jaxrs 
-		http://cxf.apache.org/schemas/jaxrs.xsd
-		http://www.springframework.org/schema/aop  
-		http://www.springframework.org/schema/aop/spring-aop.xsd">
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context-4.1.xsd 
+                           http://www.springframework.org/schema/tx 
+                           http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+                           http://www.springframework.org/schema/jdbc
+                           http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd">
 	<!-- Enable annotation configuration -->
 	<context:annotation-config />
 	
@@ -38,12 +31,23 @@
 				<value>classpath:jdbc-h2.properties</value>
 			</list>
 		</property>
-	</bean>
+	</bean>	
+	
+	<jdbc:embedded-database id="dataSource" type="H2">
+		<jdbc:script location="classpath:dll/inserts/initializeSchema.sql" />
+	</jdbc:embedded-database>
+	
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:dll/inserts/insertCountries.sql" />
+		<jdbc:script location="classpath:dll/inserts/insertAllFederalStates.sql" />
+		<jdbc:script location="classpath:dll/inserts/insertAllKnownZipcodes.sql" />
+		<jdbc:script location="classpath:dll/inserts/insertAllCountriesZipcodesToAddresses.sql" />
+	</jdbc:initialize-database>
 
-	<!-- PostgreSQL tomcat.dbcp DataSource configuration -->
+	<!-- H2 tomcat.dbcp DataSource configuration -->
 	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
 		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="url" value="${jdbc.base.url}${jdbc.db.name}" />
+		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.user}" />
 		<property name="password" value="${jdbc.password}" />
 		<property name="initialSize" value="10" /><!-- default:10 -->
@@ -65,10 +69,22 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-	<bean id="jpaVendorAdapter"	class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="generateDdl" value="true" />
 		<property name="showSql" value="true" />
-		<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+		<property name="database" value="H2" />
+		<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+	</bean>
+
+	<bean id="persistenceUnitManager"
+		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+		<property name="persistenceXmlLocations">
+			<list>
+				<value>classpath*:META-INF/persistence-h2.xml</value>
+			</list>
+		</property>
+		<property name="defaultDataSource" ref="dataSource" />
 	</bean>
 
 	<bean id="entityManagerFactory"
