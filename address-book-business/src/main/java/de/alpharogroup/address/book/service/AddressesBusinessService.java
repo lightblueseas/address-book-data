@@ -21,6 +21,7 @@ import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
+import de.alpharogroup.jgeohash.Adjacent;
 import de.alpharogroup.jgeohash.GeoHashUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -213,7 +214,8 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findNeighbourhood(String geohash)
 	{
-		String hqlString = HqlStringCreator.getGeohashQuery();
+		String hqlString = "select address from Addresses address " + "where address.geohash like :"
+				+ Adjacent.CENTER;
 		final Query query = getQuery(hqlString);
 		query.setParameter("center", geohash + "%");
 		List<Addresses> addresses = query.getResultList();

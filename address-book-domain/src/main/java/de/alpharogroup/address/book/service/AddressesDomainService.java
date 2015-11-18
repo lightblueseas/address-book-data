@@ -89,8 +89,9 @@ public class AddressesDomainService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findNeighbourhood(String geohash) {		
-		return getMapper().toDomainObjects(addressesService.findNeighbourhood(geohash));
+	public List<Address> findNeighbourhood(String geohash) {
+		List<Addresses> addresses = addressesService.findNeighbourhood(geohash);
+		return getMapper().toDomainObjects(addresses);
 	}
 
 	/**

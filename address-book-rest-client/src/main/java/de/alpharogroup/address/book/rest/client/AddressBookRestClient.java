@@ -21,6 +21,15 @@ import lombok.Getter;
  */
 public class AddressBookRestClient
 {
+
+	/** The Constant DEFAULT_HTTP_PORT. */
+	public static final int DEFAULT_HTTP_PORT = 8080;
+
+	/** The Constant BASE_URL_PREFIX. */
+	public static final String BASE_URL_PREFIX = "http://localhost";
+
+	/** The Constant DEFAULT_BASE_URL. */
+	public static final String DEFAULT_BASE_URL = BASE_URL_PREFIX + ":" + DEFAULT_HTTP_PORT;
 	
 	/**
 	 * The {@link AddressesResource}.
@@ -46,6 +55,12 @@ public class AddressBookRestClient
 	@Getter
 	private final ZipcodesResource zipcodesResource;
 
+	/**
+	 * Instantiates a new {@link AddressBookRestClient} with the default base url.
+	 */
+	public AddressBookRestClient() {
+		this(DEFAULT_BASE_URL);
+	}
 	/**
 	 * Instantiates a new {@link AddressBookRestClient}.
 	 *
