@@ -70,8 +70,17 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 		if(this.countryToFederalstateMap == null) {
 			this.countryToFederalstateMap = new LinkedHashMap<>();
 			final Map<Countries, List<Federalstates>> countriesToFederalstatesMap = countriesService.getCountriesToFederalstatesMap();
+			final CountriesMapper mapper = getMapper();
 			for(Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap.entrySet()) {
-				this.countryToFederalstateMap.put(getMapper().toDomainObject(entry.getKey()), getMapper().map(entry.getValue(), Federalstate.class));
+				Countries countries = entry.getKey();
+				List<Federalstates> fss = entry.getValue();
+				if(countries !=null) {
+					Country country = mapper.toDomainObject(countries);
+					List<Federalstate> federalstates = mapper.map(fss, Federalstate.class);
+					this.countryToFederalstateMap.put(country, federalstates);
+				} else {
+					System.err.println(fss);
+				}				
 			}			
 		}
 		return this.countryToFederalstateMap;

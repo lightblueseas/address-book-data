@@ -3,6 +3,7 @@ package de.alpharogroup.address.book.rest;
 import java.util.List;
 
 import de.alpharogroup.address.book.domain.Address;
+import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
 import de.alpharogroup.address.book.service.api.AddressService;
@@ -74,4 +75,66 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	public Address contains(Zipcode zipcode) {
 		return getDomainService().contains(zipcode);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Address> find(Zipcode zipcode) {
+		return getDomainService().find(zipcode);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Zipcode> findAllAddressesWithCountry(Country country) {
+		List<Zipcode> zipcodes = getDomainService().findAllAddressesWithCountry(country);
+		return zipcodes;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Address> findAll(Country country) {
+		List<Address> addresses = getDomainService().findAll(country);
+		return addresses;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Address> findGeohashIsNull() {
+		List<Address> addresses = getDomainService().findGeohashIsNull();
+		return addresses;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Address> find(Country country, String zipcode) {
+		List<Address> addresses = getDomainService().find(country, zipcode);
+		return addresses;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Address> find(Country country, String zipcode, String city) {
+		List<Address> addresses = getDomainService().find(country, zipcode, city);
+		return addresses;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Address findFirst(Country country, String zipcode) {
+		return getDomainService().findFirst(country, zipcode);
+	}
+	
 }

@@ -134,7 +134,7 @@ public interface AddressesService extends BusinessService<Addresses, Integer> {
 	Addresses contains(String latitude, String longitude);
 
 	/**
-	 * Checks if the given {@link Zipcodes} is contained in the database.
+	 * Checks if the given {@link Zipcodes} is contained in the database and return the first occurence.
 	 *
 	 * @param zipcode
 	 *            the zipcode

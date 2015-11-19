@@ -178,7 +178,7 @@ public class HqlStringCreator
 		final StringBuilder sb = new StringBuilder();
 		sb.append(
 		// Subselect start...
-		"(" + getGeohashFirstRingQuery() + ")"
+		"(" + getGeohashFirstRingQuery(false) + ")"
 		// Subselect end...
 		);
 		return sb.toString().trim();
@@ -187,12 +187,19 @@ public class HqlStringCreator
 	/**
 	 * Gets the geohash first ring query.
 	 *
+	 * @param asAddress the as address flag if the result shell be objects or geohash values.
 	 * @return the geohash first ring query
 	 */
-	public static String getGeohashFirstRingQuery()
+	public static String getGeohashFirstRingQuery(boolean asAddress)
 	{
+		String value;
+		if(asAddress) {
+			value = "address";
+		} else {
+			value = "address.geohash";			
+		}
 		final StringBuilder sb = new StringBuilder();
-		sb.append("select address.geohash from Addresses address "
+		sb.append("select "	+ value + " from Addresses address "
 		// First ring...
 			+ "where address.geohash like :" + Adjacent.CENTER + " " + "or address.geohash like :"
 			+ Adjacent.TOP + " " + "or address.geohash like :" + Adjacent.TOP_RIGHT + " "
@@ -214,7 +221,7 @@ public class HqlStringCreator
 		final StringBuilder sb = new StringBuilder();
 		sb.append(
 		// Subselect start...
-		"(" + getGeohashFirstAndSecondRingQuery() + ")"
+		"(" + getGeohashFirstAndSecondRingQuery(false) + ")"
 		// Subselect end...
 		);
 		return sb.toString().trim();
@@ -223,12 +230,19 @@ public class HqlStringCreator
 	/**
 	 * Gets the geohash first and second ring query.
 	 *
+	 * @param asAddress the as address flag if the result shell be objects or geohash values.
 	 * @return the geohash first and second ring query
 	 */
-	public static String getGeohashFirstAndSecondRingQuery()
+	public static String getGeohashFirstAndSecondRingQuery(boolean asAddress)
 	{
+		String value;
+		if(asAddress) {
+			value = "address";
+		} else {
+			value = "address.geohash";			
+		}
 		final StringBuilder sb = new StringBuilder();
-		sb.append("select address.geohash from Addresses address "
+		sb.append("select "	+ value	+ " from Addresses address "
 		// First ring...
 			+ "where address.geohash like :" + Adjacent.CENTER + " " + "or address.geohash like :"
 			+ Adjacent.TOP + " " + "or address.geohash like :" + Adjacent.TOP_RIGHT + " "

@@ -234,7 +234,7 @@ public class AddressesBusinessService
 		{
 			adjacentAreas = GeoHashUtils.getAllAdjacentAreasMap(geohash);
 		}
-		String hqlString = HqlStringCreator.getGeohashFirstRingQuery();
+		String hqlString = HqlStringCreator.getGeohashFirstRingQuery(true);
 		final Query query = getQuery(hqlString);
 		for (Entry<String, String> entry : adjacentAreas.entrySet())
 		{
@@ -256,7 +256,7 @@ public class AddressesBusinessService
 		{
 			adjacentAreas = GeoHashUtils.getTwentyFiveAreasMap(geohash);
 		}
-		String hqlString = HqlStringCreator.getGeohashFirstAndSecondRingQuery();
+		String hqlString = HqlStringCreator.getGeohashFirstAndSecondRingQuery(true);
 		final Query query = getQuery(hqlString);
 		for (Entry<String, String> entry : adjacentAreas.entrySet())
 		{

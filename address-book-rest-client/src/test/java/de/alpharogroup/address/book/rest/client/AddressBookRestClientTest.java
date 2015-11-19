@@ -16,25 +16,57 @@
 package de.alpharogroup.address.book.rest.client;
 
 import java.util.List;
+import java.util.Map;
 
 import org.testng.annotations.Test;
 
 import de.alpharogroup.address.book.domain.Address;
+import de.alpharogroup.address.book.domain.Country;
+import de.alpharogroup.address.book.domain.Federalstate;
+import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.collections.ListExtensions;
+
+import static org.testng.Assert.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 /**
  * The class {@link AddressBookRestClientTest}.
  */
 public class AddressBookRestClientTest {
-    
+	AddressBookRestClient restClient;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+	}
+
+	@BeforeMethod
+	public void setUpMethod() throws Exception {
+		if (restClient == null) {
+			restClient = new AddressBookRestClient();
+		}
+	}
+
+	@AfterMethod
+	public void tearDownMethod() throws Exception {
+	}
+
 	/**
-	 * Test the {@link AddressesResource}. 
+	 * Test the {@link AddressesResource}.
 	 * 
-	 * Note: you have to start a rest server
-	 * to test this or you have to mock it.
+	 * Note: you have to start a rest server to test this or you have to mock
+	 * it.
 	 */
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testAddressesRestResource() {
-		AddressBookRestClient restClient = new AddressBookRestClient();
+		
 		// http://localhost:8080/address/geohash/u336
 		List<Address> addresses = restClient.getAddressesResource().find("u336");
 		System.out.println(addresses.size());
@@ -50,5 +82,64 @@ public class AddressBookRestClientTest {
 		// http://localhost:8080/address/find/49.647934/8.110127
 		addresses = restClient.getAddressesResource().find("49.647934", "8.110127");
 		System.out.println(addresses.size());
+		// http://localhost:8080/address/contains/49.647934/8.110127
+		Address address = restClient.getAddressesResource().contains("49.647934", "8.110127");
+		System.out.println(address);
+		Zipcode zc = getZipcode();
+		Country germany = getGermanyAsCountry();
+		// http://localhost:8080/address/contains/zipcode
+		address = restClient.getAddressesResource().contains(zc);
+		System.out.println(address);
+		// http://localhost:8080/address/find/zipcodes
+		addresses = restClient.getAddressesResource().find(zc);
+		System.out.println(addresses.size());
+		System.out.println(ListExtensions.getFirst(addresses));
+		// http://localhost:8080/address/find/zipcodes/by/country
+		List<Zipcode> zipcodes = restClient.getAddressesResource().findAllAddressesWithCountry(germany);
+		System.out.println(zipcodes.size());
+		// http://localhost:8080/address/find/addresses/by/country
+		addresses = restClient.getAddressesResource().findAll(germany);
+		System.out.println(addresses.size());
+		// http://localhost:8080/address/find/addresses/if/geohash/null
+		addresses = restClient.getAddressesResource().findGeohashIsNull();
+		System.out.println(addresses.size());
+		// http://localhost:8080/address/find/addresses/by/country/and/zipcode
+		addresses = restClient.getAddressesResource().find(germany, "71638");
+		System.out.println(addresses.size());
+		// http://localhost:8080/address/find/addresses/by/country/zipcode/and/city
+		addresses = restClient.getAddressesResource().find(germany, "71638", "Ludwigsburg");
+		System.out.println(addresses.size());
+		// http://localhost:8080/address/find/first/by/country/and/zipcode
+		address = restClient.getAddressesResource().findFirst(germany, "71638");
+		System.out.println(address);
+
+	}
+
+	/**
+	 * Test the {@link CountriesResource}.
+	 * 
+	 * Note: you have to start a rest server to test this or you have to mock
+	 * it.
+	 */
+	@Test(enabled = true)
+	public void testCountriesRestResource() {
+		AddressBookRestClient restClient = new AddressBookRestClient();
+		Map<Country, List<Federalstate>> map = restClient.getCountriesResource().getCountriesToFederalstatesMap();
+	}
+
+	private Zipcode getZipcode() {
+		Country germany = getGermanyAsCountry();
+		// 4 Kenzingen 79341 81
+		Zipcode zc = Zipcode.builder().city("Kenzingen").country(germany).zipcode("79341").build();
+		zc.setId(4);
+		return zc;
+	}
+
+	private Country getGermanyAsCountry() {
+		// 81 DE DEU 276 de.deu
+		Country country = Country.builder().iso3166A2name("DE").iso3166A3name("DEU").iso3166Number("276").name("de.deu")
+				.build();
+		country.setId(81);
+		return country;
 	}
 }

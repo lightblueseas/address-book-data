@@ -8,7 +8,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import de.alpharogroup.address.book.domain.Address;
@@ -101,136 +100,97 @@ public interface AddressesResource extends RestfulResource<Integer, Address>
 	Address contains(@PathParam("latitude")String latitude, @PathParam("longitude")String longitude);
 
 	/**
-	 * Checks if the given {@link Zipcode} is contained in the database.
+	 * Checks if the given {@link Zipcode} is contained in the database and return the first occurence.
 	 *
 	 * @param zipcode
 	 *            the zipcode
 	 * @return the {@link Address}
 	 */
-	@GET
+	@POST
 	@Path("/contains/zipcode")
-	Address contains(@QueryParam("zipcode")Zipcode zipcode);
-//
-//	/**
-//	 * Finds a list of {@link Address} from the given {@link Zipcode} object.
-//	 *
-//	 * @param zipcode
-//	 *            the zipcode
-//	 * @return the list of {@link Address}
-//	 */
-//	@POST
-//	@Path("/contains/zipcode")
-//	List<Address> find(Zipcode zipcode);
-//
-//	/**
-//	 * Find all {@link Zipcode} with the given country.
-//	 *
-//	 * @param country
-//	 *            the county
-//	 * @return the list of {@link Zipcode}
-//	 */
-//	@POST
-//	@Path("/find/zipcodes/by/country")
-//	List<Zipcode> findAllAddressesWithCountry(Country country);
-//
-//	/**
-//	 * Find all {@link Address} with the given country.
-//	 *
-//	 * @param country
-//	 *            the country
-//	 * @return the list
-//	 */
-//	@POST
-//	@Path("/find/addresses/by/country")
-//	List<Address> findAll(Country country);
-//
-//	/**
-//	 * Find all addresses that have a geohash value that is null.
-//	 *
-//	 * @return the list of {@link Address}
-//	 */
-//	@POST
-//	@Path("/find/addresses/if/geohash/null")
-//	List<Address> findGeohashIsNull();
-//
-//	/**
-//	 * Finds a list of {@link Address} from the given arguments.
-//	 *
-//	 * @param country
-//	 *            the country
-//	 * @param zipcode
-//	 *            the zipcode
-//	 * @return the list of {@link Address}
-//	 */
-//	List<Address> find(Country country, String zipcode);
-//
-//	/**
-//	 * Finds a list of {@link Address} from the given arguments.
-//	 *
-//	 * @param country
-//	 *            the country
-//	 * @param zipcode
-//	 *            the zipcode
-//	 * @param city
-//	 *            the city
-//	 * @return the list of {@link Address}
-//	 */
-//	List<Address> find(Country country, String zipcode, String city);
-//
-//	/**
-//	 * Finds the first {@link Address} from the given arguments.
-//	 *
-//	 * @param country
-//	 *            the country
-//	 * @param zipcode
-//	 *            the zipcode
-//	 * @return the {@link Address}
-//	 */
-//	Address findFirst(Country country, String zipcode);
-//
-//	/**
-//	 * Find invalid {@link Address} objects from the given arguments.
-//	 *
-//	 * @param country
-//	 *            the country
-//	 * @param geohash
-//	 *            the geohash
-//	 * @return the list
-//	 */
-//	List<Address> findInvalidAddresses(Country country, String geohash);
-//
-//	/**
-//	 * Find invalid {@link Address} objects from the given arguments.
-//	 *
-//	 * @param country
-//	 *            the country
-//	 * @param geohash
-//	 *            the geohash
-//	 * @param not
-//	 *            the flag that indicates a negation from the geohash value
-//	 * @return the list of {@link Address}
-//	 */
-//	List<Address> findInvalidAddresses(Country country, String geohash, boolean not);
-//
-//	/**
-//	 * Finds a list of {@link Address} that have the same cityname.
-//	 *
-//	 * @param country
-//	 *            the country
-//	 * @param city
-//	 *            the city
-//	 * @return the list of {@link Address}
-//	 */
-//	List<Address> findAddressesWithSameCityname(Country country, String city);
-//
-//	/**
-//	 * Finds a list of {@link Address} that have the same zipcode.
-//	 *
-//	 * @param country
-//	 *            the country
-//	 * @param zipcode
-//	 *            the zipcode
-//	 * @return the list of {@link Address}
-//	 */
-//	List<Address> findAddressesWithSameZipcode(Country country, String zipcode);
+	Address contains(Zipcode zipcode);
+
+	/**
+	 * Finds a list of {@link Address} from the given {@link Zipcode} object.
+	 *
+	 * @param zipcode
+	 *            the zipcode
+	 * @return the list of {@link Address}
+	 */
+	@POST
+	@Path("/find/zipcodes")
+	List<Address> find(Zipcode zipcode);
+
+	/**
+	 * Find all {@link Zipcode} with the given country.
+	 *
+	 * @param country
+	 *            the county
+	 * @return the list of {@link Zipcode}
+	 */
+	@POST
+	@Path("/find/zipcodes/by/country")
+	List<Zipcode> findAllAddressesWithCountry(Country country);
+
+	/**
+	 * Find all {@link Address} with the given country.
+	 *
+	 * @param country
+	 *            the country
+	 * @return the list
+	 */
+	@POST
+	@Path("/find/addresses/by/country")
+	List<Address> findAll(Country country);
+
+	/**
+	 * Find all addresses that have a geohash value that is null.
+	 *
+	 * @return the list of {@link Address}
+	 */
+	@POST
+	@Path("/find/addresses/if/geohash/null")
+	List<Address> findGeohashIsNull();
+
+	/**
+	 * Finds a list of {@link Address} from the given arguments.
+	 *
+	 * @param country
+	 *            the country
+	 * @param zipcode
+	 *            the zipcode
+	 * @return the list of {@link Address}
+	 */
+	@POST
+	@Path("/find/addresses/by/country/and/zipcode")
+	List<Address> find(Country country, String zipcode);
+
+	/**
+	 * Finds a list of {@link Address} from the given arguments.
+	 *
+	 * @param country
+	 *            the country
+	 * @param zipcode
+	 *            the zipcode
+	 * @param city
+	 *            the city
+	 * @return the list of {@link Address}
+	 */
+	@POST
+	@Path("/find/addresses/by/country/zipcode/and/city")
+	List<Address> find(Country country, String zipcode, String city);
+
+	/**
+	 * Finds the first {@link Address} from the given arguments.
+	 *
+	 * @param country
+	 *            the country
+	 * @param zipcode
+	 *            the zipcode
+	 * @return the {@link Address}
+	 */
+	@POST
+	@Path("/find/first/by/country/and/zipcode")
+	Address findFirst(Country country, String zipcode);
+
 }
