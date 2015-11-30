@@ -25,7 +25,7 @@ import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jgeohash.GeoHashPoint;
 import de.alpharogroup.jgeohash.distance.DistanceCalculator;
 import de.alpharogroup.jgeohash.distance.MeasuringUnit;
-import de.alpharogroup.xml.XmlUtils;
+import de.alpharogroup.xml.XmlExtensions;
 
 
 @ContextConfiguration(locations = "classpath:test-applicationContext.xml")
@@ -174,7 +174,7 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		File deDir = PathFinder.getRelativePath(smr, "zipcodes", "de");
 		File input = new File(deDir, "DeZipcodes.xml");
 		String notPrZipcodes = ReadFileUtils.readFromFile(input);
-		List<DeZipcodeBean> deZipcodeBeanList = XmlUtils.toObjectWithXStream(notPrZipcodes);
+		List<DeZipcodeBean> deZipcodeBeanList = XmlExtensions.toObjectWithXStream(notPrZipcodes);
 
 		Countries country = countriesService.find("DE");
 		for (DeZipcodeBean bean : deZipcodeBeanList)

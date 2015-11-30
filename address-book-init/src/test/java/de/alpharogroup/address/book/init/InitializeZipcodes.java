@@ -25,7 +25,7 @@ import de.alpharogroup.file.read.ReadFileUtils;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.file.write.WriteFileUtils;
 import de.alpharogroup.lang.ClassExtensions;
-import de.alpharogroup.xml.XmlUtils;
+import de.alpharogroup.xml.XmlExtensions;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -80,7 +80,7 @@ public class InitializeZipcodes {
 			deZipcodeBeanList.add(bean);
 		}
 		File output = new File(deDir, "DeZipcodes.xml");
-		String xml = XmlUtils.toXmlWithXStream(deZipcodeBeanList);
+		String xml = XmlExtensions.toXmlWithXStream(deZipcodeBeanList);
 		WriteFileUtils.string2File(output, xml);
 	}
 	
@@ -244,7 +244,7 @@ public class InitializeZipcodes {
 
 		File germanZipcodesXmlFile = new File(deDir, "GermanZipcodes.xml");
 		String notPrZipcodes = ReadFileUtils.readFromFile(germanZipcodesXmlFile);
-		List<GermanZipcodeBean> list = XmlUtils.toObjectWithXStream(notPrZipcodes);
+		List<GermanZipcodeBean> list = XmlExtensions.toObjectWithXStream(notPrZipcodes);
 		return list;
 	}
 

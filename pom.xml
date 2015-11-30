@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-persistence-parent</artifactId>
-		<version>2.12.0</version>
+		<version>2.14.0</version>
 		<relativePath />
 	</parent>
 
@@ -51,7 +51,7 @@
 
 	<properties>
 		<!-- MYSTIC-CRYPT versions -->
-		<mystic-crypt.version>4.2.0</mystic-crypt.version>
+		<mystic-crypt.version>4.4.0</mystic-crypt.version>
 		<randomizer.version>${mystic-crypt.version}</randomizer.version>
 		<!-- JGEOHASH version -->
 		<jgeohash.version>2.0.0</jgeohash.version>
@@ -100,14 +100,5 @@
 		</dependencies>
 
 	</dependencyManagement>
-
-	<dependencies>
-		<!-- LOMBOK DEPENDENCIES -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-
-	</dependencies>
 
 </project>

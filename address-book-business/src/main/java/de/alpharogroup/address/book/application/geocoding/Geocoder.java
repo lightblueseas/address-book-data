@@ -17,7 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import de.alpharogroup.xml.XmlUtils;
+import de.alpharogroup.xml.XmlExtensions;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.jgeohash.GeoHashPoint;
@@ -120,7 +120,7 @@ public class Geocoder
 
 		// Parse the input
 		SAXParser saxParser = factory.newSAXParser();
-		saxParser.parse(XmlUtils.getInputSource(xmldata), handler);
+		saxParser.parse(XmlExtensions.getInputSource(xmldata), handler);
 
 		if (data.size() == 2)
 		{

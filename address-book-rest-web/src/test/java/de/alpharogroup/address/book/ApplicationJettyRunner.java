@@ -9,7 +9,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.springframework.web.context.ContextLoaderListener;
 
-import de.alpharogroup.file.delete.DeleteFileUtils;
+import de.alpharogroup.file.delete.DeleteFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jetty9.runner.Jetty9Runner;
 import de.alpharogroup.jetty9.runner.config.Jetty9RunConfiguration;
@@ -41,7 +41,7 @@ public class ApplicationJettyRunner {
         File logfile = new File(projectDirectory, "application.log");
         if (logfile.exists()) {
             try {
-                DeleteFileUtils.delete(logfile);
+                DeleteFileExtensions.delete(logfile);
             } catch (IOException e) {
                 Logger.getRootLogger().error("logfile could not deleted.", e);
             }

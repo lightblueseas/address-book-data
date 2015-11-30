@@ -30,7 +30,7 @@ import de.alpharogroup.file.read.ReadFileUtils;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.file.write.WriteFileUtils;
 import de.alpharogroup.random.RandomExtensions;
-import de.alpharogroup.xml.XmlUtils;
+import de.alpharogroup.xml.XmlExtensions;
 import de.alpharogroup.jgeohash.GeoHashPoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +83,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		File npZipcodesFile = new File(processedDir, "npZipcodes.xml");
 
 		String notPrZipcodes = ReadFileUtils.readFromFile(npZipcodesFile);
-		notProcessed = XmlUtils.toObjectWithXStream(notPrZipcodes);
+		notProcessed = XmlExtensions.toObjectWithXStream(notPrZipcodes);
 
 		System.out.println("Not processed zipcodes:" + notProcessed.size());
 		for (Zipcodes zc : notProcessed)
@@ -110,7 +110,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		List<Zipcodes> germanZipcodes = zipcodesService.find(germany);
 		germanZipcodes.removeAll(processed);
 		String notPrZipcodes = ReadFileUtils.readFromFile(npZipcodesFile);
-		notProcessed = XmlUtils.toObjectWithXStream(notPrZipcodes);
+		notProcessed = XmlExtensions.toObjectWithXStream(notPrZipcodes);
 		System.out.println("Not processed:" + notProcessed.size());
 		germanZipcodes.removeAll(notProcessed);
 		int count = 1;
@@ -160,7 +160,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 				e.printStackTrace();
 			}
 		}
-		String xmlNP = XmlUtils.toXmlWithXStream(notProcessed);
+		String xmlNP = XmlExtensions.toXmlWithXStream(notProcessed);
 		WriteFileUtils.string2File(npZipcodesFile, xmlNP);
 	}
 
@@ -258,10 +258,10 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 			e.printStackTrace();
 		}
 
-		String xmlNP = XmlUtils.toXmlWithXStream(notProcessed);
+		String xmlNP = XmlExtensions.toXmlWithXStream(notProcessed);
 		WriteFileUtils.string2File(getNotProcessedFile(), xmlNP);
 
-		String xmlGeoPoints = XmlUtils.toXmlWithXStream(geopoints);
+		String xmlGeoPoints = XmlExtensions.toXmlWithXStream(geopoints);
 		WriteFileUtils.string2File(geoZipcodesFile, xmlGeoPoints);
 		System.out.println("Finished at:" + new Date(System.currentTimeMillis()));
 	}
@@ -304,9 +304,9 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 			}
 			processed.add(zc);
 		}
-		String xml = XmlUtils.toXmlWithXStream(processed);
+		String xml = XmlExtensions.toXmlWithXStream(processed);
 		WriteFileUtils.string2File(zipcodesFile, xml);
-		String xmlGeo = XmlUtils.toXmlWithXStream(geoPointZipcodes);
+		String xmlGeo = XmlExtensions.toXmlWithXStream(geoPointZipcodes);
 		WriteFileUtils.string2File(geoZipcodesFile, xmlGeo);
 		System.out.println("Finished at:" + new Date(System.currentTimeMillis()));
 	}
@@ -341,7 +341,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		List<Zipcodes> allGermanZipcodes = zipcodesService.findAll(germany, null, null);
 		allGermanZipcodes.removeAll(processed);
 
-		String xmlNP = XmlUtils.toXmlWithXStream(allGermanZipcodes);
+		String xmlNP = XmlExtensions.toXmlWithXStream(allGermanZipcodes);
 		WriteFileUtils.string2File(getNotProcessedFile(), xmlNP);
 	}
 
@@ -352,7 +352,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 
 		File germanZipcodesXmlFile = new File(deDir, "GermanZipcodes.xml");
 		String notPrZipcodes = ReadFileUtils.readFromFile(germanZipcodesXmlFile);
-		List<GermanZipcodeBean> list = XmlUtils.toObjectWithXStream(notPrZipcodes);
+		List<GermanZipcodeBean> list = XmlExtensions.toObjectWithXStream(notPrZipcodes);
 		return list;
 	}
 
@@ -360,7 +360,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	{
 		File npZipcodesFile = getNotProcessedFile();
 		String notPrZipcodes = ReadFileUtils.readFromFile(npZipcodesFile);
-		List<Zipcodes> notProcessed = XmlUtils.toObjectWithXStream(notPrZipcodes);
+		List<Zipcodes> notProcessed = XmlExtensions.toObjectWithXStream(notPrZipcodes);
 		return notProcessed;
 	}
 
@@ -378,7 +378,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 
 		File geoZipcodesFile = new File(processedDir, "geoZipcodes.xml");
 		String geoZipcodes = ReadFileUtils.readFromFile(geoZipcodesFile);
-		List<GeoPointZipcode> geoPointZipcodes = XmlUtils.toObjectWithXStream(geoZipcodes);
+		List<GeoPointZipcode> geoPointZipcodes = XmlExtensions.toObjectWithXStream(geoZipcodes);
 		return geoPointZipcodes;
 	}
 
@@ -484,7 +484,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 			}
 			addressesService.merge(address);
 		}
-		String xmlNP = XmlUtils.toXmlWithXStream(newNpZipcodes);
+		String xmlNP = XmlExtensions.toXmlWithXStream(newNpZipcodes);
 		WriteFileUtils.string2File(getNotProcessedFile(), xmlNP);
 	}
 
