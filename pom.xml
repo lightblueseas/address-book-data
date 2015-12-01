@@ -51,7 +51,7 @@
 
 	<properties>
 		<!-- MYSTIC-CRYPT versions -->
-		<mystic-crypt.version>4.4.0</mystic-crypt.version>
+		<mystic-crypt.version>4.6.0</mystic-crypt.version>
 		<randomizer.version>${mystic-crypt.version}</randomizer.version>
 		<!-- JGEOHASH version -->
 		<jgeohash.version>2.0.0</jgeohash.version>
