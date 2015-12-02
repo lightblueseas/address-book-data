@@ -20,10 +20,10 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.service.api.AddressesService;
 import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
-import de.alpharogroup.file.csv.CsvFileUtils;
-import de.alpharogroup.file.read.ReadFileUtils;
+import de.alpharogroup.file.csv.CsvFileExtensions;
+import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
-import de.alpharogroup.file.write.WriteFileUtils;
+import de.alpharogroup.file.write.WriteFileExtensions;
 import de.alpharogroup.lang.ClassExtensions;
 import de.alpharogroup.xml.XmlExtensions;
 
@@ -65,7 +65,7 @@ public class InitializeZipcodes {
 		File deZipcodesCsvFile = new File(deDir, "DE.txt");
 
 		List<DeZipcodeBean> deZipcodeBeanList = new ArrayList<DeZipcodeBean>();
-		List<String> lines = CsvFileUtils.readFileToList(deZipcodesCsvFile);
+		List<String> lines = CsvFileExtensions.readFileToList(deZipcodesCsvFile);
 		for (String line : lines) {
 			String[] entries = line.split("	");
 			int last = entries.length-1;
@@ -81,7 +81,7 @@ public class InitializeZipcodes {
 		}
 		File output = new File(deDir, "DeZipcodes.xml");
 		String xml = XmlExtensions.toXmlWithXStream(deZipcodeBeanList);
-		WriteFileUtils.string2File(output, xml);
+		WriteFileExtensions.string2File(output, xml);
 	}
 	
 	
@@ -99,7 +99,7 @@ public class InitializeZipcodes {
 //			add("Wales");
 //		}};
 //		List<UkZipcodeBean> ukZipcodeBeanList = new ArrayList<UkZipcodeBean>();
-//		List<String> lines = CsvFileUtils.readFileToList(ukZipcodesCsvFile);
+//		List<String> lines = CsvFileExtensions.readFileToList(ukZipcodesCsvFile);
 //		lines.remove(0);
 //		for (String line : lines) {
 //			String[] entries = line.split(",");
@@ -243,7 +243,7 @@ public class InitializeZipcodes {
 				"de");
 
 		File germanZipcodesXmlFile = new File(deDir, "GermanZipcodes.xml");
-		String notPrZipcodes = ReadFileUtils.readFromFile(germanZipcodesXmlFile);
+		String notPrZipcodes = ReadFileExtensions.readFromFile(germanZipcodesXmlFile);
 		List<GermanZipcodeBean> list = XmlExtensions.toObjectWithXStream(notPrZipcodes);
 		return list;
 	}

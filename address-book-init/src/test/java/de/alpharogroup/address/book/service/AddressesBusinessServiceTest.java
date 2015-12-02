@@ -20,7 +20,7 @@ import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.collections.ListExtensions;
-import de.alpharogroup.file.read.ReadFileUtils;
+import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jgeohash.GeoHashPoint;
 import de.alpharogroup.jgeohash.distance.DistanceCalculator;
@@ -173,7 +173,7 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		File smr = PathFinder.getSrcMainResourcesDir();
 		File deDir = PathFinder.getRelativePath(smr, "zipcodes", "de");
 		File input = new File(deDir, "DeZipcodes.xml");
-		String notPrZipcodes = ReadFileUtils.readFromFile(input);
+		String notPrZipcodes = ReadFileExtensions.readFromFile(input);
 		List<DeZipcodeBean> deZipcodeBeanList = XmlExtensions.toObjectWithXStream(notPrZipcodes);
 
 		Countries country = countriesService.find("DE");
