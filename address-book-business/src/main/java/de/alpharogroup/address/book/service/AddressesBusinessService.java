@@ -22,7 +22,7 @@ import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 import de.alpharogroup.jgeohash.Adjacent;
-import de.alpharogroup.jgeohash.GeoHashUtils;
+import de.alpharogroup.jgeohash.GeoHashExtensions;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -232,7 +232,7 @@ public class AddressesBusinessService
 		Map<String, String> adjacentAreas = null;
 		if (geohash != null && !geohash.isEmpty())
 		{
-			adjacentAreas = GeoHashUtils.getAllAdjacentAreasMap(geohash);
+			adjacentAreas = GeoHashExtensions.getAllAdjacentAreasMap(geohash);
 		}
 		String hqlString = HqlStringCreator.getGeohashFirstRingQuery(true);
 		final Query query = getQuery(hqlString);
@@ -254,7 +254,7 @@ public class AddressesBusinessService
 		Map<String, String> adjacentAreas = null;
 		if (geohash != null && !geohash.isEmpty())
 		{
-			adjacentAreas = GeoHashUtils.getTwentyFiveAreasMap(geohash);
+			adjacentAreas = GeoHashExtensions.getTwentyFiveAreasMap(geohash);
 		}
 		String hqlString = HqlStringCreator.getGeohashFirstAndSecondRingQuery(true);
 		final Query query = getQuery(hqlString);

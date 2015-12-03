@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
-import de.alpharogroup.jgeohash.GeoHashUtils;
+import de.alpharogroup.jgeohash.GeoHashExtensions;
 import de.alpharogroup.jgeohash.Point;
 import de.alpharogroup.jgeohash.distance.DistanceCalculator;
 import de.alpharogroup.jgeohash.distance.MeasuringUnit;
@@ -43,9 +43,9 @@ public class GeoLocationService
 	public static void main(final String[] args)
 	{
 		String alterTeichwegGeohash = "u1x0v54r";
-		Map<String, String> neighbors = GeoHashUtils.getAllAdjacentAreasMap(alterTeichwegGeohash);
+		Map<String, String> neighbors = GeoHashExtensions.getAllAdjacentAreasMap(alterTeichwegGeohash);
 		System.out.println("neighbors:" + neighbors);
-		double[] coordinates = GeoHashUtils.decodeAndRound(alterTeichwegGeohash);
+		double[] coordinates = GeoHashExtensions.decodeAndRound(alterTeichwegGeohash);
 		Point alterTeichweg = new Point(coordinates[0], coordinates[1]);
 		Point ludwigsburg = new Point(48.894169, 9.191870);
 		for (Point point : getExtremePointsFrom(ludwigsburg, 300.00))
