@@ -12,19 +12,24 @@
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
+			<artifactId>rest-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
 			<artifactId>address-book-rest-api</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-client</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 		</dependency>
-				
+
 	</dependencies>
 
 </project>
