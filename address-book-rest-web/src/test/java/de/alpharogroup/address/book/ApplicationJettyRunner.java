@@ -2,6 +2,7 @@ package de.alpharogroup.address.book;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.apache.log4j.Logger;
@@ -17,6 +18,7 @@ import de.alpharogroup.jetty9.runner.config.ServletContextHandlerConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletHolderConfiguration;
 import de.alpharogroup.jetty9.runner.factories.ServletContextHandlerFactory;
 import de.alpharogroup.log.LoggerExtensions;
+import de.alpharogroup.resourcebundle.properties.PropertiesExtensions;
 
 /**
  * The Class {@link ApplicationJettyRunner} holds the main method that starts a jetty server with the rest services for the address-book-data.
@@ -29,28 +31,28 @@ public class ApplicationJettyRunner {
 	 * @param args the arguments
 	 * @throws Exception the exception
 	 */
-    public static void main(String[] args) throws Exception {
-        int sessionTimeout = 1800;// set timeout to 30min(60sec * 30min=1800sec)...
-        String projectname = "address-book-rest-web";
-        File projectDirectory = PathFinder.getProjectDirectory();
-        File webapp = PathFinder.getRelativePath(projectDirectory, projectname, "src", "main",
+    public static void main(final String[] args) throws Exception {
+        final int sessionTimeout = 1800;// set timeout to 30min(60sec * 30min=1800sec)...
+        final String projectname = "address-book-rest-web";
+        final File projectDirectory = PathFinder.getProjectDirectory();
+        final File webapp = PathFinder.getRelativePath(projectDirectory, projectname, "src", "main",
                 "webapp");
 
-        String filterPath = "/*";
+        final String filterPath = "/*";
 
-        File logfile = new File(projectDirectory, "application.log");
+        final File logfile = new File(projectDirectory, "application.log");
         if (logfile.exists()) {
             try {
                 DeleteFileExtensions.delete(logfile);
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 Logger.getRootLogger().error("logfile could not deleted.", e);
             }
         }
 		// Add a file appender to the logger programatically
-		LoggerExtensions.addFileAppender(Logger.getRootLogger(), 
+		LoggerExtensions.addFileAppender(Logger.getRootLogger(),
 				LoggerExtensions.newFileAppender(logfile.getAbsolutePath()));
 
-        ServletContextHandler servletContextHandler = ServletContextHandlerFactory.getNewServletContextHandler(
+        final ServletContextHandler servletContextHandler = ServletContextHandlerFactory.getNewServletContextHandler(
                 ServletContextHandlerConfiguration.builder()
                 .servletHolderConfiguration(
                         ServletHolderConfiguration.builder()
@@ -62,16 +64,29 @@ public class ApplicationJettyRunner {
                 .maxInactiveInterval(sessionTimeout)
                 .filterPath(filterPath)
                 .initParameter("contextConfigLocation",
-                        "classpath:address-book-application-context.xml")
+                        "classpath:application-context.xml")
                 .build());
         servletContextHandler.addEventListener(new ContextLoaderListener());
-        Jetty9RunConfiguration configuration = Jetty9RunConfiguration.builder()
+        final Jetty9RunConfiguration configuration = Jetty9RunConfiguration.builder()
                 .servletContextHandler(servletContextHandler)
                 .httpPort(8080)
                 .httpsPort(8443)
                 .build();
-        Server server = new Server();
+        final Server server = new Server();
         Jetty9Runner.runServletContextHandler(server, configuration);
 
     }
+
+	/**
+	 * Gets the project name.
+	 *
+	 * @return the project name
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	protected static String getProjectName() throws IOException {
+		final Properties projectProperties = PropertiesExtensions.loadProperties("project.properties");
+		final String projectName = projectProperties.getProperty("artifactId");
+		return projectName;
+	}
+
 }

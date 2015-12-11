@@ -24,4 +24,5 @@
         </properties>
 
     </persistence-unit>
+
 </persistence>

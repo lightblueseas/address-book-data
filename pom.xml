@@ -55,6 +55,8 @@
 		<randomizer.version>${mystic-crypt.version}</randomizer.version>
 		<!-- JGEOHASH version -->
 		<jgeohash.version>2.1.0</jgeohash.version>
+		<!-- RESOURCEBUNDLE-CORE versions -->
+		<resourcebundle-inspector.version>2.7.0</resourcebundle-inspector.version>
 	</properties>
 
 	<dependencyManagement>
@@ -95,6 +97,12 @@
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>jgeohash</artifactId>
 				<version>${jgeohash.version}</version>
+			</dependency>
+			<!-- RESOURCEBUNDLE-CORE DEPENDENCIES -->
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>resourcebundle-inspector</artifactId>
+				<version>${resourcebundle-inspector.version}</version>
 			</dependency>
 
 		</dependencies>

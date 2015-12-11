@@ -11,11 +11,11 @@
 
 	<artifactId>address-book-rest-web</artifactId>
 	<packaging>war</packaging>
-	
+
 	<properties>
 		<war-name>address-book-rest-webapp</war-name>
 	</properties>
-	
+
 	<dependencies>
 
 		<dependency>
@@ -146,6 +146,11 @@
 			<artifactId>tomcat-jdbc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- RESOURCEBUNDLE-CORE DEPENDENCIES -->
+		<dependency>
+			<groupId>de.alpharogroup</groupId>
+			<artifactId>resourcebundle-inspector</artifactId>
+		</dependency>
 
 	</dependencies>
 
@@ -169,7 +174,7 @@
 			</resource>
 
 			<resource>
-				<filtering>false</filtering>
+				<filtering>true</filtering>
 				<directory>src/main/resources</directory>
 			</resource>
 
