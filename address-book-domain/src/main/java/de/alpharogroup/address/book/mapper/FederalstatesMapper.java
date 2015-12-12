@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.entities.Federalstates;
-import de.alpharogroup.db.entitymapper.AbstractEntityBOMapper;
+import de.alpharogroup.db.entitymapper.AbstractEntityDOMapper;
 
 @Component
-public class FederalstatesMapper extends AbstractEntityBOMapper<Federalstates, Federalstate> {
+public class FederalstatesMapper extends AbstractEntityDOMapper<Federalstates, Federalstate> {
 
 }

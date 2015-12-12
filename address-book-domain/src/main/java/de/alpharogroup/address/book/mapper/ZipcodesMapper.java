@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.entities.Zipcodes;
-import de.alpharogroup.db.entitymapper.AbstractEntityBOMapper;
+import de.alpharogroup.db.entitymapper.AbstractEntityDOMapper;
 @Component
-public class ZipcodesMapper extends AbstractEntityBOMapper<Zipcodes, Zipcode> {
+public class ZipcodesMapper extends AbstractEntityDOMapper<Zipcodes, Zipcode> {
 
 }
