@@ -12,7 +12,7 @@
 
 	<artifactId>address-book-data</artifactId>
 	<packaging>pom</packaging>
-	<version>3.1.0</version>
+	<version>3.6.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
@@ -54,7 +54,7 @@
 		<mystic-crypt.version>4.7.0</mystic-crypt.version>
 		<randomizer.version>${mystic-crypt.version}</randomizer.version>
 		<!-- JGEOHASH version -->
-		<jgeohash.version>2.1.0</jgeohash.version>
+		<jgeohash.version>2.2.0</jgeohash.version>
 		<!-- RESOURCEBUNDLE-CORE versions -->
 		<resourcebundle-inspector.version>2.7.0</resourcebundle-inspector.version>
 	</properties>

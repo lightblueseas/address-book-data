@@ -20,23 +20,23 @@ public class FederalstatesBusinessServiceTest  extends AbstractTestNGSpringConte
 	private CountriesService countriesService;
 	@Autowired
 	private FederalstatesService federalstatesService;
-	@Test
+	@Test(enabled = false)
 	public void testFindFederalstatesFromCountryCountriesString() {
-		Countries germany = countriesService.find("DE");
+		final Countries germany = countriesService.find("DE");
 		List<Federalstates> federalstates = federalstatesService.findFederalstatesFromCountry(germany, "Hamburg");
 		AssertJUnit.assertEquals(1, federalstates.size());
-		Federalstates federalstate = federalstatesService.findFederalstate(germany, "Hamburg");
+		final Federalstates federalstate = federalstatesService.findFederalstate(germany, "Hamburg");
 		AssertJUnit.assertNotNull(federalstate);
 		AssertJUnit.assertEquals("Hamburg", federalstate.getName());
 		federalstates = federalstatesService.findFederalstatesFromCountry(germany);
 		System.out.println(federalstates);
-		
+
 	}
-	@Test
+	@Test(enabled = false)
 	public void testFindFederalstatesFromCountryCountries() {
-		Countries germany = countriesService.find("DE");
-		List<Federalstates> federalstates = federalstatesService.findFederalstatesFromCountry(germany);
-		AssertJUnit.assertEquals(16, federalstates.size());		
+		final Countries germany = countriesService.find("DE");
+		final List<Federalstates> federalstates = federalstatesService.findFederalstatesFromCountry(germany);
+		AssertJUnit.assertEquals(16, federalstates.size());
 	}
 
 }

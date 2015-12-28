@@ -31,10 +31,10 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	/**
 	 * Sets the specific {@link ZipcodesDao}.
 	 *
-	 * @param countriesDao the new {@link ZipcodesDao}.
+	 * @param zipcodesDao the new {@link ZipcodesDao}.
 	 */
 	@Autowired
-	public void setZipcodesDao(ZipcodesDao zipcodesDao) {
+	public void setZipcodesDao(final ZipcodesDao zipcodesDao) {
 		setDao(zipcodesDao);
 	}
 
@@ -76,7 +76,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public Zipcodes getZipcode(String zipcode, final String city) {
+	public Zipcodes getZipcode(final String zipcode, final String city) {
 		final Zipcodes zc;
 		final List<Zipcodes> zipcodes = findZipcodes(zipcode);
 		if (zipcodes != null && !zipcodes.isEmpty()) {
@@ -93,20 +93,20 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 */
 	@Override
 	public List<Zipcodes> find(final Countries country) {
-		return findAll(country, null, null);		
+		return findAll(country, null, null);
 	}
 
 	/**
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public Zipcodes findCityFromZipcode(Countries country, String zipcode) {
-		List<Zipcodes> zipcodes = findAll(country, zipcode, null);
+	public Zipcodes findCityFromZipcode(final Countries country, final String zipcode) {
+		final List<Zipcodes> zipcodes = findAll(country, zipcode, null);
 		if(zipcodes != null && !zipcodes.isEmpty()){
 			return zipcodes.get(0);
 		}
 		return null;
-		
+
 	}
 
 	/**
@@ -114,22 +114,22 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Zipcodes> findAll(Countries country, String zipcode, String city) {
-		String c = country == null ? null : country.getName();
+	public List<Zipcodes> findAll(final Countries country, final String zipcode, final String city) {
+		final String c = country == null ? null : country.getName();
 		final String hqlString = HqlStringCreator.forZipcodes(c, zipcode, city);
 		final Query query = getQuery(hqlString);
 		if(country != null){
-			query.setParameter("country", country);			
+			query.setParameter("country", country);
 		}
 		if(zipcode != null && !zipcode.isEmpty()){
-			query.setParameter("zipcode", zipcode);			
+			query.setParameter("zipcode", zipcode);
 		}
 		if(city != null && !city.isEmpty()){
 			query.setParameter("city", city);
-			
+
 		}
-		List<Zipcodes> zipcodes = query.getResultList();
+		final List<Zipcodes> zipcodes = query.getResultList();
 		return zipcodes;
 	}
-	
+
 }

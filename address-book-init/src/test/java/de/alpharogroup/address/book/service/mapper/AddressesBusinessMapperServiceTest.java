@@ -15,16 +15,17 @@ public class AddressesBusinessMapperServiceTest extends AbstractTestNGSpringCont
 	@Autowired
 	private AddressService addressService;
 
-	@Test
+	@Test(enabled = false)
 	public void testRead()
 	{
-		Address address = addressService.read(1);
+		final Address address = addressService.read(1);
 		System.out.println(address);
 	}
-	@Test
+
+	@Test(enabled = false)
 	public void testCreate()
 	{
-		Address address = Address.builder()			
+		Address address = Address.builder()
 			.addressComment("")
 			.geohash("u34er25463")
 			.street("Hamburger Chaussee")

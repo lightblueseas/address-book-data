@@ -13,12 +13,17 @@ import de.alpharogroup.resourcebundle.properties.PropertiesExtensions;
 public class InitializeDatabase {
 
 	/**
-	 * The main method. Initializes database for the addressbook.
+	 * The main method to start the initialization process from the specific database.
 	 *
-	 * @param args the arguments
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws SQLException the SQL exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param args
+	 *            the arguments of this main method
+	 * @throws SQLException
+	 *             is thrown if a database access error occurs or this method is called on a closed
+	 *             connection
+	 * @throws ClassNotFoundException
+	 *             is thrown if the Class was not found or could not be located.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public static void main(final String[] args) throws ClassNotFoundException,
 			SQLException, IOException {
