@@ -1,5 +1,8 @@
 package de.alpharogroup.address.book.service.util;
 
+import de.alpharogroup.address.book.entities.Addresses;
+import de.alpharogroup.address.book.entities.Countries;
+import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.jgeohash.Adjacent;
 
 /**
@@ -7,7 +10,7 @@ import de.alpharogroup.jgeohash.Adjacent;
  */
 public class HqlStringCreator
 {
-	
+
 	/**
 	 * Generates hql script for zipcodes.
 	 *
@@ -16,17 +19,17 @@ public class HqlStringCreator
 	 * @param city the city
 	 * @return the string
 	 */
-	public static String forZipcodes(String country, String zipcode, String city)
+	public static String forZipcodes(final String country, final String zipcode, final String city)
 	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("select zc from Zipcodes zc");
-		boolean countryIsNotNull = country != null;
+		final StringBuilder sb = new StringBuilder();
+		sb.append("select zc from " + Zipcodes.class.getSimpleName() + " zc");
+		final boolean countryIsNotNull = country != null;
 		if (countryIsNotNull)
 		{
 			sb.append(" ");
 			sb.append("where zc.country=:country");
 		}
-		boolean zipcodeIsNotNull = zipcode != null && !zipcode.isEmpty();
+		final boolean zipcodeIsNotNull = zipcode != null && !zipcode.isEmpty();
 		if (zipcodeIsNotNull)
 		{
 			sb.append(" ");
@@ -39,7 +42,7 @@ public class HqlStringCreator
 				sb.append("and zc.zipcode=:zipcode");
 			}
 		}
-		boolean cityIsNotNull = city != null && !city.isEmpty();
+		final boolean cityIsNotNull = city != null && !city.isEmpty();
 		if (cityIsNotNull)
 		{
 			sb.append(" ");
@@ -64,18 +67,18 @@ public class HqlStringCreator
 	 * @param name the name
 	 * @return the string
 	 */
-	public static String forCountries(String iso3166A2name, String iso3166A3name,
-		String iso3166Number, String name)
+	public static String forCountries(final String iso3166A2name, final String iso3166A3name,
+		final String iso3166Number, final String name)
 	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("select c from Countries c");
-		boolean iso3166A2nameIsNotNull = iso3166A2name != null && !iso3166A2name.isEmpty();
+		final StringBuilder sb = new StringBuilder();
+		sb.append("select c from " + Countries.class.getSimpleName() + " c");
+		final boolean iso3166A2nameIsNotNull = iso3166A2name != null && !iso3166A2name.isEmpty();
 		if (iso3166A2nameIsNotNull)
 		{
 			sb.append(" ");
 			sb.append("where c.iso3166A2name=:iso3166A2name");
 		}
-		boolean iso3166A3nameIsNotNull = iso3166A3name != null && !iso3166A3name.isEmpty();
+		final boolean iso3166A3nameIsNotNull = iso3166A3name != null && !iso3166A3name.isEmpty();
 		if (iso3166A3nameIsNotNull)
 		{
 			sb.append(" ");
@@ -88,7 +91,7 @@ public class HqlStringCreator
 				sb.append("and c.iso3166A3name=:iso3166A3name");
 			}
 		}
-		boolean iso3166NumberIsNotNull = iso3166Number != null && !iso3166Number.isEmpty();
+		final boolean iso3166NumberIsNotNull = iso3166Number != null && !iso3166Number.isEmpty();
 		if (iso3166NumberIsNotNull)
 		{
 			sb.append(" ");
@@ -101,7 +104,7 @@ public class HqlStringCreator
 				sb.append("and c.iso3166Number=:iso3166Number");
 			}
 		}
-		boolean nameIsNotNull = name != null && !name.isEmpty();
+		final boolean nameIsNotNull = name != null && !name.isEmpty();
 		if (nameIsNotNull)
 		{
 			sb.append(" ");
@@ -128,13 +131,13 @@ public class HqlStringCreator
 	public String forAddresses(
 	// String addressComment,
 	// Federalstates federalstate,
-		String geohash, String latitude, String longitude
+		final String geohash, final String latitude, final String longitude
 	// , String street, String streetnumber,
 	// Zipcodes zipcode
 	)
 	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("select a from Addresses a");
+		final StringBuilder sb = new StringBuilder();
+		sb.append("select a from " + Addresses.class.getSimpleName() + " a");
 
 		return sb.toString().trim();
 	}
@@ -163,7 +166,7 @@ public class HqlStringCreator
 	public static String getGeohashQuery()
 	{
 		final StringBuilder sb = new StringBuilder();
-		sb.append("select address.geohash from Addresses address " + "where address.geohash like :"
+		sb.append("select address.geohash from " + Addresses.class.getSimpleName() + " address " + "where address.geohash like :"
 			+ Adjacent.CENTER + " ");
 		return sb.toString().trim();
 	}
@@ -190,13 +193,13 @@ public class HqlStringCreator
 	 * @param asAddress the as address flag if the result shell be objects or geohash values.
 	 * @return the geohash first ring query
 	 */
-	public static String getGeohashFirstRingQuery(boolean asAddress)
+	public static String getGeohashFirstRingQuery(final boolean asAddress)
 	{
 		String value;
 		if(asAddress) {
 			value = "address";
 		} else {
-			value = "address.geohash";			
+			value = "address.geohash";
 		}
 		final StringBuilder sb = new StringBuilder();
 		sb.append("select "	+ value + " from Addresses address "
@@ -233,13 +236,13 @@ public class HqlStringCreator
 	 * @param asAddress the as address flag if the result shell be objects or geohash values.
 	 * @return the geohash first and second ring query
 	 */
-	public static String getGeohashFirstAndSecondRingQuery(boolean asAddress)
+	public static String getGeohashFirstAndSecondRingQuery(final boolean asAddress)
 	{
 		String value;
 		if(asAddress) {
 			value = "address";
 		} else {
-			value = "address.geohash";			
+			value = "address.geohash";
 		}
 		final StringBuilder sb = new StringBuilder();
 		sb.append("select "	+ value	+ " from Addresses address "
