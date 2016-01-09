@@ -24,7 +24,7 @@
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>jgeohash</artifactId>
+			<artifactId>jgeohash-core</artifactId>
 		</dependency>
 
 	</dependencies>

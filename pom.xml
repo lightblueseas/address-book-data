@@ -53,8 +53,10 @@
 		<!-- MYSTIC-CRYPT versions -->
 		<mystic-crypt.version>4.7.0</mystic-crypt.version>
 		<randomizer.version>${mystic-crypt.version}</randomizer.version>
-		<!-- JGEOHASH version -->
-		<jgeohash.version>2.2.0</jgeohash.version>
+		<!-- JGEOHASH LOCATION version -->
+		<jgeohash.version>2.3.0</jgeohash.version>
+		<jgeohash-core.version>${jgeohash.version}</jgeohash-core.version>
+		<jgeohash-geoip.version>${jgeohash.version}</jgeohash-geoip.version>
 	</properties>
 
 	<dependencyManagement>
@@ -90,11 +92,17 @@
 				<artifactId>randomizer</artifactId>
 				<version>${randomizer.version}</version>
 			</dependency>
-			<!-- JGEOHASH DEPENDENCIES -->
+			<!-- JGEOHASH LOCATION DEPENDENCIES -->
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>jgeohash</artifactId>
-				<version>${jgeohash.version}</version>
+				<artifactId>jgeohash-core</artifactId>
+				<version>${jgeohash-core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>jgeohash-geoip</artifactId>
+				<version>${jgeohash-geoip.version}</version>
 			</dependency>
 
 		</dependencies>
