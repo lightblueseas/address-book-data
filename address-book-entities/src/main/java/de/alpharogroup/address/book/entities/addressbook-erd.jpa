@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" status="GENERATED" xs="false" id="_14566642616871" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:entity xre="false" sm="false" abs="false" class="Addresses" visibile="true" minimized="false" rootElement="_14566642616871" id="_14566642616914">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="String" visibile="true" name="addressComment" id="_14566642616979">
+                <jpa:column name="address_comment" unique="false" nullable="true" insertable="true" updatable="true" table="addresses" length="100"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="geohash" id="_145666426169710">
+                <jpa:column name="geohash" unique="false" nullable="true" insertable="true" updatable="true" table="addresses" length="16"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="latitude" id="_145666426169711">
+                <jpa:column name="latitude" unique="false" nullable="true" insertable="true" updatable="true" table="addresses" length="12"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="longitude" id="_145666426169712">
+                <jpa:column name="longitude" unique="false" nullable="true" insertable="true" updatable="true" table="addresses" length="12"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="street" id="_145666426169713">
+                <jpa:column name="street" unique="false" nullable="true" insertable="true" updatable="true" table="addresses" length="64"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="streetnumber" id="_145666426169714">
+                <jpa:column name="streetnumber" unique="false" nullable="true" insertable="true" updatable="true" table="addresses" length="5"/>
+            </basic>
+            <many-to-one connected-entity-id="_14566642616937" connected-attribute-id="_145666426169934" target-entity="Federalstates" visibile="true" name="federalstateId" id="_145666426169715">
+                <join-column name="federalstate_id" referenced-column-name="id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </many-to-one>
+            <many-to-one connected-entity-id="_14566642616935" connected-attribute-id="_145666426169820" target-entity="Zipcodes" visibile="true" name="zipcodeId" id="_145666426169816">
+                <join-column name="zipcode_id" referenced-column-name="id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </many-to-one>
+            <jpa:id attribute-type="Integer" visibile="true" name="id" id="_14566642616968">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="addresses"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="addresses"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Zipcodes" visibile="true" minimized="false" rootElement="_14566642616871" id="_14566642616935">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="String" visibile="true" name="city" id="_145666426169818">
+                <jpa:column name="city" unique="false" nullable="true" insertable="true" updatable="true" table="zipcodes" length="128"/>
+            </basic>
+            <basic optional="false" attribute-type="String" visibile="true" name="zipcode" id="_145666426169819">
+                <jpa:column name="zipcode" unique="false" nullable="false" insertable="true" updatable="true" table="zipcodes" length="10"/>
+            </basic>
+            <many-to-one connected-entity-id="_14566642616936" connected-attribute-id="_145666426169927" target-entity="Countries" visibile="true" name="countryId" id="_145666426169821">
+                <join-column name="country_id" referenced-column-name="id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </many-to-one>
+            <one-to-many mapped-by="zipcodeId" connected-entity-id="_14566642616914" connected-attribute-id="_145666426169816" target-entity="Addresses" visibile="true" name="addressesCollection" id="_145666426169820"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="id" id="_145666426169817">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="zipcodes"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="zipcodes"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Countries" visibile="true" minimized="false" rootElement="_14566642616871" id="_14566642616936">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="String" visibile="true" name="iso3166A2name" id="_145666426169923">
+                <jpa:column name="iso3166_a2name" unique="false" nullable="true" insertable="true" updatable="true" table="countries" length="2"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="iso3166A3name" id="_145666426169924">
+                <jpa:column name="iso3166_a3name" unique="false" nullable="true" insertable="true" updatable="true" table="countries" length="3"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="iso3166Number" id="_145666426169925">
+                <jpa:column name="iso3166_number" unique="false" nullable="true" insertable="true" updatable="true" table="countries" length="3"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="name" id="_145666426169926">
+                <jpa:column name="name" unique="false" nullable="true" insertable="true" updatable="true" table="countries" length="128"/>
+            </basic>
+            <one-to-many mapped-by="countryId" connected-entity-id="_14566642616935" connected-attribute-id="_145666426169821" target-entity="Zipcodes" visibile="true" name="zipcodesCollection" id="_145666426169927"/>
+            <one-to-many mapped-by="countryId" connected-entity-id="_14566642616937" connected-attribute-id="_145666426169935" target-entity="Federalstates" visibile="true" name="federalstatesCollection" id="_145666426169928"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="id" id="_145666426169922">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="countries"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="countries"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Federalstates" visibile="true" minimized="false" rootElement="_14566642616871" id="_14566642616937">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="String" visibile="true" name="iso3166A2code" id="_145666426169930">
+                <jpa:column name="iso3166_a2code" unique="false" nullable="true" insertable="true" updatable="true" table="federalstates" length="6"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="name" id="_145666426169931">
+                <jpa:column name="name" unique="false" nullable="true" insertable="true" updatable="true" table="federalstates" length="128"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="subdivisionCategory" id="_145666426169932">
+                <jpa:column name="subdivision_category" unique="false" nullable="true" insertable="true" updatable="true" table="federalstates" length="128"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="subdivisionName" id="_145666426169933">
+                <jpa:column name="subdivision_name" unique="false" nullable="true" insertable="true" updatable="true" table="federalstates" length="56"/>
+            </basic>
+            <many-to-one connected-entity-id="_14566642616936" connected-attribute-id="_145666426169928" target-entity="Countries" visibile="true" name="countryId" id="_145666426169935">
+                <join-column name="country_id" referenced-column-name="id" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </many-to-one>
+            <one-to-many mapped-by="federalstateId" connected-entity-id="_14566642616914" connected-attribute-id="_145666426169715" target-entity="Addresses" visibile="true" name="addressesCollection" id="_145666426169934"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="id" id="_145666426169929">
+                <jpa:column name="id" unique="false" nullable="false" insertable="true" updatable="true" table="federalstates"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="federalstates"/>
+    </jpa:entity>
+    <jpa:diagram id="_14566642616892">
+        <plane elementRef="_14566642616871" id="_14566642616903_p"/>
+    </jpa:diagram>
+</jpa:entity-mappings>
