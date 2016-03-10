@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The Entity class {@link Addresses} is keeping the information for addresses.
+ * The entity class {@link Addresses} is keeping the information for addresses.
  */
 @Entity
 @Table(name = "addresses")
