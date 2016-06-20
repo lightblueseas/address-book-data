@@ -61,6 +61,16 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 	public void setCountriesDao(CountriesDao countriesDao){
 		setDao(countriesDao);
 	}
+	/**
+	 * Sets the specific {@link CountriesMapper}.
+	 *
+	 * @param mapper
+	 *            the new {@link CountriesMapper}.
+	 */
+	@Autowired
+	public void setCountriesMapper(CountriesMapper mapper) {
+		setMapper(mapper);
+	}
 	
 	/**
 	 * {@inheritDoc}
