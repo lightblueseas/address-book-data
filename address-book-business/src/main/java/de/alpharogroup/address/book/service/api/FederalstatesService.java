@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
-import de.alpharogroup.db.service.jpa.BusinessService;
+import de.alpharogroup.db.service.api.BusinessService;
 
 /**
  * The interface {@link FederalstatesService}.
