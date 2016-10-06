@@ -123,7 +123,6 @@ public class AddressBookRestClientTest {
 	 */
 	@Test(enabled = false)
 	public void testCountriesRestResource() {
-		final AddressBookRestClient restClient = new AddressBookRestClient();
 		final Map<Country, List<Federalstate>> map = restClient.getCountriesResource().getCountriesToFederalstatesMap();
 	}
 

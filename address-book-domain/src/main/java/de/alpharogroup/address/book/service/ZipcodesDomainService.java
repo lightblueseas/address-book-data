@@ -47,6 +47,17 @@ AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
 	public void setZipcodesDao(ZipcodesDao zipcodesDao){
 		setDao(zipcodesDao);
 	}
+	/**
+	 * Sets the specific {@link ZipcodesMapper}.
+	 *
+	 * @param mapper
+	 *            the new {@link ZipcodesMapper}.
+	 */
+	@Autowired
+	public void setZipcodesMapper(ZipcodesMapper mapper) {
+		setMapper(mapper);
+	}
+
 
 	/**
 	 * {@inheritDoc}

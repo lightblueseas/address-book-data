@@ -41,6 +41,17 @@ AbstractDomainService<Integer, Federalstate, Federalstates, FederalstatesDao, Fe
 	public void setFederalstatesDao(final FederalstatesDao federalstatesDao) {
 		setDao(federalstatesDao);
 	}
+	/**
+	 * Sets the specific {@link FederalstatesMapper}.
+	 *
+	 * @param mapper
+	 *            the new {@link FederalstatesMapper}.
+	 */
+	@Autowired
+	public void setFederalstatesMapper(FederalstatesMapper mapper) {
+		setMapper(mapper);
+	}
+
 	
 	/**
 	 * {@inheritDoc}
