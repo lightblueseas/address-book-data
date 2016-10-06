@@ -22,7 +22,7 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.CountriesMapper;
 import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.CountryService;
-import de.alpharogroup.lang.ObjectExtensions;
+import de.alpharogroup.lang.object.CopyObjectExtensions;
 import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
@@ -198,7 +198,7 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 	public String setLocationModel(LocationModel<Address> modelObject, String zc) {
 		LocationModel<Addresses> locationModel = getMapper().map(modelObject, LocationModel.class);
 		String result = countriesService.setLocationModel(locationModel, zc);
-		ObjectExtensions.copyQuietly(modelObject, locationModel);
+		CopyObjectExtensions.copyQuietly(locationModel, modelObject);
 		return result;
 	}
 }
