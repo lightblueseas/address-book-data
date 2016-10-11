@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>address-book-data</artifactId>
-		<version>3.9.0</version>
+		<version>3.10.0</version>
 	</parent>
 
 	<artifactId>address-book-rest-web</artifactId>

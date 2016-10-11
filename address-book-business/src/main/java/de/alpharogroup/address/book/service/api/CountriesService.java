@@ -3,7 +3,10 @@ package de.alpharogroup.address.book.service.api;
 import java.util.List;
 import java.util.Map;
 
+import de.alpharogroup.address.book.application.model.ValuesOfCountryName;
+import de.alpharogroup.address.book.application.model.FederalStatesOfCountry;
 import de.alpharogroup.address.book.application.model.LocationModel;
+import de.alpharogroup.address.book.application.model.ZipcodesOfCountry;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
@@ -20,32 +23,70 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	 * corresponding federal states as a List of Federalstates objects.
 	 * 
 	 * @return the countries to federalstates map
+	 * @deprecated use instead {@link CountriesService#getCountriesToFederalstatesList()}
 	 */
+	@Deprecated
 	Map<Countries, List<Federalstates>> getCountriesToFederalstatesMap();
+
+	/**
+	 * Gets a list with the mapping-class: the key as Countries object and as value the
+	 * corresponding federal states as a List of Federalstates objects.
+	 * 
+	 * @return the countries to federalstates list
+	 */
+	List<FederalStatesOfCountry> getCountriesToFederalstatesList();
 
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as
 	 * value the corresponding federal states as a List of Iso3166A2code String objects.
 	 * 
 	 * @return the countries to federalstates as string map
+	 * @deprecated use instead {@link CountriesService#getCountriesToFederalstatesAsStringList()}
 	 */
+	@Deprecated
 	Map<String, List<String>> getCountriesToFederalstatesAsStringMap();
+
+	/**
+	 * Gets a map with the mapping-class: the key is the name of the country and as
+	 * value the corresponding federal states as a List of Iso3166A2code String objects.
+	 * 
+	 * @return the countries to federalstates as string list
+	 */
+	List<ValuesOfCountryName> getCountriesToFederalstatesAsStringList();
 	
 	/**
 	 * Gets a map with the mapping: the key as Countries object and as value the
 	 * corresponding Zipcodes as a List of Zipcodes objects.
 	 *
 	 * @return the countries to zipcodes map
+	 * @deprecated use instead {@link CountriesService#getCountriesToZipcodesList()}
 	 */
 	Map<Countries, List<Zipcodes>> getCountriesToZipcodesMap();
+	
+	/**
+	 * Gets a map with the mapping-class: the key as Countries object and as value the
+	 * corresponding Zipcodes as a List of Zipcodes objects.
+	 *
+	 * @return the countries to zipcodes list
+	 */
+	List<ZipcodesOfCountry> getCountriesToZipcodesList();
 	
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as
 	 * value the corresponding zipcodes as a List of String objects.
 	 *
 	 * @return the countries to zipcodes as string map
+	 * @deprecated use instead {@link CountriesService#getCountriesToZipcodesAsStringList()}
 	 */
 	Map<String, List<String>> getCountriesToZipcodesAsStringMap();
+	
+	/**
+	 * Gets a map with the mapping-class: the key is the name of the country and as
+	 * value the corresponding zipcodes as a List of String objects.
+	 *
+	 * @return the countries to zipcodes as string list
+	 */
+	List<ValuesOfCountryName> getCountriesToZipcodesAsStringList();
 	
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as

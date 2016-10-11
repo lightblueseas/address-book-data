@@ -7,10 +7,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class FederalStateNamesOfCountryName {
+public class ValuesOfCountryName {
 
 	private String country;
 	
-	private List<String> federalstates;
+	private List<String> values;
 	
 }

@@ -12,7 +12,7 @@
 
 	<artifactId>address-book-data</artifactId>
 	<packaging>pom</packaging>
-	<version>3.9.0</version>
+	<version>3.10.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
