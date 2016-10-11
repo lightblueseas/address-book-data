@@ -9,12 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import de.alpharogroup.address.book.application.model.LocationModel;
 import de.alpharogroup.address.book.daos.CountriesDao;
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.address.book.domain.customserialize.CountryDeserializer;
+import de.alpharogroup.address.book.domain.customserialize.CountrySerializer;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
@@ -33,8 +38,7 @@ import lombok.Setter;
 @Transactional
 @Service("countriesDomainService")
 public class CountriesDomainService extends
-AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper> implements CountryService
-{
+		AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper> implements CountryService {
 
 	/** The {@link CountriesService}. */
 	@Autowired
@@ -43,14 +47,20 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 	private CountriesService countriesService;
 
 	/** The country to zipcode map. */
+	@JsonDeserialize(using = CountryDeserializer.class)
+	@JsonSerialize(using = CountrySerializer.class)
 	private Map<Country, List<Zipcode>> countryToZipcodeMap;
-	
+
 	/** The country to federalstate map. */
+	@JsonDeserialize(using = CountryDeserializer.class)
+	@JsonSerialize(using = CountrySerializer.class)
 	private Map<Country, List<Federalstate>> countryToFederalstateMap;
-	
+
 	/** The german country to zipcode map. */
+	@JsonDeserialize(using = CountryDeserializer.class)
+	@JsonSerialize(using = CountrySerializer.class)
 	private Map<Country, List<Zipcode>> germanCountryToZipcodeMap;
-	
+
 	/**
 	 * Sets the specific {@link CountriesDao}.
 	 *
@@ -58,9 +68,10 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 	 *            the new {@link CountriesDao}.
 	 */
 	@Autowired
-	public void setCountriesDao(CountriesDao countriesDao){
+	public void setCountriesDao(CountriesDao countriesDao) {
 		setDao(countriesDao);
 	}
+
 	/**
 	 * Sets the specific {@link CountriesMapper}.
 	 *
@@ -71,27 +82,28 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 	public void setCountriesMapper(CountriesMapper mapper) {
 		setMapper(mapper);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Map<Country, List<Federalstate>> getCountriesToFederalstatesMap() {
-		if(this.countryToFederalstateMap == null) {
+		if (this.countryToFederalstateMap == null) {
 			this.countryToFederalstateMap = new LinkedHashMap<>();
-			final Map<Countries, List<Federalstates>> countriesToFederalstatesMap = countriesService.getCountriesToFederalstatesMap();
+			final Map<Countries, List<Federalstates>> countriesToFederalstatesMap = countriesService
+					.getCountriesToFederalstatesMap();
 			final CountriesMapper mapper = getMapper();
-			for(Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap.entrySet()) {
+			for (Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap.entrySet()) {
 				Countries countries = entry.getKey();
 				List<Federalstates> fss = entry.getValue();
-				if(countries !=null) {
+				if (countries != null) {
 					Country country = mapper.toDomainObject(countries);
 					List<Federalstate> federalstates = mapper.map(fss, Federalstate.class);
 					this.countryToFederalstateMap.put(country, federalstates);
 				} else {
 					System.err.println(fss);
-				}				
-			}			
+				}
+			}
 		}
 		return this.countryToFederalstateMap;
 	}
@@ -109,11 +121,12 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 	 */
 	@Override
 	public Map<Country, List<Zipcode>> getCountriesToZipcodesMap() {
-		if(this.countryToZipcodeMap == null) {
+		if (this.countryToZipcodeMap == null) {
 			this.countryToZipcodeMap = new LinkedHashMap<>();
 			final Map<Countries, List<Zipcodes>> countriesToZipcodesMap = countriesService.getCountriesToZipcodesMap();
 			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodesMap.entrySet()) {
-				countryToZipcodeMap.put(getMapper().toDomainObject(entry.getKey()), getMapper().map(entry.getValue(), Zipcode.class));
+				countryToZipcodeMap.put(getMapper().toDomainObject(entry.getKey()),
+						getMapper().map(entry.getValue(), Zipcode.class));
 			}
 		}
 		return this.countryToZipcodeMap;
@@ -132,11 +145,13 @@ AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper
 	 */
 	@Override
 	public Map<Country, List<Zipcode>> getGermanCountriesToZipcodesMap() {
-		if(this.germanCountryToZipcodeMap == null) {
+		if (this.germanCountryToZipcodeMap == null) {
 			this.germanCountryToZipcodeMap = new LinkedHashMap<>();
-			Map<Countries, List<Zipcodes>> germanCountriesToZipcodesMap = countriesService.getGermanCountriesToZipcodesMap();
+			Map<Countries, List<Zipcodes>> germanCountriesToZipcodesMap = countriesService
+					.getGermanCountriesToZipcodesMap();
 			for (Entry<Countries, List<Zipcodes>> entry : germanCountriesToZipcodesMap.entrySet()) {
-				this.germanCountryToZipcodeMap.put(getMapper().toDomainObject(entry.getKey()), getMapper().map(entry.getValue(), Zipcode.class));				
+				this.germanCountryToZipcodeMap.put(getMapper().toDomainObject(entry.getKey()),
+						getMapper().map(entry.getValue(), Zipcode.class));
 			}
 		}
 		return this.germanCountryToZipcodeMap;

@@ -18,6 +18,7 @@ package de.alpharogroup.address.book.rest.client;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -30,13 +31,44 @@ import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
 import de.alpharogroup.address.book.rest.api.CountriesResource;
+import de.alpharogroup.address.book.rest.api.FederalstatesResource;
+import de.alpharogroup.address.book.rest.api.ZipcodesResource;
+import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
 import de.alpharogroup.collections.ListExtensions;
+import lombok.Getter;
 
 /**
  * The class {@link AddressBookRestClientTest}.
  */
 public class AddressBookRestClientTest {
-	AddressBookRestClient restClient;
+	
+	@Getter
+	private AddressBookRestClient restClient;
+	
+
+	/**
+	 * The {@link AddressesResource}.
+	 */
+	@Getter
+	private AddressesResource addressesResource;
+
+	/**
+	 * The {@link CountriesResource}.
+	 */
+	@Getter
+	private CountriesResource countriesResource;
+
+	/**
+	 * The {@link FederalstatesResource}.
+	 */
+	@Getter
+	private FederalstatesResource federalstatesResource;
+
+	/**
+	 * The {@link ZipcodesResource}.
+	 */
+	@Getter
+	private ZipcodesResource zipcodesResource;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -51,6 +83,10 @@ public class AddressBookRestClientTest {
 	public void setUpMethod() throws Exception {
 		if (restClient == null) {
 			restClient = new AddressBookRestClient();
+			addressesResource = restClient.getAddressesResource();
+			countriesResource = restClient.getCountriesResource();
+			federalstatesResource = restClient.getFederalstatesResource();
+			zipcodesResource = restClient.getZipcodesResource();
 		}
 	}
 
@@ -68,51 +104,50 @@ public class AddressBookRestClientTest {
 	public void testAddressesRestResource() {
 
 		// http://localhost:8080/address/geohash/u336
-		List<Address> addresses = restClient.getAddressesResource().find("u336");
+		List<Address> addresses = addressesResource.find("u336");
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/geohash/neighbourhood/u336
-		addresses = restClient.getAddressesResource().findNeighbourhood("u336");
+		addresses = addressesResource.findNeighbourhood("u336");
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/geohash/first/ring/u336
-		addresses = restClient.getAddressesResource().findFirstRingNeighbourhood("u336");
+		addresses = addressesResource.findFirstRingNeighbourhood("u336");
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/geohash/first/and/second/ring/u336
-		addresses = restClient.getAddressesResource().findFirstAndSecondRingNeighbourhood("u336");
+		addresses = addressesResource.findFirstAndSecondRingNeighbourhood("u336");
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/49.647934/8.110127
-		addresses = restClient.getAddressesResource().find("49.647934", "8.110127");
+		addresses = addressesResource.find("49.647934", "8.110127");
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/contains/49.647934/8.110127
-		Address address = restClient.getAddressesResource().contains("49.647934", "8.110127");
+		Address address = addressesResource.contains("49.647934", "8.110127");
 		System.out.println(address);
 		final Zipcode zc = getZipcode();
 		final Country germany = getGermanyAsCountry();
 		// http://localhost:8080/address/contains/zipcode
-		address = restClient.getAddressesResource().contains(zc);
+		address = addressesResource.contains(zc);
 		System.out.println(address);
 		// http://localhost:8080/address/find/zipcodes
-		addresses = restClient.getAddressesResource().find(zc);
+		addresses = addressesResource.find(zc);
 		System.out.println(addresses.size());
 		System.out.println(ListExtensions.getFirst(addresses));
 		// http://localhost:8080/address/find/zipcodes/by/country
-		final List<Zipcode> zipcodes = restClient.getAddressesResource().findAllAddressesWithCountry(germany);
+		final List<Zipcode> zipcodes = addressesResource.findAllAddressesWithCountry(germany);
 		System.out.println(zipcodes.size());
 		// http://localhost:8080/address/find/addresses/by/country
-		addresses = restClient.getAddressesResource().findAll(germany);
+		addresses = addressesResource.findAll(germany);
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/addresses/if/geohash/null
-		addresses = restClient.getAddressesResource().findGeohashIsNull();
+		addresses = addressesResource.findGeohashIsNull();
 		System.out.println(addresses.size());
-		// http://localhost:8080/address/find/addresses/by/country/and/zipcode
-		addresses = restClient.getAddressesResource().find(germany, "71638");
+		// http://localhost:8080/address/find/addresses
+		addresses = addressesResource.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").build() );
 		System.out.println(addresses.size());
-		// http://localhost:8080/address/find/addresses/by/country/zipcode/and/city
-		addresses = restClient.getAddressesResource().find(germany, "71638", "Ludwigsburg");
+		// http://localhost:8080/address/find/addresses
+		addresses = addressesResource.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").city("Ludwigsburg").build() );
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/first/by/country/and/zipcode
-		address = restClient.getAddressesResource().findFirst(germany, "71638");
+		address = addressesResource.findFirst(AddressSearchCriteria.builder().country(germany).zipcode("71638").build());
 		System.out.println(address);
-
 	}
 
 	/**
@@ -121,9 +156,10 @@ public class AddressBookRestClientTest {
 	 * Note: you have to start a rest server to test this or you have to mock
 	 * it.
 	 */
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testCountriesRestResource() {
-		final Map<Country, List<Federalstate>> map = restClient.getCountriesResource().getCountriesToFederalstatesMap();
+		final Map<Country, List<Federalstate>> map = countriesResource.getCountriesToFederalstatesMap();
+		AssertJUnit.assertNotNull(map);
 	}
 
 	private Zipcode getZipcode() {

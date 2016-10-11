@@ -59,6 +59,55 @@ public class HqlStringCreator
 	}
 
 	/**
+	 * Generates hql script for addresses.
+	 *
+	 * @param country the country
+	 * @param zipcode the zipcode
+	 * @param city the city
+	 * @return the generated hql string
+	 */
+	public static String forAddresses(Countries country, String zipcode, String city)
+	{
+		final StringBuilder sb = new StringBuilder();
+		sb.append("select a from " + Addresses.class.getSimpleName() + " a");
+		final boolean countryIsNotNull = country != null;
+		if (countryIsNotNull)
+		{
+			sb.append(" ");
+			sb.append("where a.zipcode.country=:country");
+		}
+		final boolean zipcodeIsNotNull = zipcode != null && !zipcode.isEmpty();
+		if (zipcodeIsNotNull)
+		{
+			sb.append(" ");
+			if (!countryIsNotNull)
+			{
+				sb.append("where a.zipcode.zipcode=:zipcode");
+			}
+			else
+			{
+				sb.append("and a.zipcode.zipcode=:zipcode");
+			}
+		}
+		
+		final boolean cityIsNotNull = city != null && !city.isEmpty();
+		if (cityIsNotNull)
+		{
+			sb.append(" ");
+			if (!countryIsNotNull && !zipcodeIsNotNull)
+			{
+				sb.append("where a.zipcode.city like :city");
+			}
+			else
+			{
+				sb.append("and a.zipcode.city like :city");
+			}
+		}
+		
+		return sb.toString().trim();
+	}
+	
+	/**
 	 * Generates hql script for countries.
 	 *
 	 * @param iso3166A2name the iso3166 a2name
@@ -117,28 +166,6 @@ public class HqlStringCreator
 				sb.append("and c.name=:name");
 			}
 		}
-		return sb.toString().trim();
-	}
-
-	/**
-	 * Generates hql script for addresses.
-	 *
-	 * @param geohash the geohash
-	 * @param latitude the latitude
-	 * @param longitude the longitude
-	 * @return the string
-	 */
-	public String forAddresses(
-	// String addressComment,
-	// Federalstates federalstate,
-		final String geohash, final String latitude, final String longitude
-	// , String street, String streetnumber,
-	// Zipcodes zipcode
-	)
-	{
-		final StringBuilder sb = new StringBuilder();
-		sb.append("select a from " + Addresses.class.getSimpleName() + " a");
-
 		return sb.toString().trim();
 	}
 

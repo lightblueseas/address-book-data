@@ -77,6 +77,7 @@ public class CountriesBusinessService extends
 	public void setCountriesDao(CountriesDao countriesDao) {
 		setDao(countriesDao);
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

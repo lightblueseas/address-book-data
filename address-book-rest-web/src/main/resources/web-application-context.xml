@@ -18,10 +18,10 @@
 			<ref bean="zipcodesResource" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
-			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+			<bean class="de.alpharogroup.address.book.rest.customserialize.JacksonObjectMapperProvider" />
 		</jaxrs:providers>
 	</jaxrs:server>
-
+	
 	<!-- web resources -->
 	<bean id="addressesResource" class="de.alpharogroup.address.book.rest.AddressesRestResource">
 		<property name="domainService" ref="addressesDomainService"></property>

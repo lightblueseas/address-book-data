@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.torpedoquery.jpa.Torpedo;
 
 import de.alpharogroup.address.book.daos.AddressesDao;
 import de.alpharogroup.address.book.entities.Addresses;
@@ -157,17 +158,13 @@ public class AddressesBusinessService
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<Addresses> findAll(Countries country)
 	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("select a from Addresses a");
-		sb.append(" ");
-		sb.append("where a.zipcode.country=:country");
-		final String hqlString = sb.toString();
-		final Query query = getQuery(hqlString);
-		query.setParameter("country", country);
-		List<Addresses> addresses = query.getResultList();
+		List<Addresses> addresses = null;
+		Addresses from = Torpedo.from(Addresses.class);
+		Torpedo.where(from.getZipcode().getCountry()).eq(country);
+		org.torpedoquery.jpa.Query<Addresses> select = Torpedo.select(from);
+		addresses = select.list(getDao().getEntityManager());
 		return addresses;
 	}
 
@@ -337,21 +334,9 @@ public class AddressesBusinessService
 	 * {@inheritDoc}
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<Addresses> find(Countries country, String zipcode)
 	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("select a from Addresses a");
-		sb.append(" ");
-		sb.append("where a.zipcode.country=:country");
-		sb.append(" ");
-		sb.append("and a.zipcode.zipcode=:zipcode");
-		final String hqlString = sb.toString();
-		final Query query = getQuery(hqlString);
-		query.setParameter("zipcode", zipcode);
-		query.setParameter("country", country);
-		List<Addresses> addresses = query.getResultList();
-		return addresses;
+		return find(country, zipcode, null);
 	}
 
 	/**
@@ -360,20 +345,18 @@ public class AddressesBusinessService
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(Countries country, String zipcode, String city)
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("select a from Addresses a");
-		sb.append(" ");
-		sb.append("where a.zipcode.country=:country");
-		sb.append(" ");
-		sb.append("and a.zipcode.zipcode=:zipcode");
-		sb.append(" ");
-		sb.append("and a.zipcode.city like :city");
-		final String hqlString = sb.toString();
+	{		
+		String hqlString = HqlStringCreator.forAddresses(country, zipcode, city);
 		final Query query = getQuery(hqlString);
-		query.setParameter("country", country);
-		query.setParameter("zipcode", zipcode);
-		query.setParameter("city", "%" + city + "%");
+		if(country != null){
+			query.setParameter("country", country);
+		}
+		if(zipcode != null){
+			query.setParameter("zipcode", zipcode);
+		}
+		if(city != null){
+			query.setParameter("city", city);
+		}		
 		List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}

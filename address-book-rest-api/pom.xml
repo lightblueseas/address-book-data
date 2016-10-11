@@ -21,6 +21,11 @@
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>address-book-domain</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+		</dependency>
 
 	</dependencies>
 

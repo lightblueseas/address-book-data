@@ -26,6 +26,13 @@
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>jgeohash-core</artifactId>
 		</dependency>
+		<!-- TORPEDOQUERY DEPENDENCIES -->
+		<dependency>
+			<groupId>org.torpedoquery</groupId>
+			<artifactId>org.torpedoquery</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+
 
 	</dependencies>
 

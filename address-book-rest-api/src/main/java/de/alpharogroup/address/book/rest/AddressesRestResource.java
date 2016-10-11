@@ -6,7 +6,9 @@ import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
+import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
 import de.alpharogroup.address.book.service.api.AddressService;
+import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 /**
@@ -115,8 +117,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(Country country, String zipcode) {
-		List<Address> addresses = getDomainService().find(country, zipcode);
+	public List<Address> find(AddressSearchCriteria addressSearchCriteria) {
+		List<Address> addresses = getDomainService().find(addressSearchCriteria.getCountry(), addressSearchCriteria.getZipcode(), addressSearchCriteria.getCity());
 		return addresses;
 	}
 
@@ -124,17 +126,9 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(Country country, String zipcode, String city) {
-		List<Address> addresses = getDomainService().find(country, zipcode, city);
-		return addresses;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Address findFirst(Country country, String zipcode) {
-		return getDomainService().findFirst(country, zipcode);
+	public Address findFirst(AddressSearchCriteria addressSearchCriteria) {
+		List<Address> addresses = find(addressSearchCriteria);
+		return ListExtensions.getFirst(addresses);
 	}
 	
 }

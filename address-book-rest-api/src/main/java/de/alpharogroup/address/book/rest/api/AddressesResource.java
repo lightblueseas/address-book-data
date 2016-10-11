@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
 import de.alpharogroup.service.rs.RestfulResource;
 
 /**
@@ -155,30 +156,13 @@ public interface AddressesResource extends RestfulResource<Integer, Address>
 	/**
 	 * Finds a list of {@link Address} from the given arguments.
 	 *
-	 * @param country
-	 *            the country
-	 * @param zipcode
-	 *            the zipcode
+	 * @param addressSearchCriteria the address search criteria
+	 * 
 	 * @return the list of {@link Address}
 	 */
 	@POST
-	@Path("/find/addresses/by/country/and/zipcode")
-	List<Address> find(Country country, String zipcode);
-
-	/**
-	 * Finds a list of {@link Address} from the given arguments.
-	 *
-	 * @param country
-	 *            the country
-	 * @param zipcode
-	 *            the zipcode
-	 * @param city
-	 *            the city
-	 * @return the list of {@link Address}
-	 */
-	@POST
-	@Path("/find/addresses/by/country/zipcode/and/city")
-	List<Address> find(Country country, String zipcode, String city);
+	@Path("/find/addresses")
+	List<Address> find(AddressSearchCriteria addressSearchCriteria);
 
 	/**
 	 * Finds the first {@link Address} from the given arguments.
@@ -191,6 +175,6 @@ public interface AddressesResource extends RestfulResource<Integer, Address>
 	 */
 	@POST
 	@Path("/find/first/by/country/and/zipcode")
-	Address findFirst(Country country, String zipcode);
+	Address findFirst(AddressSearchCriteria addressSearchCriteria);
 
 }
