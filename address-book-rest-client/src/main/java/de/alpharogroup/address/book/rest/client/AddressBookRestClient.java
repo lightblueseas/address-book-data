@@ -3,14 +3,13 @@ package de.alpharogroup.address.book.rest.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import de.alpharogroup.address.book.rest.api.AddressesResource;
 import de.alpharogroup.address.book.rest.api.CountriesResource;
 import de.alpharogroup.address.book.rest.api.FederalstatesResource;
 import de.alpharogroup.address.book.rest.api.ZipcodesResource;
-import de.alpharogroup.address.book.rest.customserialize.CustomTypeModulesRegistrationProvider;
 import de.alpharogroup.cxf.rest.client.AbstractRestClient;
+import de.alpharogroup.service.rs.providers.CustomTypeModulesRegistrationProvider;
 import lombok.Getter;
 
 /**
