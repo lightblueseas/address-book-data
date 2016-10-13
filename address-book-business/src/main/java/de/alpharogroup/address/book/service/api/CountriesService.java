@@ -3,14 +3,12 @@ package de.alpharogroup.address.book.service.api;
 import java.util.List;
 import java.util.Map;
 
-import de.alpharogroup.address.book.application.model.ValuesOfCountryName;
-import de.alpharogroup.address.book.application.model.FederalStatesOfCountry;
 import de.alpharogroup.address.book.application.model.LocationModel;
-import de.alpharogroup.address.book.application.model.ZipcodesOfCountry;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.entities.Zipcodes;
+import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.db.service.api.BusinessService;
 
 /**
@@ -34,7 +32,7 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	 * 
 	 * @return the countries to federalstates list
 	 */
-	List<FederalStatesOfCountry> getCountriesToFederalstatesList();
+	List<KeyValuesPair<Countries, Federalstates>> getCountriesToFederalstatesList();
 
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as
@@ -47,12 +45,12 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	Map<String, List<String>> getCountriesToFederalstatesAsStringMap();
 
 	/**
-	 * Gets a map with the mapping-class: the key is the name of the country and as
+	 * Gets a list with the mapping-class: the key is the name of the country and as
 	 * value the corresponding federal states as a List of Iso3166A2code String objects.
 	 * 
 	 * @return the countries to federalstates as string list
 	 */
-	List<ValuesOfCountryName> getCountriesToFederalstatesAsStringList();
+	List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList();
 	
 	/**
 	 * Gets a map with the mapping: the key as Countries object and as value the
@@ -64,12 +62,12 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	Map<Countries, List<Zipcodes>> getCountriesToZipcodesMap();
 	
 	/**
-	 * Gets a map with the mapping-class: the key as Countries object and as value the
+	 * Gets a list with the mapping-class: the key as Countries object and as value the
 	 * corresponding Zipcodes as a List of Zipcodes objects.
 	 *
 	 * @return the countries to zipcodes list
 	 */
-	List<ZipcodesOfCountry> getCountriesToZipcodesList();
+	List<KeyValuesPair<Countries, Zipcodes>> getCountriesToZipcodesList();
 	
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as
@@ -78,45 +76,85 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	 * @return the countries to zipcodes as string map
 	 * @deprecated use instead {@link CountriesService#getCountriesToZipcodesAsStringList()}
 	 */
+	@Deprecated
 	Map<String, List<String>> getCountriesToZipcodesAsStringMap();
 	
 	/**
-	 * Gets a map with the mapping-class: the key is the name of the country and as
+	 * Gets a list with the mapping-class: the key is the name of the country and as
 	 * value the corresponding zipcodes as a List of String objects.
 	 *
 	 * @return the countries to zipcodes as string list
 	 */
-	List<ValuesOfCountryName> getCountriesToZipcodesAsStringList();
+	List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList();
 	
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as
 	 * value the corresponding zipcodes as a List of String objects.
 	 *
 	 * @return the countries to zipcodes as string map for german speeking countries only
+	 * @deprecated use instead {@link CountriesService#getGermanCountriesToZipcodesList()}
 	 */
+	@Deprecated
 	Map<Countries, List<Zipcodes>> getGermanCountriesToZipcodesMap();
+	
+	/**
+	 * Gets a list with the mapping-class: the key is the name of the country and as
+	 * value the corresponding zipcodes as a List of String objects.
+	 *
+	 * @return the countries to zipcodes as list of {@link KeyValuesPair} for german speeking countries only
+	 */
+	List<KeyValuesPair<Countries, Zipcodes>> getGermanCountriesToZipcodesList();
 	
 	/**
 	 * Gets the german countries to zipcodes as string map.
 	 *
 	 * @return the german countries to zipcodes as string map
+	 * @deprecated use instead {@link CountriesService#getGermanCountriesToZipcodesAsStringList()}
 	 */
+	@Deprecated
 	Map<String, List<String>> getGermanCountriesToZipcodesAsStringMap();
+	
+	/**
+	 * Gets a list with the mapping-class: the key is the name of the german speaking country and as
+	 * value the corresponding zipcodes as a List of String objects.
+	 *
+	 * @return the german speaking countries to zipcodes as string list
+	 */
+	List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList();
 	
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as
 	 * value the corresponding zipcodes and cities as a List of String objects.
 	 *
 	 * @return the countries to zipcodes and cities as string map
+	 * @deprecated use instead {@link CountriesService#getCountriesToZipcodesAndCitiesAsStringList()}
 	 */
+	@Deprecated
 	Map<String, List<String>> getCountriesToZipcodesAndCitiesAsStringMap();
+	
+	/**
+	 * Gets a list with the mapping-class: the key is the name of the country and as
+	 * value the corresponding zipcodes and cities as a List of String objects.
+	 *
+	 * @return the countries to zipcodes and cities as string list
+	 */
+	List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList();
 	
 	/**
 	 * Gets the german countries to zipcodes and cities as string map.
 	 *
 	 * @return the german countries to zipcodes and cities as string map
+	 * @deprecated use instead {@link CountriesService#getGermanCountriesToZipcodesAndCitiesAsStringList()}
 	 */
+	@Deprecated
 	Map<String, List<String>> getGermanCountriesToZipcodesAndCitiesAsStringMap();
+	
+	/**
+	 * Gets the german countries to zipcodes and cities as string list.
+	 *
+	 * @return the german countries to zipcodes and cities as string list
+	 */
+	List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList();
 	
 	/**
 	 * Find all {@link Countries} from the given arguments.

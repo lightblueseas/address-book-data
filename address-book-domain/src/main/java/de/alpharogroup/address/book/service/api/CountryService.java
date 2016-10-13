@@ -8,6 +8,7 @@ import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.domain.DomainService;
 
 public interface CountryService extends DomainService<Integer, Country>
@@ -19,7 +20,15 @@ public interface CountryService extends DomainService<Integer, Country>
 	 * 
 	 * @return the countries to federalstates map
 	 */
-	Map<Country, List<Federalstate>> getCountriesToFederalstatesMap();
+	Map<Country, List<Federalstate>> getCountriesToFederalstatesMap();	
+
+	/**
+	 * Gets a list with the mapping-class: the key as Country object and as value the
+	 * corresponding federal states as a List of Federalstate objects.
+	 * 
+	 * @return the Country to federalstate list
+	 */
+	List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList();
 
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as

@@ -18,7 +18,7 @@
 			<ref bean="zipcodesResource" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
-			<bean class="de.alpharogroup.address.book.rest.customserialize.JacksonObjectMapperProvider" />
+			<bean class="de.alpharogroup.address.book.rest.customserialize.CustomTypeModulesRegistrationProvider" />
 		</jaxrs:providers>
 	</jaxrs:server>
 	

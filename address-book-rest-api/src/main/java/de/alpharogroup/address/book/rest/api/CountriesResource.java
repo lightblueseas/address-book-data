@@ -14,6 +14,7 @@ import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.rs.RestfulResource;
 
 @Path("/country/")
@@ -31,6 +32,11 @@ public interface CountriesResource extends RestfulResource<Integer, Country>
 	@POST
 	@Path("/to/federalstates/")
 	Map<Country, List<Federalstate>> getCountriesToFederalstatesMap();
+	
+
+	@POST
+	@Path("/to/federalstateslist/")
+	List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList();
 
 	/**
 	 * Gets a map with the mapping: the key is the name of the country and as

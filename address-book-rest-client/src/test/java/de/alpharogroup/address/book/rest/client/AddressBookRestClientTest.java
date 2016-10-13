@@ -35,6 +35,7 @@ import de.alpharogroup.address.book.rest.api.FederalstatesResource;
 import de.alpharogroup.address.book.rest.api.ZipcodesResource;
 import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
 import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.pairs.KeyValuesPair;
 import lombok.Getter;
 
 /**
@@ -158,8 +159,8 @@ public class AddressBookRestClientTest {
 	 */
 	@Test(enabled = true)
 	public void testCountriesRestResource() {
-		final Map<Country, List<Federalstate>> map = countriesResource.getCountriesToFederalstatesMap();
-		AssertJUnit.assertNotNull(map);
+		final List<KeyValuesPair<Country, Federalstate>> list = countriesResource.getCountriesToFederalstatesList();
+		AssertJUnit.assertNotNull(list);
 	}
 
 	private Zipcode getZipcode() {

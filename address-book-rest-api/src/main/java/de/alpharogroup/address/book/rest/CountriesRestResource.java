@@ -10,6 +10,7 @@ import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.rest.api.CountriesResource;
 import de.alpharogroup.address.book.service.api.CountryService;
+import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 /**
@@ -25,6 +26,12 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	@Override
 	public Map<Country, List<Federalstate>> getCountriesToFederalstatesMap() {
 		return getDomainService().getCountriesToFederalstatesMap();
+	}
+	
+
+	@Override
+	public List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList() {
+		return getDomainService().getCountriesToFederalstatesList();
 	}
 
 	/**
@@ -114,4 +121,5 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	public String setLocationModel(LocationModel<Address> modelObject, String zc) {
 		return getDomainService().setLocationModel(modelObject, zc);
 	}
+
 }

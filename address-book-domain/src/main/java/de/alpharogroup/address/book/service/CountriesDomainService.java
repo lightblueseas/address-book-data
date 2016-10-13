@@ -1,5 +1,7 @@
 package de.alpharogroup.address.book.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,17 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import de.alpharogroup.address.book.application.model.LocationModel;
 import de.alpharogroup.address.book.daos.CountriesDao;
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.address.book.domain.customserialize.CountryDeserializer;
-import de.alpharogroup.address.book.domain.customserialize.CountrySerializer;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
@@ -27,6 +24,7 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.CountriesMapper;
 import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.CountryService;
+import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.lang.object.CopyObjectExtensions;
 import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
@@ -47,18 +45,15 @@ public class CountriesDomainService extends
 	private CountriesService countriesService;
 
 	/** The country to zipcode map. */
-	@JsonDeserialize(using = CountryDeserializer.class)
-	@JsonSerialize(using = CountrySerializer.class)
 	private Map<Country, List<Zipcode>> countryToZipcodeMap;
 
 	/** The country to federalstate map. */
-	@JsonDeserialize(using = CountryDeserializer.class)
-	@JsonSerialize(using = CountrySerializer.class)
-	private Map<Country, List<Federalstate>> countryToFederalstateMap;
+	private Map<Country, List<Federalstate>> countryToFederalstateMap;	
+
+	/** The country to federalstate list. */
+	private List<KeyValuesPair<Country, Federalstate>> countryToFederalstateList;
 
 	/** The german country to zipcode map. */
-	@JsonDeserialize(using = CountryDeserializer.class)
-	@JsonSerialize(using = CountrySerializer.class)
 	private Map<Country, List<Zipcode>> germanCountryToZipcodeMap;
 
 	/**
@@ -106,6 +101,34 @@ public class CountriesDomainService extends
 			}
 		}
 		return this.countryToFederalstateMap;
+	}
+	
+
+	@Override
+	public List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList() {
+		if (this.countryToFederalstateList == null) {
+			this.countryToFederalstateList = new ArrayList<>();
+			List<KeyValuesPair<Countries, Federalstates>> countriesToFederalstatesMap = countriesService
+					.getCountriesToFederalstatesList();
+			final CountriesMapper mapper = getMapper();
+			for (KeyValuesPair<Countries, Federalstates> entry : countriesToFederalstatesMap) {
+				Countries countries = entry.getKey();
+				Collection<Federalstates> fss = entry.getValues();
+				if (countries != null) {
+					Country country = mapper.toDomainObject(countries);
+					List<Federalstate> federalstates = mapper.map(fss, Federalstate.class);
+					this.countryToFederalstateList.add(
+							KeyValuesPair.<Country, Federalstate>builder()
+							.key(country)
+							.values(federalstates)
+							.build()
+							);
+				} else {
+					System.err.println(fss);
+				}
+			}
+		}
+		return this.countryToFederalstateList;
 	}
 
 	/**
@@ -216,4 +239,5 @@ public class CountriesDomainService extends
 		CopyObjectExtensions.copyQuietly(locationModel, modelObject);
 		return result;
 	}
+
 }
