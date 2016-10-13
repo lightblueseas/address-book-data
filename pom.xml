@@ -5,8 +5,8 @@
 
 	<parent>
 		<groupId>de.alpharogroup</groupId>
-		<artifactId>mvn-persistence-parent</artifactId>
-		<version>2.46.0</version>
+		<artifactId>persistence-api</artifactId>
+		<version>3.20.0</version>
 		<relativePath />
 	</parent>
 

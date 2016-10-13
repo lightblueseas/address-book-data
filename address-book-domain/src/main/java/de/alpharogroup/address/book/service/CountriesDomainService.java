@@ -48,6 +48,7 @@ public class CountriesDomainService extends
 	private Map<Country, List<Zipcode>> countryToZipcodeMap;
 
 	/** The country to federalstate map. */
+	@Deprecated
 	private Map<Country, List<Federalstate>> countryToFederalstateMap;	
 
 	/** The country to federalstate list. */
@@ -81,6 +82,7 @@ public class CountriesDomainService extends
 	/**
 	 * {@inheritDoc}
 	 */
+	@Deprecated
 	@Override
 	public Map<Country, List<Federalstate>> getCountriesToFederalstatesMap() {
 		if (this.countryToFederalstateMap == null) {

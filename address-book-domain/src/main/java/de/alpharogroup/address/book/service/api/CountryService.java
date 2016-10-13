@@ -19,7 +19,9 @@ public interface CountryService extends DomainService<Integer, Country>
 	 * corresponding federal states as a List of Federalstate objects.
 	 * 
 	 * @return the countries to federalstates map
+	 * @deprecated use instead {@link CountryService#getCountriesToFederalstatesList()}
 	 */
+	@Deprecated
 	Map<Country, List<Federalstate>> getCountriesToFederalstatesMap();	
 
 	/**
