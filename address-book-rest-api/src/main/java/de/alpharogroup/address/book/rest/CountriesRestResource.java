@@ -1,9 +1,8 @@
 package de.alpharogroup.address.book.rest;
 
 import java.util.List;
-import java.util.Map;
 
-import de.alpharogroup.address.book.application.model.LocationModel;
+import de.alpharogroup.address.book.application.model.LocationSearchModel;
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
@@ -24,70 +23,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Country, List<Federalstate>> getCountriesToFederalstatesMap() {
-		return getDomainService().getCountriesToFederalstatesMap();
-	}
-	
-
-	@Override
 	public List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList() {
 		return getDomainService().getCountriesToFederalstatesList();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<String, List<String>> getCountriesToFederalstatesAsStringMap() {
-		return getDomainService().getCountriesToFederalstatesAsStringMap();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<Country, List<Zipcode>> getCountriesToZipcodesMap() {
-		return getDomainService().getCountriesToZipcodesMap();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<String, List<String>> getCountriesToZipcodesAsStringMap() {
-		return getDomainService().getCountriesToZipcodesAsStringMap();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<Country, List<Zipcode>> getGermanCountriesToZipcodesMap() {
-		return getDomainService().getGermanCountriesToZipcodesMap();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<String, List<String>> getGermanCountriesToZipcodesAsStringMap() {
-		return getDomainService().getGermanCountriesToZipcodesAsStringMap();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<String, List<String>> getCountriesToZipcodesAndCitiesAsStringMap() {
-		return getDomainService().getCountriesToZipcodesAndCitiesAsStringMap();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<String, List<String>> getGermanCountriesToZipcodesAndCitiesAsStringMap() {
-		return getDomainService().getGermanCountriesToZipcodesAndCitiesAsStringMap();
 	}
 
 	/**
@@ -118,8 +55,64 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String setLocationModel(LocationModel<Address> modelObject, String zc) {
-		return getDomainService().setLocationModel(modelObject, zc);
+	public List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList() {
+		return getDomainService().getCountriesToFederalstatesAsStringList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<KeyValuesPair<Country, Zipcode>> getCountriesToZipcodesList() {
+		return getDomainService().getCountriesToZipcodesList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList() {
+		return getDomainService().getCountriesToZipcodesAsStringList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<KeyValuesPair<Country, Zipcode>> getGermanCountriesToZipcodesList() {
+		return getDomainService().getGermanCountriesToZipcodesList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList() {
+		return getDomainService().getGermanCountriesToZipcodesAsStringList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList() {
+		return getDomainService().getCountriesToZipcodesAndCitiesAsStringList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList() {
+		return getDomainService().getGermanCountriesToZipcodesAndCitiesAsStringList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public LocationSearchModel<Address> setLocationSearchModel(LocationSearchModel<Address> modelObject) {
+		return getDomainService().setLocationSearchModel(modelObject);
 	}
 
 }

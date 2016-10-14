@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.alpharogroup.address.book.application.model.LocationModel;
+import de.alpharogroup.address.book.application.model.LocationSearchModel;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
@@ -190,6 +191,17 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	 * @param modelObject the model object
 	 * @param zc the zipcode as string
 	 * @return null if everything is ok otherwise an error property string
+	 * @deprecated use instead {@link CountriesService#setLocationSearchModel()}
 	 */
+	@Deprecated
 	String setLocationModel(LocationModel<Addresses> modelObject, String zc);
+	
+	/**
+	 * Sets the given {@link LocationSearchModel} object and returns it.
+	 *
+	 * @param modelObject the model object
+	 * 
+	 * @return the modified {@link LocationSearchModel} object.
+	 */
+	LocationSearchModel<Addresses> setLocationSearchModel(LocationSearchModel<Addresses> modelObject);
 }

@@ -3,7 +3,10 @@ package de.alpharogroup.address.book.rest.api;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -24,7 +27,9 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 *            the iso3166 a2code
 	 * @return the federal states
 	 */
-	Federalstate findFederalstateFromIso3166A2code(final String iso3166A2code);
+	@GET
+	@Path("/find/federalstate/{iso3166A2code}/")
+	Federalstate findFederalstateFromIso3166A2code(@PathParam("iso3166A2code") final String iso3166A2code);
 
 	/**
 	 * Find federalstate name from iso3166 a2code.
@@ -33,7 +38,9 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 *            the iso3166 a2code
 	 * @return the string
 	 */
-	String findFederalstateNameFromIso3166A2code(final String iso3166A2code);
+	@GET
+	@Path("/find/federalstatestring/{iso3166A2code}/")
+	String findFederalstateNameFromIso3166A2code(@PathParam("iso3166A2code")final String iso3166A2code);
 
 	/**
 	 * Find federalstates from country.
@@ -42,6 +49,8 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 *            the country
 	 * @return the list
 	 */
+	@POST
+	@Path("/find/federalstate/country")
 	List<Federalstate> findFederalstatesFromCountry(final Country country);
 
 	/**

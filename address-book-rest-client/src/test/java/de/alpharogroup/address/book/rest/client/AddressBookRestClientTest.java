@@ -159,8 +159,14 @@ public class AddressBookRestClientTest {
 	 */
 	@Test(enabled = true)
 	public void testCountriesRestResource() {
+
+		// http://localhost:8080/country/get/country2federalstate/list/
 		final List<KeyValuesPair<Country, Federalstate>> list = countriesResource.getCountriesToFederalstatesList();
 		AssertJUnit.assertNotNull(list);
+
+		// http://localhost:8080/country/get/country2federalstate/stringlist/
+		List<KeyValuesPair<String, String>> cList = countriesResource.getCountriesToFederalstatesAsStringList();
+		AssertJUnit.assertNotNull(cList);
 	}
 
 	private Zipcode getZipcode() {

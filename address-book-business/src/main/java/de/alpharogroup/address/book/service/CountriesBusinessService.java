@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.address.book.application.model.LocationModel;
+import de.alpharogroup.address.book.application.model.LocationSearchModel;
 import de.alpharogroup.address.book.daos.CountriesDao;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
@@ -179,6 +180,9 @@ public class CountriesBusinessService extends
 	}	
 
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList() {
 		if(this.countriesToFederalstatesAsStringList == null) {
@@ -226,6 +230,9 @@ public class CountriesBusinessService extends
 		return this.countriesToZipcodesMap;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<KeyValuesPair<Countries, Zipcodes>> getCountriesToZipcodesList() {
 		if(this.countriesToZipcodesList == null) {
@@ -272,6 +279,9 @@ public class CountriesBusinessService extends
 		return this.countriesToZipcodesAsStringMap;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList() {
 		if(this.countriesToZipcodesAsStringList == null) {
@@ -334,6 +344,9 @@ public class CountriesBusinessService extends
 	}
 	
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<KeyValuesPair<Countries, Zipcodes>> getGermanCountriesToZipcodesList() {
 		if(this.germanCountriesToZipcodesList == null) {
@@ -396,6 +409,9 @@ public class CountriesBusinessService extends
 	}
 	
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList() {
 		if(this.germanCountriesToZipcodesAsStringList == null) {
@@ -443,6 +459,9 @@ public class CountriesBusinessService extends
 	}
 	
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList() {
 		if(this.countriesToZipcodesAndCitiesAsStringList == null) {
@@ -489,6 +508,9 @@ public class CountriesBusinessService extends
 		return this.germanCountriesToZipcodesAndCitiesAsStringMap;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList() {
 		if(this.germanCountriesToZipcodesAndCitiesAsStringList == null) {
@@ -557,6 +579,7 @@ public class CountriesBusinessService extends
 	/**
 	 * {@inheritDoc}
 	 */
+	@Deprecated
 	@Override
 	public String setLocationModel(LocationModel<Addresses> modelObject, String zc) {
 		String errorKey = null;
@@ -581,5 +604,32 @@ public class CountriesBusinessService extends
 		return errorKey;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public LocationSearchModel<Addresses> setLocationSearchModel(LocationSearchModel<Addresses> modelObject) {
+		String errorKey = null;
+		if(modelObject.getZipcode() == null) {
+			errorKey = "global.location.error.label";						
+		} else {
+			Countries country = findByName(modelObject.getLocation().getSelectedCountryName());
+			Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country, modelObject.getZipcode());
+			if(zipcode != null){
+				List<Addresses> addresses = getAddressesService().find(zipcode);
+				Addresses address = null;
+				if(addresses != null && !addresses.isEmpty()) {
+					address = addresses.get(0);
+					modelObject.getLocation().setAddress(address);
+				} else {
+					errorKey = "global.location.error.label";
+				}
+			} else {
+				errorKey = "global.location.error.label";
+			}
+			modelObject.setErrorKey(errorKey);
+		}
+		return modelObject;
+	}
 
 }
