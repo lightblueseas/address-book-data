@@ -3,6 +3,7 @@
 <suite name="Suite" parallel="false">
 	<test name="Test">
 		<classes>
+			<class name="de.alpharogroup.address.book.rest.client.AddressBookRestClientTest" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

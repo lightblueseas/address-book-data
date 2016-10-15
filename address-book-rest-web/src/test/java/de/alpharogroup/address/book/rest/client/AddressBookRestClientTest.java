@@ -16,7 +16,6 @@
 package de.alpharogroup.address.book.rest.client;
 
 import java.util.List;
-import java.util.Map;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
@@ -70,14 +69,13 @@ public class AddressBookRestClientTest {
 	 */
 	@Getter
 	private ZipcodesResource zipcodesResource;
-
+	
 	@BeforeClass
-	public static void setUpClass() throws Exception {
-
+	public void setUpClass() throws Exception {
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public void tearDownClass() throws Exception {
 	}
 
 	@BeforeMethod
@@ -161,12 +159,38 @@ public class AddressBookRestClientTest {
 	public void testCountriesRestResource() {
 
 		// http://localhost:8080/country/get/country2federalstate/list/
-		final List<KeyValuesPair<Country, Federalstate>> list = countriesResource.getCountriesToFederalstatesList();
-		AssertJUnit.assertNotNull(list);
+		final List<KeyValuesPair<Country, Federalstate>> countriesToFederalstatesList = countriesResource.getCountriesToFederalstatesList();
+		AssertJUnit.assertNotNull(countriesToFederalstatesList);
 
 		// http://localhost:8080/country/get/country2federalstate/stringlist/
-		List<KeyValuesPair<String, String>> cList = countriesResource.getCountriesToFederalstatesAsStringList();
-		AssertJUnit.assertNotNull(cList);
+		List<KeyValuesPair<String, String>> countriesToFederalstatesAsStringList = countriesResource.getCountriesToFederalstatesAsStringList();
+		AssertJUnit.assertNotNull(countriesToFederalstatesAsStringList);
+
+		// http://localhost:8080/country/get/country2zipcodes/list/
+		List<KeyValuesPair<Country, Zipcode>> countriesToZipcodesList = countriesResource.getCountriesToZipcodesList();
+		AssertJUnit.assertNotNull(countriesToZipcodesList);
+
+		// http://localhost:8080/country/get/country2zipcodes/stringlist/
+		List<KeyValuesPair<String, String>> countriesToZipcodesAsStringList = countriesResource.getCountriesToZipcodesAsStringList();
+		AssertJUnit.assertNotNull(countriesToZipcodesAsStringList);
+
+		// http://localhost:8080/country/get/germancountry2zipcodes/list/
+		List<KeyValuesPair<Country, Zipcode>> germanCountriesToZipcodesList = countriesResource.getGermanCountriesToZipcodesList();
+		AssertJUnit.assertNotNull(germanCountriesToZipcodesList);
+		
+		// http://localhost:8080/country/get/germancountry2zipcodes/stringlist/
+		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAsStringList = countriesResource.getGermanCountriesToZipcodesAsStringList();
+		AssertJUnit.assertNotNull(germanCountriesToZipcodesAsStringList);
+
+		// http://localhost:8080/country/get/country2zipcodesandcities/stringlist/
+		List<KeyValuesPair<String, String>> countriesToZipcodesAndCitiesAsStringList = countriesResource.getCountriesToZipcodesAndCitiesAsStringList();
+		AssertJUnit.assertNotNull(countriesToZipcodesAndCitiesAsStringList);
+
+		// http://localhost:8080/country/get/germancountry2zipcodesandcities/stringlist/
+		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAndCitiesAsStringList = countriesResource.getGermanCountriesToZipcodesAndCitiesAsStringList();
+		AssertJUnit.assertNotNull(germanCountriesToZipcodesAndCitiesAsStringList);
+		
+		
 	}
 
 	private Zipcode getZipcode() {

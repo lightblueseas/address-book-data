@@ -32,7 +32,11 @@ public class ApplicationJettyRunner {
 	 * @throws Exception the exception
 	 */
     public static void main(final String[] args) throws Exception {
-        final int sessionTimeout = 1800;// set timeout to 30min(60sec * 30min=1800sec)...
+    	ApplicationJettyRunner.runRestApplication();
+    }
+
+    public static Server runRestApplication() {
+		final int sessionTimeout = 1800;// set timeout to 30min(60sec * 30min=1800sec)...
         final String projectname = "address-book-rest-web";
         final File projectDirectory = PathFinder.getProjectDirectory();
         final File webapp = PathFinder.getRelativePath(projectDirectory, projectname, "src", "main",
@@ -74,8 +78,8 @@ public class ApplicationJettyRunner {
                 .build();
         final Server server = new Server();
         Jetty9Runner.runServletContextHandler(server, configuration);
-
-    }
+		return server;
+	}
 
 	/**
 	 * Gets the project name.
