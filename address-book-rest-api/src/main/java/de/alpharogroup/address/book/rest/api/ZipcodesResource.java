@@ -9,7 +9,7 @@ import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.service.rs.RestfulResource;
 
-@Path("/country/")
+@Path("/zipcode/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface ZipcodesResource extends RestfulResource<Integer, Zipcode>
@@ -27,7 +27,9 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode>
 	 *            the city
 	 * @return the list of {@link Zipcode}
 	 */
-	List<Zipcode> find(String country, String zipcode, String city);
+	@GET
+	@Path("/find/{country}/{zipcode}/{city}/")
+	List<Zipcode> find(@PathParam("country") String country, @PathParam("zipcode") String zipcode, @PathParam("city") String city);
 
 	/**
 	 * Gets a List of {@link Zipcode} with the given parameters that can be null if
@@ -46,6 +48,8 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode>
 	/**
 	 * Delete all zipcodes.
 	 */
+	@GET
+	@Path("/deleteAllZipcodes/")
 	void deleteAllZipcodes();
 
 	/**
