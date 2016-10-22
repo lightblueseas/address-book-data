@@ -13,7 +13,7 @@ import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 /**
- * The class {@link CountriesRestResource}.
+ * The class {@link CountriesRestResource} provides an implementation of the inteface {@link CountriesResource}.
  */
 public class CountriesRestResource extends AbstractRestfulResource<Integer, Country, CountryService>
 	implements CountriesResource

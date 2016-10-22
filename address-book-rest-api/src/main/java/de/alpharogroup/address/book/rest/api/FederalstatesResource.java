@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
+import de.alpharogroup.collections.pairs.KeyValuePair;
 import de.alpharogroup.service.rs.RestfulResource;
 
 @Path("/federalstate/")
@@ -50,36 +51,40 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 * @return the list
 	 */
 	@POST
-	@Path("/find/federalstate/country")
+	@Path("/find/federalstates/country")
 	List<Federalstate> findFederalstatesFromCountry(final Country country);
 
 	/**
 	 * Find federal states from country.
 	 * 
-	 * @param country
-	 *            the country
-	 * @param name the name of the federal state
+	 * @param countryWithName
+	 *            the {@link KeyValuePair} object that encapsulate the country with the name of the federal state
 	 * @return the list of found federal states.
 	 */
-	List<Federalstate> findFederalstatesFromCountry(final Country country, String name);
+	@POST
+	@Path("/find/federalstates/country/with/name")
+	List<Federalstate> findFederalstatesFromCountry(final KeyValuePair<Country, String> countryWithName);
 
 	/**
 	 * Find the first federal state from country.
 	 * 
-	 * @param country
-	 *            the country
-	 * @param name the name of the federal state
+	 * @param countryWithName
+	 *            the {@link KeyValuePair} object that encapsulate the country with the name of the federal state
 	 * @return the the first federal state or null if not found.
 	 */
-	Federalstate findFederalstate(final Country country, String name);
+	@POST
+	@Path("/find/federalstate/country/with/name")
+	Federalstate findFederalstate(final KeyValuePair<Country, String> countryWithName);
 
 	/**
 	 * Gets the Federalstates from the given String object. Example for the
 	 * format for the given String is(without the double quotes): "gr.grc=&gt;gr.a"
 	 * or "de.deu=&gt;de.bw"
 	 *
-	 * @param string a concat string from country and an optional state string code.
+	 * @param countrystatecode a concat string from country and an optional state string code.
 	 * @return the federalstate
 	 */
-	Federalstate getFederalstate(final String string);
+	@GET
+	@Path("/get/federalstate/{countrystatecode}/")
+	Federalstate getFederalstate(final String countrystatecode);
 }
