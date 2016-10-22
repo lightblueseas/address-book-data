@@ -15,6 +15,7 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.factories.AddressBookFactory;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
+import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 
 /**
@@ -76,12 +77,10 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public Zipcodes getZipcode(final String zipcode, final String city) {
-		final Zipcodes zc;
+	public Zipcodes getZipcode(final String zipcode, final String city) {		
 		final List<Zipcodes> zipcodes = findZipcodes(zipcode);
-		if (zipcodes != null && !zipcodes.isEmpty()) {
-			zc = zipcodes.get(0);
-		} else {
+		Zipcodes zc = ListExtensions.getFirst(zipcodes);
+		if (zc == null) {
 			zc = AddressBookFactory.getInstance().newZipcodes(null, null, city,
 					zipcode);
 		}
@@ -102,10 +101,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	@Override
 	public Zipcodes findCityFromZipcode(final Countries country, final String zipcode) {
 		final List<Zipcodes> zipcodes = findAll(country, zipcode, null);
-		if(zipcodes != null && !zipcodes.isEmpty()){
-			return zipcodes.get(0);
-		}
-		return null;
+		return ListExtensions.getFirst(zipcodes);
 
 	}
 

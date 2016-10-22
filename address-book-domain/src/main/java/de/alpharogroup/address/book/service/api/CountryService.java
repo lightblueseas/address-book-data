@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import de.alpharogroup.address.book.application.model.LocationModel;
-import de.alpharogroup.address.book.application.model.LocationSearchModel;
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.address.book.entities.Addresses;
+import de.alpharogroup.address.book.domain.model.LocationSearchModel;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.domain.DomainService;
 

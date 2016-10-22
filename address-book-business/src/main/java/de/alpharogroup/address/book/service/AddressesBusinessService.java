@@ -21,6 +21,7 @@ import de.alpharogroup.address.book.service.api.AddressesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
+import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 import de.alpharogroup.jgeohash.Adjacent;
 import de.alpharogroup.jgeohash.GeoHashExtensions;
@@ -291,11 +292,7 @@ public class AddressesBusinessService
 	public Addresses contains(String latitude, String longitude)
 	{
 		List<Addresses> addresses = find(latitude, longitude);
-		if (addresses != null && !addresses.isEmpty())
-		{
-			return addresses.get(0);
-		}
-		return null;
+		return ListExtensions.getFirst(addresses);
 	}
 
 	/**
@@ -305,11 +302,7 @@ public class AddressesBusinessService
 	public Addresses contains(Zipcodes zipcode)
 	{
 		List<Addresses> addresses = find(zipcode);
-		if (addresses != null && !addresses.isEmpty())
-		{
-			return addresses.get(0);
-		}
-		return null;
+		return ListExtensions.getFirst(addresses);
 	}
 
 	/**
@@ -445,11 +438,7 @@ public class AddressesBusinessService
 	public Addresses findFirst(Countries country, String zipcode)
 	{
 		List<Addresses> addresses = find(country, zipcode);
-		if (addresses != null && !addresses.isEmpty())
-		{
-			return addresses.get(0);
-		}
-		return null;
+		return ListExtensions.getFirst(addresses);
 	}
 
 }

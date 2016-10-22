@@ -1,4 +1,4 @@
-package de.alpharogroup.address.book.application.model;
+package de.alpharogroup.address.book.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,10 +20,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LocationSearchModel<Addresses> {
+public class LocationSearchModel<Address> {
 	
 	/** The model object. */
-	private LocationAddressesModel location;
+	private LocationAddressModel location;
 	
 	/** The zipcode. */
 	private String zipcode;

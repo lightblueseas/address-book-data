@@ -18,8 +18,7 @@ import de.alpharogroup.service.rs.RestfulResource;
 @Path("/federalstate/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface FederalstatesResource extends RestfulResource<Integer, Federalstate>
-{
+public interface FederalstatesResource extends RestfulResource<Integer, Federalstate> {
 
 	/**
 	 * Find federal state from iso3166 a2code.
@@ -41,7 +40,7 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 */
 	@GET
 	@Path("/find/federalstatestring/{iso3166A2code}/")
-	String findFederalstateNameFromIso3166A2code(@PathParam("iso3166A2code")final String iso3166A2code);
+	String findFederalstateNameFromIso3166A2code(@PathParam("iso3166A2code") final String iso3166A2code);
 
 	/**
 	 * Find federalstates from country.
@@ -58,7 +57,8 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 * Find federal states from country.
 	 * 
 	 * @param countryWithName
-	 *            the {@link KeyValuePair} object that encapsulate the country with the name of the federal state
+	 *            the {@link KeyValuePair} object that encapsulate the country
+	 *            with the name of the federal state
 	 * @return the list of found federal states.
 	 */
 	@POST
@@ -69,7 +69,8 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 * Find the first federal state from country.
 	 * 
 	 * @param countryWithName
-	 *            the {@link KeyValuePair} object that encapsulate the country with the name of the federal state
+	 *            the {@link KeyValuePair} object that encapsulate the country
+	 *            with the name of the federal state
 	 * @return the the first federal state or null if not found.
 	 */
 	@POST
@@ -78,13 +79,15 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 
 	/**
 	 * Gets the Federalstates from the given String object. Example for the
-	 * format for the given String is(without the double quotes): "gr.grc=&gt;gr.a"
-	 * or "de.deu=&gt;de.bw"
+	 * format for the given String is(without the double quotes):
+	 * "gr.grc=&gt;gr.a" or "de.deu=&gt;de.bw"
 	 *
-	 * @param countrystatecode a concat string from country and an optional state string code.
+	 * @param countrystatecode
+	 *            a concat string from country and an optional state string
+	 *            code.
 	 * @return the federalstate
 	 */
 	@GET
 	@Path("/get/federalstate/{countrystatecode}/")
-	Federalstate getFederalstate(final String countrystatecode);
+	Federalstate getFederalstate(@PathParam("countrystatecode") final String countrystatecode);
 }

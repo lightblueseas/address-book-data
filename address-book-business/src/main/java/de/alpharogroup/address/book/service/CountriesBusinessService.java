@@ -590,9 +590,8 @@ public class CountriesBusinessService extends
 			Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country, zc);
 			if(zipcode != null){
 				List<Addresses> addresses = getAddressesService().find(zipcode);
-				Addresses address = null;
-				if(addresses != null && !addresses.isEmpty()) {
-					address = addresses.get(0);
+				Addresses address = ListExtensions.getFirst(addresses);
+				if(address != null) {
 					modelObject.setAddress(address);
 				} else {
 					errorKey = "global.location.error.label";
@@ -617,9 +616,8 @@ public class CountriesBusinessService extends
 			Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country, modelObject.getZipcode());
 			if(zipcode != null){
 				List<Addresses> addresses = getAddressesService().find(zipcode);
-				Addresses address = null;
-				if(addresses != null && !addresses.isEmpty()) {
-					address = addresses.get(0);
+				Addresses address = ListExtensions.getFirst(addresses);
+				if(address != null) {
 					modelObject.getLocation().setAddress(address);
 				} else {
 					errorKey = "global.location.error.label";

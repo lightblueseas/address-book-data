@@ -28,12 +28,15 @@ import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.address.book.domain.model.LocationAddressModel;
+import de.alpharogroup.address.book.domain.model.LocationSearchModel;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
 import de.alpharogroup.address.book.rest.api.CountriesResource;
 import de.alpharogroup.address.book.rest.api.FederalstatesResource;
 import de.alpharogroup.address.book.rest.api.ZipcodesResource;
 import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
 import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.pairs.KeyValuePair;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
 import lombok.Getter;
 
@@ -189,7 +192,85 @@ public class AddressBookRestClientTest {
 		// http://localhost:8080/country/get/germancountry2zipcodesandcities/stringlist/
 		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAndCitiesAsStringList = countriesResource.getGermanCountriesToZipcodesAndCitiesAsStringList();
 		AssertJUnit.assertNotNull(germanCountriesToZipcodesAndCitiesAsStringList);
+
+		LocationSearchModel<Address> lsm = LocationSearchModel.<Address>builder()
+		.zipcode("71638")
+		.location(LocationAddressModel.builder()
+				.selectedCountryName("de.deu")
+				.address(Address.builder()
+						.build())
+				.build())
+		.build();		
+//	   {  
+//		   "location":{  
+//		      "location":null,
+//		      "selectedCountryName":"de.deu",
+//		      "address":{  
+//		         "addressComment":null,
+//		         "federalstate":null,
+//		         "geohash":null,
+//		         "latitude":null,
+//		         "longitude":null,
+//		         "street":null,
+//		         "streetnumber":null,
+//		         "zipcode":null,
+//		         "id":null
+//		      }
+//		   },
+//		   "zipcode":"71638",
+//		   "errorKey":null
+//		}
+		// http://localhost:8080/country/resolve/location
+		LocationSearchModel<Address> locationSearchModel = countriesResource.setLocationSearchModel(lsm);
+		AssertJUnit.assertNotNull(locationSearchModel);
 		
+	}
+
+	/**
+	 * Test the {@link FederalstatesResource}.
+	 *
+	 * Note: you have to start a rest server to test this or you have to mock
+	 * it.
+	 */
+	@Test(enabled = false)
+	public void testFederalstatesRestResource() {
+
+		// http://localhost:8080/federalstate/find/federalstate/gb.lnd
+		Federalstate federalstate = federalstatesResource.findFederalstateFromIso3166A2code("gb.lnd");
+		AssertJUnit.assertNotNull(federalstate);
+
+		// http://localhost:8080/federalstate/find/federalstatestring/gb.lnd
+		String name = federalstatesResource.findFederalstateNameFromIso3166A2code("gb.lnd");
+		AssertJUnit.assertNotNull(name);
+
+		final Country germany = getGermanyAsCountry();
+		// http://localhost:8080/federalstate/find/federalstates/country
+		// {"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81}
+		List<Federalstate> federalstates = federalstatesResource.findFederalstatesFromCountry(germany);
+		AssertJUnit.assertNotNull(federalstates);
+
+		// http://localhost:8080/federalstate/find/federalstates/country/with/name
+		// {"key":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"value":"Berlin"}
+		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value("Berlin").build();
+		federalstates = federalstatesResource.findFederalstatesFromCountry(berlin);
+		AssertJUnit.assertNotNull(federalstates);
+		
+		federalstate = federalstatesResource.findFederalstate(berlin);
+		AssertJUnit.assertNotNull(federalstate);
+		
+		federalstate = federalstatesResource.getFederalstate("de.deu=>de.bw");
+		AssertJUnit.assertNotNull(federalstate);
+	}
+	
+	
+	/**
+	 * Test the {@link ZipcodesResource}.
+	 *
+	 * Note: you have to start a rest server to test this or you have to mock
+	 * it.
+	 */
+	@Test(enabled = false)
+	public void testZipcodesRestResource() {
 		
 	}
 

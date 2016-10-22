@@ -10,11 +10,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import de.alpharogroup.address.book.application.model.LocationSearchModel;
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.address.book.domain.model.LocationSearchModel;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.rs.RestfulResource;
 

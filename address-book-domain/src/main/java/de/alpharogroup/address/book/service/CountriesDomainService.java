@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.address.book.application.model.LocationModel;
-import de.alpharogroup.address.book.application.model.LocationSearchModel;
 import de.alpharogroup.address.book.daos.CountriesDao;
 import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
+import de.alpharogroup.address.book.domain.model.LocationSearchModel;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
@@ -322,9 +322,10 @@ public class CountriesDomainService extends
 	@SuppressWarnings("unchecked")
 	@Override
 	public LocationSearchModel<Address> setLocationSearchModel(LocationSearchModel<Address> modelObject) {
-		LocationSearchModel<Addresses> locationModel = getMapper().map(modelObject, LocationSearchModel.class);
+		de.alpharogroup.address.book.application.model.LocationSearchModel<Addresses> locationModel = getMapper().map(modelObject, de.alpharogroup.address.book.application.model.LocationSearchModel.class);
 		locationModel = countriesService.setLocationSearchModel(locationModel);
-		CopyObjectExtensions.copyQuietly(locationModel, modelObject);
+		// CopyObjectExtensions.copyQuietly(locationModel, modelObject);
+		modelObject = getMapper().map(locationModel, LocationSearchModel.class);
 		return modelObject;
 	}
 

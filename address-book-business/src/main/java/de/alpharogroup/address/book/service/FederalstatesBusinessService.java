@@ -39,19 +39,15 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Federalstates findFederalstateFromIso3166A2code(
 			final String iso3166A2code) {
 		final String hqlString = "select fs from Federalstates fs where fs.iso3166A2code=:iso3166A2code";
 		final Query query = getQuery(hqlString);
 		query.setParameter("iso3166A2code", iso3166A2code);
-		@SuppressWarnings("unchecked")
-		final
-		List<Federalstates> federalstates = query.getResultList();
-		if(federalstates != null && !federalstates.isEmpty()){
-			federalstates.get(0);
-		}
-		return null;
+		final List<Federalstates> federalstates = query.getResultList();
+		return ListExtensions.getFirst(federalstates);
 	}
 
 	/**
@@ -66,10 +62,7 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 		@SuppressWarnings("unchecked")
 		final
 		List<String> names = query.getResultList();
-		if(names != null && !names.isEmpty()){
-			names.get(0);
-		}
-		return null;
+		return ListExtensions.getFirst(names);
 	}
 
 	/**
