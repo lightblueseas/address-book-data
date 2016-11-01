@@ -111,8 +111,7 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Zipcodes> findAll(final Countries country, final String zipcode, final String city) {
-		final String c = country == null ? null : country.getName();
-		final String hqlString = HqlStringCreator.forZipcodes(c, zipcode, city);
+		final String hqlString = HqlStringCreator.forZipcodes(country, zipcode, city);
 		final Query query = getQuery(hqlString);
 		if(country != null){
 			query.setParameter("country", country);

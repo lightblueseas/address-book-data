@@ -78,16 +78,15 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	Federalstate findFederalstate(final KeyValuePair<Country, String> countryWithName);
 
 	/**
-	 * Gets the Federalstates from the given String object. Example for the
-	 * format for the given String is(without the double quotes):
-	 * "gr.grc=&gt;gr.a" or "de.deu=&gt;de.bw"
+	 * Gets the Federalstate from the given String objects. 
+	 * Example: "country=gr.grc, stateCode=gr.a"
+	 * or "country=de.deu, stateCode=de.bw"
 	 *
-	 * @param countrystatecode
-	 *            a concat string from country and an optional state string
-	 *            code.
+	 * @param country the country.
+	 * @param stateCode the optional state string code.
 	 * @return the federalstate
 	 */
 	@GET
-	@Path("/get/federalstate/{countrystatecode}/")
-	Federalstate getFederalstate(@PathParam("countrystatecode") final String countrystatecode);
+	@Path("/get/federalstate/{country}/{statecode}/")
+	Federalstate getFederalstate(@PathParam("country") final String country, @PathParam("statecode") final String stateCode);
 }

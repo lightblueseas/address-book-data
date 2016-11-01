@@ -4,6 +4,7 @@ import java.util.List;
 
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
+import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.service.domain.DomainService;
 
 public interface FederalstateService extends DomainService<Integer, Federalstate>
@@ -57,12 +58,25 @@ public interface FederalstateService extends DomainService<Integer, Federalstate
 	Federalstate findFederalstate(final Country country, String name);
 
 	/**
-	 * Gets the Federalstates from the given String object. Example for the
+	 * Gets the Federalstate from the given String object. Example for the
 	 * format for the given String is(without the double quotes): "gr.grc=&gt;gr.a"
 	 * or "de.deu=&gt;de.bw"
 	 *
 	 * @param string a concat string from country and an optional state string code.
 	 * @return the federalstate
-	 */
+	 * @deprecated use instead {@link FederalstateService#getFederalstate(String, String)}
+	 */@Deprecated
 	Federalstate getFederalstate(final String string);
+	
+
+	/**
+	 * Gets the Federalstate from the given String objects. 
+	 * Example: "country=gr.grc, stateCode=gr.a"
+	 * or "country=de.deu, stateCode=de.bw"
+	 *
+	 * @param country the country.
+	 * @param stateCode the optional state string code.
+	 * @return the federalstate
+	 */
+	Federalstate getFederalstate(final String country, final String stateCode);
 }

@@ -9,6 +9,7 @@ import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.rest.api.ZipcodesResource;
 import de.alpharogroup.address.book.service.api.ZipcodeService;
 import de.alpharogroup.collections.pairs.KeyValuePair;
+import de.alpharogroup.collections.pairs.Triple;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 /**
@@ -22,24 +23,8 @@ public class ZipcodesRestResource extends AbstractRestfulResource<Integer, Zipco
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Zipcode> find(String country, String zipcode, String city) {
-		return getDomainService().find(country, zipcode, city);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Zipcode> findAll(Country country, String zipcode, String city) {
-		return getDomainService().findAll(country, zipcode, city);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void deleteAllZipcodes() {
-		getDomainService().deleteAllZipcodes();		
+	public List<Zipcode> findAll(Triple<Country, String, String> searchCriteria) {
+		return getDomainService().findAll(searchCriteria.getLeft(), searchCriteria.getMiddle(), searchCriteria.getRight());
 	}
 
 	/**
@@ -70,7 +55,7 @@ public class ZipcodesRestResource extends AbstractRestfulResource<Integer, Zipco
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Zipcode> find(Country country) {
+	public List<Zipcode> find(final Country country) {
 		return getDomainService().find(country);
 	}
 
@@ -81,4 +66,5 @@ public class ZipcodesRestResource extends AbstractRestfulResource<Integer, Zipco
 	public Zipcode findCityFromZipcode(KeyValuePair<Country, String> countryWithZipcode) {
 		return getDomainService().findCityFromZipcode(countryWithZipcode.getKey(), countryWithZipcode.getValue());
 	}
+
 }

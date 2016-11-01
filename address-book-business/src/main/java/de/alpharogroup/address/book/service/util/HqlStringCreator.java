@@ -19,7 +19,7 @@ public class HqlStringCreator
 	 * @param city the city
 	 * @return the string
 	 */
-	public static String forZipcodes(final String country, final String zipcode, final String city)
+	public static String forZipcodes(final Countries country, final String zipcode, final String city)
 	{
 		final StringBuilder sb = new StringBuilder();
 		sb.append("select zc from " + Zipcodes.class.getSimpleName() + " zc");

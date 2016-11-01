@@ -1,8 +1,7 @@
 package de.alpharogroup.address.book.service;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.ZipcodesMapper;
 import de.alpharogroup.address.book.service.api.ZipcodeService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
-import de.alpharogroup.address.book.service.util.HqlStringCreator;
 import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,32 +54,6 @@ AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
 	@Autowired
 	public void setZipcodesMapper(ZipcodesMapper mapper) {
 		setMapper(mapper);
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Zipcode> find(String country, String zipcode, String city)
-	{
-		final String hqlString = HqlStringCreator.forZipcodes(country, zipcode, city);
-		final Query query = getDao().getQuery(hqlString);
-		if(country != null){
-			query.setParameter("country", country);			
-		}
-		if(zipcode != null && !zipcode.isEmpty()){
-			query.setParameter("zipcode", zipcode);			
-		}
-		if(city != null && !city.isEmpty()){
-			query.setParameter("city", city);
-			
-		}
-
-		final List<Zipcodes> entities = query.getResultList();
-		final List<Zipcode> bos = getMapper().toDomainObjects(entities);		
-		return bos;
 	}
 
 	/**
@@ -130,7 +102,12 @@ AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
 	 */
 	@Override
 	public List<Zipcode> find(Country country) {
-		return getMapper().toDomainObjects(zipcodesService.find(getMapper().map(country, Countries.class)));
+		List<Zipcode> zcs = new ArrayList<>();
+		if(country != null) {
+			Countries countries = getMapper().map(country, Countries.class);
+			return getMapper().toDomainObjects(zipcodesService.find(countries));			
+		}
+		return zcs;
 	}
 
 	/**

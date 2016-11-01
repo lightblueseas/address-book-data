@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.collections.pairs.KeyValuePair;
+import de.alpharogroup.collections.pairs.Triple;
 import de.alpharogroup.service.rs.RestfulResource;
 
 @Path("/zipcode/")
@@ -25,40 +26,14 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode> {
 	 * Gets a List of {@link Zipcode} with the given parameters that can be null
 	 * if they shell be ignored in the query.
 	 *
-	 * @param country
-	 *            the country
-	 * @param zipcode
-	 *            the zipcode
-	 * @param city
-	 *            the city
-	 * @return the list of {@link Zipcode}
+	 * @param searchCriteria
+	 *            the search criteria
+	 * @return the list of {@link Zipcode} objects
 	 */
-	@GET
-	@Path("/find/{country}/{zipcode}/{city}/")
-	List<Zipcode> find(@PathParam("country") final String country, @PathParam("zipcode") final String zipcode,
-			@PathParam("city") final String city);
-
-	/**
-	 * Gets a List of {@link Zipcode} with the given parameters that can be null
-	 * if they shell be ignored in the query.
-	 *
-	 * @param country
-	 *            the country
-	 * @param zipcode
-	 *            the zipcode
-	 * @param city
-	 *            the city
-	 * @return the list of {@link Zipcode}
-	 */
-	List<Zipcode> findAll(final Country country, final String zipcode, final String city);
-
-	/**
-	 * Delete all zipcodes.
-	 */
-	@GET
-	@Path("/deleteAllZipcodes/")
-	void deleteAllZipcodes();
-
+	@POST
+	@Path("/find/all")
+	List<Zipcode> findAll(Triple<Country, String, String> searchCriteria);
+	
 	/**
 	 * Checks if the given zipcode string exists.
 	 * 
@@ -102,7 +77,7 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode> {
 	 *            the country
 	 * @return the list of {@link Zipcode}
 	 */
-	@GET
+	@POST
 	@Path("/find/by/country")
 	List<Zipcode> find(final Country country);
 
@@ -114,9 +89,11 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode> {
 	 * @param countryWithZipcode
 	 *            the {@link KeyValuePair} object that encapsulate the country
 	 *            with the zipcode
-	 * @return the {@link Zipcode}
+	 * @return the {@link Zipcode} object
 	 */
 	@POST
 	@Path("/find/city/from/zipcode")
 	Zipcode findCityFromZipcode(final KeyValuePair<Country, String> countryWithZipcode);
+	
+	
 }

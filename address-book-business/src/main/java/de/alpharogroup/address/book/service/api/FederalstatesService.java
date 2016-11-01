@@ -65,6 +65,19 @@ public interface FederalstatesService extends BusinessService<Federalstates, Int
 	 *
 	 * @param string a concat string from country and an optional state string code.
 	 * @return the federalstate
-	 */
+	 * @deprecated use instead {@link FederalstatesService#getFederalstate(String, String)}
+	 */@Deprecated
 	Federalstates getFederalstate(final String string);
+	
+
+	/**
+	 * Gets the Federalstates from the given String objects. 
+	 * Example: "country=gr.grc, stateCode=gr.a"
+	 * or "country=de.deu, stateCode=de.bw"
+	 *
+	 * @param country the country.
+	 * @param stateCode the optional state string code.
+	 * @return the federalstate
+	 */
+	Federalstates getFederalstate(final String country, final String stateCode);
 }

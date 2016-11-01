@@ -23,20 +23,6 @@ public interface ZipcodeService extends DomainService<Integer, Zipcode> {
 	 *            the city
 	 * @return the list of {@link Zipcode}
 	 */
-	List<Zipcode> find(String country, String zipcode, String city);
-
-	/**
-	 * Gets a List of {@link Zipcode} with the given parameters that can be null if
-	 * they shell be ignored in the query.
-	 *
-	 * @param country
-	 *            the country
-	 * @param zipcode
-	 *            the zipcode
-	 * @param city
-	 *            the city
-	 * @return the list of {@link Zipcode}
-	 */
 	List<Zipcode> findAll(Country country, String zipcode, String city);
 
 	/**

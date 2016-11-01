@@ -103,7 +103,7 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 */@Deprecated
 	@Override
 	public Federalstates getFederalstate(final String string) {
 		final String seperatedString = "=>";
@@ -111,16 +111,27 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 		Federalstates federalstate;
 		if (splittedString.length == 1) {
 			final String coutryString = splittedString[0];
-			final int dot = coutryString.indexOf('.');
-			final String iso3166A3code = coutryString.substring(dot + 1,
-					coutryString.length()).toUpperCase();
-			// find if the country have federal states...
-			federalstate = findFederalstateFromIso3166A2code(iso3166A3code);
+			federalstate = getFederalstate(coutryString, null);
 		} else {
+			final String coutryString = splittedString[0];
 			final String federalStateString = splittedString[1];
-			federalstate = findFederalstateFromIso3166A2code(federalStateString);
+			federalstate = getFederalstate(coutryString, federalStateString);
 		}
 		return federalstate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Federalstates getFederalstate(String country, String stateCode) {
+		if (stateCode != null) {
+			return findFederalstateFromIso3166A2code(stateCode);
+		}
+		final int dot = country.indexOf('.');
+		final String iso3166A3code = country.substring(dot + 1, country.length()).toUpperCase();
+
+		return findFederalstateFromIso3166A2code(iso3166A3code);
 	}
 
 }

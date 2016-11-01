@@ -60,7 +60,7 @@ public class FederalstatesRestResource extends AbstractRestfulResource<Integer, 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Federalstate getFederalstate(String countrystatecode) {
-		return getDomainService().getFederalstate(countrystatecode);
+	public Federalstate getFederalstate(String country, String stateCode) {
+		return getDomainService().getFederalstate(country, stateCode);
 	}
 }

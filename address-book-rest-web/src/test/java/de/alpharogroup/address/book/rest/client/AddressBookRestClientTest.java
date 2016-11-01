@@ -17,6 +17,8 @@ package de.alpharogroup.address.book.rest.client;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -38,6 +40,7 @@ import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
 import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.collections.pairs.KeyValuePair;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
+import de.alpharogroup.collections.pairs.Triple;
 import lombok.Getter;
 
 /**
@@ -158,7 +161,7 @@ public class AddressBookRestClientTest {
 	 * Note: you have to start a rest server to test this or you have to mock
 	 * it.
 	 */
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testCountriesRestResource() {
 
 		// http://localhost:8080/country/get/country2federalstate/list/
@@ -253,15 +256,17 @@ public class AddressBookRestClientTest {
 		// {"key":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"value":"Berlin"}
 		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value("Berlin").build();
 		federalstates = federalstatesResource.findFederalstatesFromCountry(berlin);
-		AssertJUnit.assertNotNull(federalstates);
-		
+		AssertJUnit.assertNotNull(federalstates);		
+
+		// http://localhost:8080/federalstate/find/federalstate/country/with/name
+		// {"key":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"value":"Berlin"}
 		federalstate = federalstatesResource.findFederalstate(berlin);
-		AssertJUnit.assertNotNull(federalstate);
-		
-		federalstate = federalstatesResource.getFederalstate("de.deu=>de.bw");
+		AssertJUnit.assertNotNull(federalstate);	
+
+		// http://localhost:8080/get/federalstate/de.deu/de.bw
+		federalstate = federalstatesResource.getFederalstate("de.deu", "de.bw");
 		AssertJUnit.assertNotNull(federalstate);
 	}
-	
 	
 	/**
 	 * Test the {@link ZipcodesResource}.
@@ -269,8 +274,50 @@ public class AddressBookRestClientTest {
 	 * Note: you have to start a rest server to test this or you have to mock
 	 * it.
 	 */
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testZipcodesRestResource() {
+		final Country germany = getGermanyAsCountry();
+		String zipcode = "22049";
+		String zcBerlin = "10783";
+		String city = "Hamburg";
+		
+		Triple<Country, String, String> searchCriteria = Triple.<Country, String, String>builder()
+		.left(germany)
+		.middle(zipcode)
+		.right(city)
+		.build();
+		// http://localhost:8080/zipcode/find/all
+		// {"left":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"middle":"22049","right":"Hamburg"}
+		List<Zipcode> zipcodes = zipcodesResource.findAll(searchCriteria);
+		AssertJUnit.assertNotNull(zipcodes);		
+		
+		// http://localhost:8080/zipcode/exists/22049
+		final Response response = zipcodesResource.existsZipcode("22049");
+		AssertJUnit.assertNotNull(response);
+
+		final boolean exists = response.readEntity(boolean.class);
+		AssertJUnit.assertTrue(exists);
+		
+		// http://localhost:8080/zipcode/find/22049
+		zipcodes = zipcodesResource.findZipcodes(zipcode);
+		AssertJUnit.assertNotNull(zipcodes);
+		
+		// http://localhost:8080/zipcode/get/22049/Hamburg
+		Zipcode zc = zipcodesResource.getZipcode(zipcode, city);
+		AssertJUnit.assertNotNull(zc);
+				
+		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value(zcBerlin).build();
+		
+		// http://localhost:8080/zipcode/find/city/from/zipcode
+
+		// {"key":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"value":"10783"}
+		zc = zipcodesResource.findCityFromZipcode(berlin);
+		AssertJUnit.assertNotNull(zc);
+		
+		// http://localhost:8080/zipcode/find/by/country
+		// {"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81}
+		zipcodes = zipcodesResource.find(germany);	
+		AssertJUnit.assertNotNull(zipcodes);		
 		
 	}
 

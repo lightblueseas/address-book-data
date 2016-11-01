@@ -98,10 +98,18 @@ AbstractDomainService<Integer, Federalstate, Federalstates, FederalstatesDao, Fe
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 */@Deprecated
 	@Override
 	public Federalstate getFederalstate(String string) {
 		return getMapper().toDomainObject(federalstatesService.getFederalstate(string));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Federalstate getFederalstate(String country, String stateCode) {
+		return getMapper().toDomainObject(federalstatesService.getFederalstate(country, stateCode));
 	}
 
 }
