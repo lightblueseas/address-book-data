@@ -14,7 +14,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import de.alpharogroup.db.entity.BaseEntity;
 
 /**
- * The Entity class {@link Countries} is keeping the information for all
+ * The entity class {@link Countries} is keeping the information for all
  * countries in the world.
  */
 @Entity

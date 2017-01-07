@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The Entity class {@link Federalstates} is keeping the information
+ * The entity class {@link Federalstates} is keeping the information
  * for the federal states from the countries.
  */
 

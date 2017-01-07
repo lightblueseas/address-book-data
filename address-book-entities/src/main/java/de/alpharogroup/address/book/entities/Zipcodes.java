@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The Entity class {@link Zipcodes} is keeping the information for the cities
+ * The entity class {@link Zipcodes} is keeping the information for the cities
  * and the corresponding zipcodes.
  */
 @Entity
