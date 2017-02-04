@@ -3,8 +3,6 @@ package de.alpharogroup.address.book.service.util;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
-import de.alpharogroup.address.book.entities.Countries;
-
 
 public class HqlStringCreatorTest {
 
@@ -13,7 +11,7 @@ public class HqlStringCreatorTest {
 		String actual;
 		String expected;
 
-		actual = HqlStringCreator.forZipcodes(null, null, null);
+		actual = HqlStringCreator.forZipcodes((String)null, null, null);
 		expected = "select zc from Zipcodes zc";		
 		AssertJUnit.assertEquals(expected, actual);
 		
@@ -37,7 +35,7 @@ public class HqlStringCreatorTest {
 		expected = "select zc from Zipcodes zc where zc.country=:country and zc.zipcode=:zipcode";		
 		AssertJUnit.assertEquals(expected, actual);
 		
-		actual = HqlStringCreator.forZipcodes(null, "10827", null);
+		actual = HqlStringCreator.forZipcodes((String)null, "10827", null);
 		expected = "select zc from Zipcodes zc where zc.zipcode=:zipcode";		
 		AssertJUnit.assertEquals(expected, actual);
 		

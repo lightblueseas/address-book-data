@@ -57,6 +57,52 @@ public class HqlStringCreator
 		}
 		return sb.toString().trim();
 	}
+	/**
+	 * Generates hql script for zipcodes.
+	 *
+	 * @param country the country
+	 * @param zipcode the zipcode
+	 * @param city the city
+	 * @return the string
+	 */
+	public static String forZipcodes(final String country, final String zipcode, final String city)
+	{
+		final StringBuilder sb = new StringBuilder();
+		sb.append("select zc from " + Zipcodes.class.getSimpleName() + " zc");
+		final boolean countryIsNotNull = country != null && !country.isEmpty();
+		if (countryIsNotNull)
+		{
+			sb.append(" ");
+			sb.append("where zc.country=:country");
+		}
+		final boolean zipcodeIsNotNull = zipcode != null && !zipcode.isEmpty();
+		if (zipcodeIsNotNull)
+		{
+			sb.append(" ");
+			if (!countryIsNotNull)
+			{
+				sb.append("where zc.zipcode=:zipcode");
+			}
+			else
+			{
+				sb.append("and zc.zipcode=:zipcode");
+			}
+		}
+		final boolean cityIsNotNull = city != null && !city.isEmpty();
+		if (cityIsNotNull)
+		{
+			sb.append(" ");
+			if (!countryIsNotNull && !zipcodeIsNotNull)
+			{
+				sb.append("where zc.city=:city");
+			}
+			else
+			{
+				sb.append("and zc.city=:city");
+			}
+		}
+		return sb.toString().trim();
+	}
 
 	/**
 	 * Generates hql script for addresses.
