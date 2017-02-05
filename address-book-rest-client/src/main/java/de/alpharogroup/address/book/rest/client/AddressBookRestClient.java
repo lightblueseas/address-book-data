@@ -43,7 +43,7 @@ public class AddressBookRestClient extends AbstractRestClient
 	 */
 	public AddressBookRestClient()
 	{
-		this(DEFAULT_BASE_URL);
+		this(DEFAULT_BASE_HTTP_URL);
 	}
 
 	/**
