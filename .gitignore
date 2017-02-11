@@ -56,3 +56,4 @@
 /.gradle
 /gradle
 /reports
+/.dbeaver-data-sources.xml
