@@ -1,17 +1,26 @@
-/*
- * Copyright 2015 Alpha Ro Group UG (haftungsbeschrängt).
+/**
+ * The MIT License
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (C) 2015 Asterios Raptis
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *  *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *  *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package de.alpharogroup.address.book.rest.client;
 
@@ -47,10 +56,9 @@ import lombok.Getter;
  * The class {@link AddressBookRestClientTest}.
  */
 public class AddressBookRestClientTest {
-	
+
 	@Getter
 	private AddressBookRestClient restClient;
-	
 
 	/**
 	 * The {@link AddressesResource}.
@@ -75,13 +83,25 @@ public class AddressBookRestClientTest {
 	 */
 	@Getter
 	private ZipcodesResource zipcodesResource;
-	
-	@BeforeClass
-	public void setUpClass() throws Exception {
+
+	private Country getGermanyAsCountry() {
+		// 81 DE DEU 276 de.deu
+		final Country country = Country.builder().iso3166A2name("DE").iso3166A3name("DEU").iso3166Number("276")
+				.name("de.deu").build();
+		country.setId(81);
+		return country;
 	}
 
-	@AfterClass
-	public void tearDownClass() throws Exception {
+	private Zipcode getZipcode() {
+		final Country germany = getGermanyAsCountry();
+		// 4 Kenzingen 79341 81
+		final Zipcode zc = Zipcode.builder().city("Kenzingen").country(germany).zipcode("79341").build();
+		zc.setId(4);
+		return zc;
+	}
+
+	@BeforeClass
+	public void setUpClass() throws Exception {
 	}
 
 	@BeforeMethod
@@ -93,6 +113,10 @@ public class AddressBookRestClientTest {
 			federalstatesResource = restClient.getFederalstatesResource();
 			zipcodesResource = restClient.getZipcodesResource();
 		}
+	}
+
+	@AfterClass
+	public void tearDownClass() throws Exception {
 	}
 
 	@AfterMethod
@@ -145,13 +169,15 @@ public class AddressBookRestClientTest {
 		addresses = addressesResource.findGeohashIsNull();
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/addresses
-		addresses = addressesResource.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").build() );
+		addresses = addressesResource.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").build());
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/addresses
-		addresses = addressesResource.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").city("Ludwigsburg").build() );
+		addresses = addressesResource
+				.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").city("Ludwigsburg").build());
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/first/by/country/and/zipcode
-		address = addressesResource.findFirst(AddressSearchCriteria.builder().country(germany).zipcode("71638").build());
+		address = addressesResource
+				.findFirst(AddressSearchCriteria.builder().country(germany).zipcode("71638").build());
 		System.out.println(address);
 	}
 
@@ -165,11 +191,13 @@ public class AddressBookRestClientTest {
 	public void testCountriesRestResource() {
 
 		// http://localhost:8080/country/get/country2federalstate/list/
-		final List<KeyValuesPair<Country, Federalstate>> countriesToFederalstatesList = countriesResource.getCountriesToFederalstatesList();
+		final List<KeyValuesPair<Country, Federalstate>> countriesToFederalstatesList = countriesResource
+				.getCountriesToFederalstatesList();
 		AssertJUnit.assertNotNull(countriesToFederalstatesList);
 
 		// http://localhost:8080/country/get/country2federalstate/stringlist/
-		List<KeyValuesPair<String, String>> countriesToFederalstatesAsStringList = countriesResource.getCountriesToFederalstatesAsStringList();
+		List<KeyValuesPair<String, String>> countriesToFederalstatesAsStringList = countriesResource
+				.getCountriesToFederalstatesAsStringList();
 		AssertJUnit.assertNotNull(countriesToFederalstatesAsStringList);
 
 		// http://localhost:8080/country/get/country2zipcodes/list/
@@ -177,56 +205,56 @@ public class AddressBookRestClientTest {
 		AssertJUnit.assertNotNull(countriesToZipcodesList);
 
 		// http://localhost:8080/country/get/country2zipcodes/stringlist/
-		List<KeyValuesPair<String, String>> countriesToZipcodesAsStringList = countriesResource.getCountriesToZipcodesAsStringList();
+		List<KeyValuesPair<String, String>> countriesToZipcodesAsStringList = countriesResource
+				.getCountriesToZipcodesAsStringList();
 		AssertJUnit.assertNotNull(countriesToZipcodesAsStringList);
 
 		// http://localhost:8080/country/get/germancountry2zipcodes/list/
-		List<KeyValuesPair<Country, Zipcode>> germanCountriesToZipcodesList = countriesResource.getGermanCountriesToZipcodesList();
+		List<KeyValuesPair<Country, Zipcode>> germanCountriesToZipcodesList = countriesResource
+				.getGermanCountriesToZipcodesList();
 		AssertJUnit.assertNotNull(germanCountriesToZipcodesList);
-		
+
 		// http://localhost:8080/country/get/germancountry2zipcodes/stringlist/
-		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAsStringList = countriesResource.getGermanCountriesToZipcodesAsStringList();
+		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAsStringList = countriesResource
+				.getGermanCountriesToZipcodesAsStringList();
 		AssertJUnit.assertNotNull(germanCountriesToZipcodesAsStringList);
 
 		// http://localhost:8080/country/get/country2zipcodesandcities/stringlist/
-		List<KeyValuesPair<String, String>> countriesToZipcodesAndCitiesAsStringList = countriesResource.getCountriesToZipcodesAndCitiesAsStringList();
+		List<KeyValuesPair<String, String>> countriesToZipcodesAndCitiesAsStringList = countriesResource
+				.getCountriesToZipcodesAndCitiesAsStringList();
 		AssertJUnit.assertNotNull(countriesToZipcodesAndCitiesAsStringList);
 
 		// http://localhost:8080/country/get/germancountry2zipcodesandcities/stringlist/
-		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAndCitiesAsStringList = countriesResource.getGermanCountriesToZipcodesAndCitiesAsStringList();
+		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAndCitiesAsStringList = countriesResource
+				.getGermanCountriesToZipcodesAndCitiesAsStringList();
 		AssertJUnit.assertNotNull(germanCountriesToZipcodesAndCitiesAsStringList);
 
-		LocationSearchModel<Address> lsm = LocationSearchModel.<Address>builder()
-		.zipcode("71638")
-		.location(LocationAddressModel.builder()
-				.selectedCountryName("de.deu")
-				.address(Address.builder()
-						.build())
-				.build())
-		.build();		
-//	   {  
-//		   "location":{  
-//		      "location":null,
-//		      "selectedCountryName":"de.deu",
-//		      "address":{  
-//		         "addressComment":null,
-//		         "federalstate":null,
-//		         "geohash":null,
-//		         "latitude":null,
-//		         "longitude":null,
-//		         "street":null,
-//		         "streetnumber":null,
-//		         "zipcode":null,
-//		         "id":null
-//		      }
-//		   },
-//		   "zipcode":"71638",
-//		   "errorKey":null
-//		}
+		LocationSearchModel<Address> lsm = LocationSearchModel.<Address>builder().zipcode("71638").location(
+				LocationAddressModel.builder().selectedCountryName("de.deu").address(Address.builder().build()).build())
+				.build();
+		// {
+		// "location":{
+		// "location":null,
+		// "selectedCountryName":"de.deu",
+		// "address":{
+		// "addressComment":null,
+		// "federalstate":null,
+		// "geohash":null,
+		// "latitude":null,
+		// "longitude":null,
+		// "street":null,
+		// "streetnumber":null,
+		// "zipcode":null,
+		// "id":null
+		// }
+		// },
+		// "zipcode":"71638",
+		// "errorKey":null
+		// }
 		// http://localhost:8080/country/resolve/location
 		LocationSearchModel<Address> locationSearchModel = countriesResource.setLocationSearchModel(lsm);
 		AssertJUnit.assertNotNull(locationSearchModel);
-		
+
 	}
 
 	/**
@@ -254,20 +282,21 @@ public class AddressBookRestClientTest {
 
 		// http://localhost:8080/federalstate/find/federalstates/country/with/name
 		// {"key":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"value":"Berlin"}
-		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value("Berlin").build();
+		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value("Berlin")
+				.build();
 		federalstates = federalstatesResource.findFederalstatesFromCountry(berlin);
-		AssertJUnit.assertNotNull(federalstates);		
+		AssertJUnit.assertNotNull(federalstates);
 
 		// http://localhost:8080/federalstate/find/federalstate/country/with/name
 		// {"key":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"value":"Berlin"}
 		federalstate = federalstatesResource.findFederalstate(berlin);
-		AssertJUnit.assertNotNull(federalstate);	
+		AssertJUnit.assertNotNull(federalstate);
 
 		// http://localhost:8080/get/federalstate/de.deu/de.bw
 		federalstate = federalstatesResource.getFederalstate("de.deu", "de.bw");
 		AssertJUnit.assertNotNull(federalstate);
 	}
-	
+
 	/**
 	 * Test the {@link ZipcodesResource}.
 	 *
@@ -280,60 +309,42 @@ public class AddressBookRestClientTest {
 		String zipcode = "22049";
 		String zcBerlin = "10783";
 		String city = "Hamburg";
-		
-		Triple<Country, String, String> searchCriteria = Triple.<Country, String, String>builder()
-		.left(germany)
-		.middle(zipcode)
-		.right(city)
-		.build();
+
+		Triple<Country, String, String> searchCriteria = Triple.<Country, String, String>builder().left(germany)
+				.middle(zipcode).right(city).build();
 		// http://localhost:8080/zipcode/find/all
 		// {"left":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"middle":"22049","right":"Hamburg"}
 		List<Zipcode> zipcodes = zipcodesResource.findAll(searchCriteria);
-		AssertJUnit.assertNotNull(zipcodes);		
-		
+		AssertJUnit.assertNotNull(zipcodes);
+
 		// http://localhost:8080/zipcode/exists/22049
 		final Response response = zipcodesResource.existsZipcode("22049");
 		AssertJUnit.assertNotNull(response);
 
 		final boolean exists = response.readEntity(boolean.class);
 		AssertJUnit.assertTrue(exists);
-		
+
 		// http://localhost:8080/zipcode/find/22049
 		zipcodes = zipcodesResource.findZipcodes(zipcode);
 		AssertJUnit.assertNotNull(zipcodes);
-		
+
 		// http://localhost:8080/zipcode/get/22049/Hamburg
 		Zipcode zc = zipcodesResource.getZipcode(zipcode, city);
 		AssertJUnit.assertNotNull(zc);
-				
-		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value(zcBerlin).build();
-		
+
+		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value(zcBerlin)
+				.build();
+
 		// http://localhost:8080/zipcode/find/city/from/zipcode
 
 		// {"key":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"value":"10783"}
 		zc = zipcodesResource.findCityFromZipcode(berlin);
 		AssertJUnit.assertNotNull(zc);
-		
+
 		// http://localhost:8080/zipcode/find/by/country
 		// {"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81}
-		zipcodes = zipcodesResource.find(germany);	
-		AssertJUnit.assertNotNull(zipcodes);		
-		
-	}
+		zipcodes = zipcodesResource.find(germany);
+		AssertJUnit.assertNotNull(zipcodes);
 
-	private Zipcode getZipcode() {
-		final Country germany = getGermanyAsCountry();
-		// 4 Kenzingen 79341 81
-		final Zipcode zc = Zipcode.builder().city("Kenzingen").country(germany).zipcode("79341").build();
-		zc.setId(4);
-		return zc;
-	}
-
-	private Country getGermanyAsCountry() {
-		// 81 DE DEU 276 de.deu
-		final Country country = Country.builder().iso3166A2name("DE").iso3166A3name("DEU").iso3166Number("276").name("de.deu")
-				.build();
-		country.setId(81);
-		return country;
 	}
 }

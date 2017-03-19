@@ -1,3 +1,27 @@
+/**
+ * The MIT License
+ *
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *  *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *  *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package de.alpharogroup.address.book.service.api;
 
 import java.util.List;
@@ -9,7 +33,7 @@ import de.alpharogroup.db.service.api.BusinessService;
 /**
  * The interface {@link ZipcodesService}.
  */
-public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
+public interface ZipcodesService extends BusinessService<Zipcodes, Integer> {
 
 	/**
 	 * Delete all zipcodes.
@@ -26,6 +50,40 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 	boolean existsZipcode(final String zipcode);
 
 	/**
+	 * Finds all {@link Zipcodes} from the given Countries object.
+	 *
+	 * @param country
+	 *            the country
+	 * @return the list of {@link Zipcodes}
+	 */
+	List<Zipcodes> find(final Countries country);
+
+	/**
+	 * Gets a List from Zipcodes with the given parameters that can be null if
+	 * they shell be ignored in the query.
+	 *
+	 * @param country
+	 *            the country
+	 * @param zipcode
+	 *            the zipcode
+	 * @param city
+	 *            the city
+	 * @return the list of {@link Zipcodes}
+	 */
+	List<Zipcodes> findAll(Countries country, String zipcode, String city);
+
+	/**
+	 * Find the city from the given Countries object and zipcode.
+	 *
+	 * @param country
+	 *            the country
+	 * @param zipcode
+	 *            the zipcode
+	 * @return the {@link Zipcodes}
+	 */
+	Zipcodes findCityFromZipcode(Countries country, String zipcode);
+
+	/**
 	 * Find {@link Zipcodes} objects from the given zipcode string.
 	 * 
 	 * @param zipcode
@@ -35,8 +93,8 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 	List<Zipcodes> findZipcodes(final String zipcode);
 
 	/**
-	 * Gets the {@link Zipcodes} object from the given zipcode string and city. If it
-	 * does not exist it will be create a new {@link Zipcodes} object.
+	 * Gets the {@link Zipcodes} object from the given zipcode string and city.
+	 * If it does not exist it will be create a new {@link Zipcodes} object.
 	 * 
 	 * @param zipcode
 	 *            the zipcode
@@ -45,32 +103,4 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer>{
 	 * @return the {@link Zipcodes}
 	 */
 	Zipcodes getZipcode(final String zipcode, final String city);
-	
-	/**
-	 * Finds all {@link Zipcodes} from the given Countries object.
-	 *
-	 * @param country the country
-	 * @return the list of {@link Zipcodes}
-	 */
-	List<Zipcodes> find(final Countries country);
-	
-	/**
-	 * Find the city from the given Countries object and zipcode.
-	 *
-	 * @param country the country
-	 * @param zipcode the zipcode
-	 * @return the {@link Zipcodes}
-	 */
-	Zipcodes findCityFromZipcode(Countries country, String zipcode);
-	
-	/**
-	 * Gets a List from Zipcodes with the given parameters that can be
-	 * null if they shell be ignored in the query.
-	 *
-	 * @param country the country
-	 * @param zipcode the zipcode
-	 * @param city the city
-	 * @return the list of {@link Zipcodes}
-	 */
-	List<Zipcodes> findAll(Countries country, String zipcode, String city);
 }
