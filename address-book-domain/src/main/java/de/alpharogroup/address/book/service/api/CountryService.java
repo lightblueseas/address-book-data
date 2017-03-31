@@ -233,7 +233,7 @@ public interface CountryService extends DomainService<Integer, Country> {
 	 * @param zc
 	 *            the zipcode as string
 	 * @return null if everything is ok otherwise an error property string
-	 * @deprecated use instead {@link CountryService#setLocationSearchModel()}
+	 * @deprecated use instead {@link CountryService#setLocationSearchModel(LocationSearchModel)}
 	 */
 	@Deprecated
 	String setLocationModel(LocationModel<Address> modelObject, String zc);

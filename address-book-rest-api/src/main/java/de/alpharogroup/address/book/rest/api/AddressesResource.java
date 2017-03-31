@@ -146,10 +146,8 @@ public interface AddressesResource extends RestfulResource<Integer, Address> {
 	/**
 	 * Finds the first {@link Address} from the given arguments.
 	 *
-	 * @param country
-	 *            the country
-	 * @param zipcode
-	 *            the zipcode
+	 * @param addressSearchCriteria
+	 *            the address search criteria
 	 * @return the {@link Address}
 	 */
 	@POST

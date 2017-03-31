@@ -238,7 +238,7 @@ public interface CountriesService extends BusinessService<Countries, Integer> {
 	 * @param zc
 	 *            the zipcode as string
 	 * @return null if everything is ok otherwise an error property string
-	 * @deprecated use instead {@link CountriesService#setLocationSearchModel()}
+	 * @deprecated use instead {@link CountriesService#setLocationSearchModel(LocationSearchModel)}
 	 */
 	@Deprecated
 	String setLocationModel(LocationModel<Addresses> modelObject, String zc);
