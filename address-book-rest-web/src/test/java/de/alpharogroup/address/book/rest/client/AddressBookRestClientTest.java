@@ -303,7 +303,7 @@ public class AddressBookRestClientTest {
 	 * Note: you have to start a rest server to test this or you have to mock
 	 * it.
 	 */
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testZipcodesRestResource() {
 		final Country germany = getGermanyAsCountry();
 		String zipcode = "22049";
