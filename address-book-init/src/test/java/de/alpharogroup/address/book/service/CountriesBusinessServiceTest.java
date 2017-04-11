@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -57,6 +56,7 @@ import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.file.write.WriteFileExtensions;
@@ -387,12 +387,12 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 
 	@Test(enabled = false)
 	public void testFindUsers() {
-		final Map<String, List<String>> map = countriesService.getCountriesToZipcodesAsStringMap();
-		for (final Entry<String, List<String>> entry : map.entrySet()) {
+		final List<KeyValuesPair<String, String>> map = countriesService.getCountriesToZipcodesAsStringList();
+		for (final KeyValuesPair<String, String> entry : map) {
 			final String country = entry.getKey();
-			if (0 < entry.getValue().size()) {
+			if (0 < entry.getValues().size()) {
 				System.out.println(country);
-				for (final String zipcode : entry.getValue()) {
+				for (final String zipcode : entry.getValues()) {
 					System.out.println(zipcode);
 				}
 				System.out.println("=====================================================");

@@ -36,7 +36,6 @@ import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.service.api.AddressesService;
 import de.alpharogroup.address.book.service.api.CountriesService;
-import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.jgeohash.GeoHashPoint;
 
@@ -49,8 +48,6 @@ public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestN
 	private ZipcodesService zipcodesService;
 	@Autowired
 	private AddressesService addressesService;
-	@Autowired
-	private FederalstatesService federalstatesService;
 
 	@Test(enabled = false)
 	public void getAllSwitzerlandAddresses() {
