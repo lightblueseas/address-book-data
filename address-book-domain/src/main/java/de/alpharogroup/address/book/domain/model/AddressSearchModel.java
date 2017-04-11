@@ -34,9 +34,6 @@ import lombok.ToString;
 
 /**
  * The class {@link AddressSearchModel}.
- *
- * @param <T>
- *            the generic type
  */
 @Getter
 @Setter
