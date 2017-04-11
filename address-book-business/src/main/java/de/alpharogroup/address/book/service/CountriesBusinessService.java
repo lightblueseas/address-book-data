@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.alpharogroup.address.book.application.model.LocationModel;
-import de.alpharogroup.address.book.application.model.LocationSearchModel;
+import de.alpharogroup.address.book.application.model.AddressesSearchModel;
 import de.alpharogroup.address.book.daos.CountriesDao;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
@@ -598,7 +598,7 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public LocationSearchModel<Addresses> setLocationSearchModel(LocationSearchModel<Addresses> modelObject) {
+	public AddressesSearchModel setLocationSearchModel(AddressesSearchModel modelObject) {
 		String errorKey = null;
 		if (modelObject.getZipcode() == null) {
 			errorKey = "global.location.error.label";

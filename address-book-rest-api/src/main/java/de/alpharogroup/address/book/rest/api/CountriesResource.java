@@ -34,11 +34,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.address.book.domain.model.LocationSearchModel;
+import de.alpharogroup.address.book.domain.model.AddressSearchModel;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.rs.RestfulResource;
 
@@ -171,14 +170,14 @@ public interface CountriesResource extends RestfulResource<Integer, Country> {
 	List<KeyValuesPair<Country, Zipcode>> getGermanCountriesToZipcodesList();
 
 	/**
-	 * Sets the given {@link LocationSearchModel} object and returns it.
+	 * Sets the given {@link AddressSearchModel} object and returns it.
 	 *
 	 * @param modelObject
 	 *            the model object
 	 * 
-	 * @return the modified {@link LocationSearchModel} object.
+	 * @return the modified {@link AddressSearchModel} object.
 	 */
 	@POST
 	@Path("/resolve/location")
-	LocationSearchModel<Address> setLocationSearchModel(LocationSearchModel<Address> modelObject);
+	AddressSearchModel setLocationSearchModel(AddressSearchModel modelObject);
 }

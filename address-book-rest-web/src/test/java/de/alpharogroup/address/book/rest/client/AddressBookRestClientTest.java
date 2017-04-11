@@ -40,7 +40,7 @@ import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.domain.model.LocationAddressModel;
-import de.alpharogroup.address.book.domain.model.LocationSearchModel;
+import de.alpharogroup.address.book.domain.model.AddressSearchModel;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
 import de.alpharogroup.address.book.rest.api.CountriesResource;
 import de.alpharogroup.address.book.rest.api.FederalstatesResource;
@@ -229,7 +229,7 @@ public class AddressBookRestClientTest {
 				.getGermanCountriesToZipcodesAndCitiesAsStringList();
 		AssertJUnit.assertNotNull(germanCountriesToZipcodesAndCitiesAsStringList);
 
-		LocationSearchModel<Address> lsm = LocationSearchModel.<Address>builder().zipcode("71638").location(
+		AddressSearchModel lsm = AddressSearchModel.builder().zipcode("71638").location(
 				LocationAddressModel.builder().selectedCountryName("de.deu").address(Address.builder().build()).build())
 				.build();
 		// {
@@ -252,7 +252,7 @@ public class AddressBookRestClientTest {
 		// "errorKey":null
 		// }
 		// http://localhost:8080/country/resolve/location
-		LocationSearchModel<Address> locationSearchModel = countriesResource.setLocationSearchModel(lsm);
+		AddressSearchModel locationSearchModel = countriesResource.setLocationSearchModel(lsm);
 		AssertJUnit.assertNotNull(locationSearchModel);
 
 	}

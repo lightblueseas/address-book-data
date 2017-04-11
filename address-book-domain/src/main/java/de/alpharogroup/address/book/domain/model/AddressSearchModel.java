@@ -22,7 +22,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.address.book.application.model;
+package de.alpharogroup.address.book.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +33,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The class {@link LocationSearchModel}.
+ * The class {@link AddressSearchModel}.
  *
  * @param <T>
  *            the generic type
@@ -44,11 +44,11 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
-public class LocationSearchModel<T> {
+@Builder
+public class AddressSearchModel {
 
 	/** The model object. */
-	private LocationAddressesModel location;
+	private LocationAddressModel location;
 
 	/** The zipcode. */
 	private String zipcode;

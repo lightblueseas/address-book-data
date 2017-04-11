@@ -32,7 +32,7 @@ import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.address.book.domain.model.LocationSearchModel;
+import de.alpharogroup.address.book.domain.model.AddressSearchModel;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.domain.DomainService;
 
@@ -233,18 +233,18 @@ public interface CountryService extends DomainService<Integer, Country> {
 	 * @param zc
 	 *            the zipcode as string
 	 * @return null if everything is ok otherwise an error property string
-	 * @deprecated use instead {@link CountryService#setLocationSearchModel(LocationSearchModel)}
+	 * @deprecated use instead {@link CountryService#setLocationSearchModel(AddressSearchModel)}
 	 */
 	@Deprecated
 	String setLocationModel(LocationModel<Address> modelObject, String zc);
 
 	/**
-	 * Sets the given {@link LocationSearchModel} object and returns it.
+	 * Sets the given {@link AddressSearchModel} object and returns it.
 	 *
 	 * @param modelObject
 	 *            the model object
 	 * 
-	 * @return the modified {@link LocationSearchModel} object.
+	 * @return the modified {@link AddressSearchModel} object.
 	 */
-	LocationSearchModel<Address> setLocationSearchModel(LocationSearchModel<Address> modelObject);
+	AddressSearchModel setLocationSearchModel(AddressSearchModel modelObject);
 }

@@ -41,7 +41,7 @@ import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.address.book.domain.model.LocationSearchModel;
+import de.alpharogroup.address.book.domain.model.AddressSearchModel;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
@@ -337,14 +337,13 @@ public class CountriesDomainService extends
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public LocationSearchModel<Address> setLocationSearchModel(LocationSearchModel<Address> modelObject) {
-		de.alpharogroup.address.book.application.model.LocationSearchModel<Addresses> locationModel = getMapper()
-				.map(modelObject, de.alpharogroup.address.book.application.model.LocationSearchModel.class);
+	public AddressSearchModel setLocationSearchModel(AddressSearchModel modelObject) {
+		de.alpharogroup.address.book.application.model.AddressesSearchModel locationModel = getMapper()
+				.map(modelObject, de.alpharogroup.address.book.application.model.AddressesSearchModel.class);
 		locationModel = countriesService.setLocationSearchModel(locationModel);
 		// CopyObjectExtensions.copyQuietly(locationModel, modelObject);
-		modelObject = getMapper().map(locationModel, LocationSearchModel.class);
+		modelObject = getMapper().map(locationModel, AddressSearchModel.class);
 		return modelObject;
 	}
 

@@ -26,11 +26,10 @@ package de.alpharogroup.address.book.rest;
 
 import java.util.List;
 
-import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.address.book.domain.model.LocationSearchModel;
+import de.alpharogroup.address.book.domain.model.AddressSearchModel;
 import de.alpharogroup.address.book.rest.api.CountriesResource;
 import de.alpharogroup.address.book.service.api.CountryService;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
@@ -135,7 +134,7 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public LocationSearchModel<Address> setLocationSearchModel(LocationSearchModel<Address> modelObject) {
+	public AddressSearchModel setLocationSearchModel(AddressSearchModel modelObject) {
 		return getDomainService().setLocationSearchModel(modelObject);
 	}
 
