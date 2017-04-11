@@ -333,7 +333,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 						notProcessed.add(zc);
 						continue;
 					}
-					geopoint = new GeoPointZipcode(zc, point);
+					geopoint = GeoPointZipcode.builder().zipcode(zc).geoHashPoint(point).build();
 					System.out.println((count++) + "). " + zc.getZipcode() + " " + zc.getCity());
 				} else {
 					continue;

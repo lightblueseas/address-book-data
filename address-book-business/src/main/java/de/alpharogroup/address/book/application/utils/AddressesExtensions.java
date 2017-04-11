@@ -28,9 +28,9 @@ import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Zipcodes;
 
 /**
- * The Class AddressesUtils.
+ * The class {@link AddressesExtensions}.
  */
-public class AddressesUtils {
+public class AddressesExtensions {
 
 	/**
 	 * Gets the location in the format first 2 character from zipcode plus the

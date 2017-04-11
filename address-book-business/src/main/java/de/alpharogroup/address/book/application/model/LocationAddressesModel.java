@@ -41,7 +41,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class LocationAddressesModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
