@@ -34,7 +34,8 @@ import de.alpharogroup.db.service.api.BusinessService;
 /**
  * The interface {@link AddressesService}.
  */
-public interface AddressesService extends BusinessService<Addresses, Integer> {
+public interface AddressesService extends BusinessService<Addresses, Integer>
+{
 
 	/**
 	 * Checks if the given latitude and longitude is contained in the database.
@@ -48,8 +49,8 @@ public interface AddressesService extends BusinessService<Addresses, Integer> {
 	Addresses contains(String latitude, String longitude);
 
 	/**
-	 * Checks if the given {@link Zipcodes} is contained in the database and
-	 * return the first occurence.
+	 * Checks if the given {@link Zipcodes} is contained in the database and return the first
+	 * occurence.
 	 *
 	 * @param zipcode
 	 *            the zipcode
@@ -74,8 +75,8 @@ public interface AddressesService extends BusinessService<Addresses, Integer> {
 	 *            the federalstate
 	 * @return the addresses
 	 */
-	Addresses createAddress(final String street, final String streetnumber, final String addressComment,
-			final String zipcode, final String city, String federalstate);
+	Addresses createAddress(final String street, final String streetnumber,
+		final String addressComment, final String zipcode, final String city, String federalstate);
 
 	/**
 	 * Creates the address.
@@ -100,9 +101,10 @@ public interface AddressesService extends BusinessService<Addresses, Integer> {
 	 *            the longitude
 	 * @return the addresses
 	 */
-	Addresses createAddress(final String street, final String streetnumber, final String addressComment,
-			final String zipcode, final String city, final String federalstate, final String geohash,
-			final java.math.BigDecimal latitude, final java.math.BigDecimal longitude);
+	Addresses createAddress(final String street, final String streetnumber,
+		final String addressComment, final String zipcode, final String city,
+		final String federalstate, final String geohash, final java.math.BigDecimal latitude,
+		final java.math.BigDecimal longitude);
 
 	/**
 	 * Finds a list of {@link Addresses} from the given arguments.
@@ -222,8 +224,8 @@ public interface AddressesService extends BusinessService<Addresses, Integer> {
 	Addresses findFirst(Countries country, String zipcode);
 
 	/**
-	 * Finds a list of {@link Addresses} from the first and second ring
-	 * neighbourhood areas of the given geohash.
+	 * Finds a list of {@link Addresses} from the first and second ring neighbourhood areas of the
+	 * given geohash.
 	 *
 	 * @param geohash
 	 *            the geohash
@@ -232,8 +234,8 @@ public interface AddressesService extends BusinessService<Addresses, Integer> {
 	List<Addresses> findFirstAndSecondRingNeighbourhood(String geohash);
 
 	/**
-	 * Finds a list of {@link Addresses} from the first ring neighbourhood areas
-	 * of the given geohash.
+	 * Finds a list of {@link Addresses} from the first ring neighbourhood areas of the given
+	 * geohash.
 	 *
 	 * @param geohash
 	 *            the geohash
@@ -273,8 +275,7 @@ public interface AddressesService extends BusinessService<Addresses, Integer> {
 	List<Addresses> findInvalidAddresses(Countries country, String geohash, boolean not);
 
 	/**
-	 * Finds a list of {@link Addresses} from the neighbourhood areas of the
-	 * given geohash.
+	 * Finds a list of {@link Addresses} from the neighbourhood areas of the given geohash.
 	 *
 	 * @param geohash
 	 *            the geohash

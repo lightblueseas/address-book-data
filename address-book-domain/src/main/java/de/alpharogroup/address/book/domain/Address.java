@@ -40,7 +40,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Address extends BaseDomainObject<Integer> {
+public class Address extends BaseDomainObject<Integer>
+{
 
 	/**
 	 * The serialVersionUID.
@@ -50,15 +51,14 @@ public class Address extends BaseDomainObject<Integer> {
 	private String addressComment;
 
 	/**
-	 * The federalstate attribute is the federal state from this {@link Address}
-	 * object.
+	 * The federalstate attribute is the federal state from this {@link Address} object.
 	 */
 	private Federalstate federalstate;
 	/** The geohash from this {@link Address} object. */
 	private String geohash;
 	/**
-	 * The latitude from the address. Latitude is a geographical term denoting
-	 * the north/south angular location of a place on a sphere.
+	 * The latitude from the address. Latitude is a geographical term denoting the north/south
+	 * angular location of a place on a sphere.
 	 */
 	private String latitude;
 	/** The longitude from the address. */

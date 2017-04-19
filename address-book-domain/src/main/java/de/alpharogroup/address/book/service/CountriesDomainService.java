@@ -60,8 +60,12 @@ import lombok.Setter;
  */
 @Transactional
 @Service("countriesDomainService")
-public class CountriesDomainService extends
-		AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper> implements CountryService {
+public class CountriesDomainService
+	extends
+		AbstractDomainService<Integer, Country, Countries, CountriesDao, CountriesMapper>
+	implements
+		CountryService
+{
 
 	/** The {@link CountriesService}. */
 	@Autowired
@@ -94,7 +98,8 @@ public class CountriesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Country find(String iso3166a2name) {
+	public Country find(String iso3166a2name)
+	{
 		return getMapper().toDomainObject(countriesService.find(iso3166a2name));
 	}
 
@@ -102,20 +107,25 @@ public class CountriesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Country> findAll(String iso3166a2name, String iso3166a3name, String iso3166Number, String name) {
-		return getMapper().toDomainObjects(countriesService.findAll(iso3166a2name, iso3166a3name, iso3166Number, name));
+	public List<Country> findAll(String iso3166a2name, String iso3166a3name, String iso3166Number,
+		String name)
+	{
+		return getMapper().toDomainObjects(
+			countriesService.findAll(iso3166a2name, iso3166a3name, iso3166Number, name));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Country findByName(String name) {
+	public Country findByName(String name)
+	{
 		return getMapper().toDomainObject(countriesService.findByName(name));
 	}
 
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList() {
+	public List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList()
+	{
 		return countriesService.getCountriesToFederalstatesAsStringList();
 	}
 
@@ -124,26 +134,34 @@ public class CountriesDomainService extends
 	 */
 	@Deprecated
 	@Override
-	public Map<String, List<String>> getCountriesToFederalstatesAsStringMap() {
+	public Map<String, List<String>> getCountriesToFederalstatesAsStringMap()
+	{
 		return countriesService.getCountriesToFederalstatesAsStringMap();
 	}
 
 	@Override
-	public List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList() {
-		if (this.countryToFederalstateList == null) {
+	public List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList()
+	{
+		if (this.countryToFederalstateList == null)
+		{
 			this.countryToFederalstateList = new ArrayList<>();
 			List<KeyValuesPair<Countries, Federalstates>> countriesToFederalstatesMap = countriesService
-					.getCountriesToFederalstatesList();
+				.getCountriesToFederalstatesList();
 			final CountriesMapper mapper = getMapper();
-			for (KeyValuesPair<Countries, Federalstates> entry : countriesToFederalstatesMap) {
+			for (KeyValuesPair<Countries, Federalstates> entry : countriesToFederalstatesMap)
+			{
 				Countries countries = entry.getKey();
 				Collection<Federalstates> fss = entry.getValues();
-				if (countries != null) {
+				if (countries != null)
+				{
 					Country country = mapper.toDomainObject(countries);
 					List<Federalstate> federalstates = mapper.map(fss, Federalstate.class);
-					this.countryToFederalstateList.add(
-							KeyValuesPair.<Country, Federalstate>builder().key(country).values(federalstates).build());
-				} else {
+					this.countryToFederalstateList
+						.add(KeyValuesPair.<Country, Federalstate> builder().key(country)
+							.values(federalstates).build());
+				}
+				else
+				{
 					System.err.println(fss);
 				}
 			}
@@ -156,20 +174,27 @@ public class CountriesDomainService extends
 	 */
 	@Deprecated
 	@Override
-	public Map<Country, List<Federalstate>> getCountriesToFederalstatesMap() {
-		if (this.countryToFederalstateMap == null) {
+	public Map<Country, List<Federalstate>> getCountriesToFederalstatesMap()
+	{
+		if (this.countryToFederalstateMap == null)
+		{
 			this.countryToFederalstateMap = new LinkedHashMap<>();
 			final Map<Countries, List<Federalstates>> countriesToFederalstatesMap = countriesService
-					.getCountriesToFederalstatesMap();
+				.getCountriesToFederalstatesMap();
 			final CountriesMapper mapper = getMapper();
-			for (Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap.entrySet()) {
+			for (Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap
+				.entrySet())
+			{
 				Countries countries = entry.getKey();
 				List<Federalstates> fss = entry.getValue();
-				if (countries != null) {
+				if (countries != null)
+				{
 					Country country = mapper.toDomainObject(countries);
 					List<Federalstate> federalstates = mapper.map(fss, Federalstate.class);
 					this.countryToFederalstateMap.put(country, federalstates);
-				} else {
+				}
+				else
+				{
 					System.err.println(fss);
 				}
 			}
@@ -178,7 +203,8 @@ public class CountriesDomainService extends
 	}
 
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList() {
+	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList()
+	{
 		return countriesService.getCountriesToZipcodesAndCitiesAsStringList();
 	}
 
@@ -187,12 +213,14 @@ public class CountriesDomainService extends
 	 */
 	@Deprecated
 	@Override
-	public Map<String, List<String>> getCountriesToZipcodesAndCitiesAsStringMap() {
+	public Map<String, List<String>> getCountriesToZipcodesAndCitiesAsStringMap()
+	{
 		return countriesService.getCountriesToZipcodesAndCitiesAsStringMap();
 	}
 
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList() {
+	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList()
+	{
 		return countriesService.getCountriesToZipcodesAsStringList();
 	}
 
@@ -201,21 +229,25 @@ public class CountriesDomainService extends
 	 */
 	@Deprecated
 	@Override
-	public Map<String, List<String>> getCountriesToZipcodesAsStringMap() {
+	public Map<String, List<String>> getCountriesToZipcodesAsStringMap()
+	{
 		return countriesService.getCountriesToZipcodesAsStringMap();
 	}
 
 	@Override
-	public List<KeyValuesPair<Country, Zipcode>> getCountriesToZipcodesList() {
-		if (this.countryToZipcodeList == null) {
+	public List<KeyValuesPair<Country, Zipcode>> getCountriesToZipcodesList()
+	{
+		if (this.countryToZipcodeList == null)
+		{
 			this.countryToZipcodeList = new ArrayList<>();
 			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodesMap = countriesService
-					.getCountriesToZipcodesList();
+				.getCountriesToZipcodesList();
 
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodesMap) {
-				countryToZipcodeList
-						.add(KeyValuesPair.<Country, Zipcode>builder().key(getMapper().toDomainObject(entry.getKey()))
-								.values(getMapper().map(entry.getValues(), Zipcode.class)).build());
+			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodesMap)
+			{
+				countryToZipcodeList.add(KeyValuesPair.<Country, Zipcode> builder()
+					.key(getMapper().toDomainObject(entry.getKey()))
+					.values(getMapper().map(entry.getValues(), Zipcode.class)).build());
 			}
 		}
 		return this.countryToZipcodeList;
@@ -226,20 +258,25 @@ public class CountriesDomainService extends
 	 */
 	@Deprecated
 	@Override
-	public Map<Country, List<Zipcode>> getCountriesToZipcodesMap() {
-		if (this.countryToZipcodeMap == null) {
+	public Map<Country, List<Zipcode>> getCountriesToZipcodesMap()
+	{
+		if (this.countryToZipcodeMap == null)
+		{
 			this.countryToZipcodeMap = new LinkedHashMap<>();
-			final Map<Countries, List<Zipcodes>> countriesToZipcodesMap = countriesService.getCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodesMap.entrySet()) {
+			final Map<Countries, List<Zipcodes>> countriesToZipcodesMap = countriesService
+				.getCountriesToZipcodesMap();
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodesMap.entrySet())
+			{
 				countryToZipcodeMap.put(getMapper().toDomainObject(entry.getKey()),
-						getMapper().map(entry.getValue(), Zipcode.class));
+					getMapper().map(entry.getValue(), Zipcode.class));
 			}
 		}
 		return this.countryToZipcodeMap;
 	}
 
 	@Override
-	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList() {
+	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList()
+	{
 		return countriesService.getGermanCountriesToZipcodesAndCitiesAsStringList();
 	}
 
@@ -248,12 +285,14 @@ public class CountriesDomainService extends
 	 */
 	@Deprecated
 	@Override
-	public Map<String, List<String>> getGermanCountriesToZipcodesAndCitiesAsStringMap() {
+	public Map<String, List<String>> getGermanCountriesToZipcodesAndCitiesAsStringMap()
+	{
 		return countriesService.getGermanCountriesToZipcodesAndCitiesAsStringMap();
 	}
 
 	@Override
-	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList() {
+	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList()
+	{
 		return countriesService.getGermanCountriesToZipcodesAsStringList();
 	}
 
@@ -262,20 +301,24 @@ public class CountriesDomainService extends
 	 */
 	@Deprecated
 	@Override
-	public Map<String, List<String>> getGermanCountriesToZipcodesAsStringMap() {
+	public Map<String, List<String>> getGermanCountriesToZipcodesAsStringMap()
+	{
 		return countriesService.getGermanCountriesToZipcodesAsStringMap();
 	}
 
 	@Override
-	public List<KeyValuesPair<Country, Zipcode>> getGermanCountriesToZipcodesList() {
-		if (this.germanCountryToZipcodeList == null) {
+	public List<KeyValuesPair<Country, Zipcode>> getGermanCountriesToZipcodesList()
+	{
+		if (this.germanCountryToZipcodeList == null)
+		{
 			this.germanCountryToZipcodeList = new ArrayList<>();
 			List<KeyValuesPair<Countries, Zipcodes>> germanCountriesToZipcodesMap = countriesService
-					.getGermanCountriesToZipcodesList();
-			for (KeyValuesPair<Countries, Zipcodes> entry : germanCountriesToZipcodesMap) {
-				this.germanCountryToZipcodeList
-						.add(KeyValuesPair.<Country, Zipcode>builder().key(getMapper().toDomainObject(entry.getKey()))
-								.values(getMapper().map(entry.getValues(), Zipcode.class)).build());
+				.getGermanCountriesToZipcodesList();
+			for (KeyValuesPair<Countries, Zipcodes> entry : germanCountriesToZipcodesMap)
+			{
+				this.germanCountryToZipcodeList.add(KeyValuesPair.<Country, Zipcode> builder()
+					.key(getMapper().toDomainObject(entry.getKey()))
+					.values(getMapper().map(entry.getValues(), Zipcode.class)).build());
 			}
 		}
 		return this.germanCountryToZipcodeList;
@@ -286,14 +329,17 @@ public class CountriesDomainService extends
 	 */
 	@Deprecated
 	@Override
-	public Map<Country, List<Zipcode>> getGermanCountriesToZipcodesMap() {
-		if (this.germanCountryToZipcodeMap == null) {
+	public Map<Country, List<Zipcode>> getGermanCountriesToZipcodesMap()
+	{
+		if (this.germanCountryToZipcodeMap == null)
+		{
 			this.germanCountryToZipcodeMap = new LinkedHashMap<>();
 			Map<Countries, List<Zipcodes>> germanCountriesToZipcodesMap = countriesService
-					.getGermanCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : germanCountriesToZipcodesMap.entrySet()) {
+				.getGermanCountriesToZipcodesMap();
+			for (Entry<Countries, List<Zipcodes>> entry : germanCountriesToZipcodesMap.entrySet())
+			{
 				this.germanCountryToZipcodeMap.put(getMapper().toDomainObject(entry.getKey()),
-						getMapper().map(entry.getValue(), Zipcode.class));
+					getMapper().map(entry.getValue(), Zipcode.class));
 			}
 		}
 		return this.germanCountryToZipcodeMap;
@@ -306,7 +352,8 @@ public class CountriesDomainService extends
 	 *            the new {@link CountriesDao}.
 	 */
 	@Autowired
-	public void setCountriesDao(CountriesDao countriesDao) {
+	public void setCountriesDao(CountriesDao countriesDao)
+	{
 		setDao(countriesDao);
 	}
 
@@ -317,7 +364,8 @@ public class CountriesDomainService extends
 	 *            the new {@link CountriesMapper}.
 	 */
 	@Autowired
-	public void setCountriesMapper(CountriesMapper mapper) {
+	public void setCountriesMapper(CountriesMapper mapper)
+	{
 		setMapper(mapper);
 	}
 
@@ -327,7 +375,8 @@ public class CountriesDomainService extends
 	@Deprecated
 	@SuppressWarnings("unchecked")
 	@Override
-	public String setLocationModel(LocationModel<Address> modelObject, String zc) {
+	public String setLocationModel(LocationModel<Address> modelObject, String zc)
+	{
 		LocationModel<Addresses> locationModel = getMapper().map(modelObject, LocationModel.class);
 		String result = countriesService.setLocationModel(locationModel, zc);
 		CopyObjectExtensions.copyQuietly(locationModel, modelObject);
@@ -338,9 +387,11 @@ public class CountriesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AddressSearchModel setLocationSearchModel(AddressSearchModel modelObject) {
+	public AddressSearchModel setLocationSearchModel(AddressSearchModel modelObject)
+	{
 		de.alpharogroup.address.book.application.model.AddressesSearchModel locationModel = getMapper()
-				.map(modelObject, de.alpharogroup.address.book.application.model.AddressesSearchModel.class);
+			.map(modelObject,
+				de.alpharogroup.address.book.application.model.AddressesSearchModel.class);
 		locationModel = countriesService.setLocationSearchModel(locationModel);
 		// CopyObjectExtensions.copyQuietly(locationModel, modelObject);
 		modelObject = getMapper().map(locationModel, AddressSearchModel.class);

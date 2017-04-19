@@ -39,8 +39,8 @@ import de.alpharogroup.address.book.domain.Address;
 import de.alpharogroup.address.book.domain.Country;
 import de.alpharogroup.address.book.domain.Federalstate;
 import de.alpharogroup.address.book.domain.Zipcode;
-import de.alpharogroup.address.book.domain.model.LocationAddressModel;
 import de.alpharogroup.address.book.domain.model.AddressSearchModel;
+import de.alpharogroup.address.book.domain.model.LocationAddressModel;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
 import de.alpharogroup.address.book.rest.api.CountriesResource;
 import de.alpharogroup.address.book.rest.api.FederalstatesResource;
@@ -55,7 +55,8 @@ import lombok.Getter;
 /**
  * The class {@link AddressBookRestClientTest}.
  */
-public class AddressBookRestClientTest {
+public class AddressBookRestClientTest
+{
 
 	@Getter
 	private AddressBookRestClient restClient;
@@ -84,29 +85,35 @@ public class AddressBookRestClientTest {
 	@Getter
 	private ZipcodesResource zipcodesResource;
 
-	private Country getGermanyAsCountry() {
+	private Country getGermanyAsCountry()
+	{
 		// 81 DE DEU 276 de.deu
-		final Country country = Country.builder().iso3166A2name("DE").iso3166A3name("DEU").iso3166Number("276")
-				.name("de.deu").build();
+		final Country country = Country.builder().iso3166A2name("DE").iso3166A3name("DEU")
+			.iso3166Number("276").name("de.deu").build();
 		country.setId(81);
 		return country;
 	}
 
-	private Zipcode getZipcode() {
+	private Zipcode getZipcode()
+	{
 		final Country germany = getGermanyAsCountry();
 		// 4 Kenzingen 79341 81
-		final Zipcode zc = Zipcode.builder().city("Kenzingen").country(germany).zipcode("79341").build();
+		final Zipcode zc = Zipcode.builder().city("Kenzingen").country(germany).zipcode("79341")
+			.build();
 		zc.setId(4);
 		return zc;
 	}
 
 	@BeforeClass
-	public void setUpClass() throws Exception {
+	public void setUpClass() throws Exception
+	{
 	}
 
 	@BeforeMethod
-	public void setUpMethod() throws Exception {
-		if (restClient == null) {
+	public void setUpMethod() throws Exception
+	{
+		if (restClient == null)
+		{
 			restClient = new AddressBookRestClient();
 			addressesResource = restClient.getAddressesResource();
 			countriesResource = restClient.getCountriesResource();
@@ -116,21 +123,23 @@ public class AddressBookRestClientTest {
 	}
 
 	@AfterClass
-	public void tearDownClass() throws Exception {
+	public void tearDownClass() throws Exception
+	{
 	}
 
 	@AfterMethod
-	public void tearDownMethod() throws Exception {
+	public void tearDownMethod() throws Exception
+	{
 	}
 
 	/**
 	 * Test the {@link AddressesResource}.
 	 *
-	 * Note: you have to start a rest server to test this or you have to mock
-	 * it.
+	 * Note: you have to start a rest server to test this or you have to mock it.
 	 */
 	@Test(enabled = false)
-	public void testAddressesRestResource() {
+	public void testAddressesRestResource()
+	{
 
 		// http://localhost:8080/address/geohash/u336
 		List<Address> addresses = addressesResource.find("u336");
@@ -169,69 +178,72 @@ public class AddressBookRestClientTest {
 		addresses = addressesResource.findGeohashIsNull();
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/addresses
-		addresses = addressesResource.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").build());
+		addresses = addressesResource
+			.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").build());
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/addresses
-		addresses = addressesResource
-				.find(AddressSearchCriteria.builder().country(germany).zipcode("71638").city("Ludwigsburg").build());
+		addresses = addressesResource.find(AddressSearchCriteria.builder().country(germany)
+			.zipcode("71638").city("Ludwigsburg").build());
 		System.out.println(addresses.size());
 		// http://localhost:8080/address/find/first/by/country/and/zipcode
 		address = addressesResource
-				.findFirst(AddressSearchCriteria.builder().country(germany).zipcode("71638").build());
+			.findFirst(AddressSearchCriteria.builder().country(germany).zipcode("71638").build());
 		System.out.println(address);
 	}
 
 	/**
 	 * Test the {@link CountriesResource}.
 	 *
-	 * Note: you have to start a rest server to test this or you have to mock
-	 * it.
+	 * Note: you have to start a rest server to test this or you have to mock it.
 	 */
 	@Test(enabled = false)
-	public void testCountriesRestResource() {
+	public void testCountriesRestResource()
+	{
 
 		// http://localhost:8080/country/get/country2federalstate/list/
 		final List<KeyValuesPair<Country, Federalstate>> countriesToFederalstatesList = countriesResource
-				.getCountriesToFederalstatesList();
+			.getCountriesToFederalstatesList();
 		AssertJUnit.assertNotNull(countriesToFederalstatesList);
 
 		// http://localhost:8080/country/get/country2federalstate/stringlist/
 		List<KeyValuesPair<String, String>> countriesToFederalstatesAsStringList = countriesResource
-				.getCountriesToFederalstatesAsStringList();
+			.getCountriesToFederalstatesAsStringList();
 		AssertJUnit.assertNotNull(countriesToFederalstatesAsStringList);
 
 		// http://localhost:8080/country/get/country2zipcodes/list/
-		List<KeyValuesPair<Country, Zipcode>> countriesToZipcodesList = countriesResource.getCountriesToZipcodesList();
+		List<KeyValuesPair<Country, Zipcode>> countriesToZipcodesList = countriesResource
+			.getCountriesToZipcodesList();
 		AssertJUnit.assertNotNull(countriesToZipcodesList);
 
 		// http://localhost:8080/country/get/country2zipcodes/stringlist/
 		List<KeyValuesPair<String, String>> countriesToZipcodesAsStringList = countriesResource
-				.getCountriesToZipcodesAsStringList();
+			.getCountriesToZipcodesAsStringList();
 		AssertJUnit.assertNotNull(countriesToZipcodesAsStringList);
 
 		// http://localhost:8080/country/get/germancountry2zipcodes/list/
 		List<KeyValuesPair<Country, Zipcode>> germanCountriesToZipcodesList = countriesResource
-				.getGermanCountriesToZipcodesList();
+			.getGermanCountriesToZipcodesList();
 		AssertJUnit.assertNotNull(germanCountriesToZipcodesList);
 
 		// http://localhost:8080/country/get/germancountry2zipcodes/stringlist/
 		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAsStringList = countriesResource
-				.getGermanCountriesToZipcodesAsStringList();
+			.getGermanCountriesToZipcodesAsStringList();
 		AssertJUnit.assertNotNull(germanCountriesToZipcodesAsStringList);
 
 		// http://localhost:8080/country/get/country2zipcodesandcities/stringlist/
 		List<KeyValuesPair<String, String>> countriesToZipcodesAndCitiesAsStringList = countriesResource
-				.getCountriesToZipcodesAndCitiesAsStringList();
+			.getCountriesToZipcodesAndCitiesAsStringList();
 		AssertJUnit.assertNotNull(countriesToZipcodesAndCitiesAsStringList);
 
 		// http://localhost:8080/country/get/germancountry2zipcodesandcities/stringlist/
 		List<KeyValuesPair<String, String>> germanCountriesToZipcodesAndCitiesAsStringList = countriesResource
-				.getGermanCountriesToZipcodesAndCitiesAsStringList();
+			.getGermanCountriesToZipcodesAndCitiesAsStringList();
 		AssertJUnit.assertNotNull(germanCountriesToZipcodesAndCitiesAsStringList);
 
-		AddressSearchModel lsm = AddressSearchModel.builder().zipcode("71638").location(
-				LocationAddressModel.builder().selectedCountryName("de.deu").address(Address.builder().build()).build())
-				.build();
+		AddressSearchModel lsm = AddressSearchModel.builder().zipcode("71638")
+			.location(LocationAddressModel.builder().selectedCountryName("de.deu")
+				.address(Address.builder().build()).build())
+			.build();
 		// {
 		// "location":{
 		// "location":null,
@@ -260,14 +272,15 @@ public class AddressBookRestClientTest {
 	/**
 	 * Test the {@link FederalstatesResource}.
 	 *
-	 * Note: you have to start a rest server to test this or you have to mock
-	 * it.
+	 * Note: you have to start a rest server to test this or you have to mock it.
 	 */
 	@Test(enabled = false)
-	public void testFederalstatesRestResource() {
+	public void testFederalstatesRestResource()
+	{
 
 		// http://localhost:8080/federalstate/find/federalstate/gb.lnd
-		Federalstate federalstate = federalstatesResource.findFederalstateFromIso3166A2code("gb.lnd");
+		Federalstate federalstate = federalstatesResource
+			.findFederalstateFromIso3166A2code("gb.lnd");
 		AssertJUnit.assertNotNull(federalstate);
 
 		// http://localhost:8080/federalstate/find/federalstatestring/gb.lnd
@@ -277,13 +290,14 @@ public class AddressBookRestClientTest {
 		final Country germany = getGermanyAsCountry();
 		// http://localhost:8080/federalstate/find/federalstates/country
 		// {"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81}
-		List<Federalstate> federalstates = federalstatesResource.findFederalstatesFromCountry(germany);
+		List<Federalstate> federalstates = federalstatesResource
+			.findFederalstatesFromCountry(germany);
 		AssertJUnit.assertNotNull(federalstates);
 
 		// http://localhost:8080/federalstate/find/federalstates/country/with/name
 		// {"key":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"value":"Berlin"}
-		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value("Berlin")
-				.build();
+		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String> builder().key(germany)
+			.value("Berlin").build();
 		federalstates = federalstatesResource.findFederalstatesFromCountry(berlin);
 		AssertJUnit.assertNotNull(federalstates);
 
@@ -300,18 +314,18 @@ public class AddressBookRestClientTest {
 	/**
 	 * Test the {@link ZipcodesResource}.
 	 *
-	 * Note: you have to start a rest server to test this or you have to mock
-	 * it.
+	 * Note: you have to start a rest server to test this or you have to mock it.
 	 */
 	@Test(enabled = false)
-	public void testZipcodesRestResource() {
+	public void testZipcodesRestResource()
+	{
 		final Country germany = getGermanyAsCountry();
 		String zipcode = "22049";
 		String zcBerlin = "10783";
 		String city = "Hamburg";
 
-		Triple<Country, String, String> searchCriteria = Triple.<Country, String, String>builder().left(germany)
-				.middle(zipcode).right(city).build();
+		Triple<Country, String, String> searchCriteria = Triple.<Country, String, String> builder()
+			.left(germany).middle(zipcode).right(city).build();
 		// http://localhost:8080/zipcode/find/all
 		// {"left":{"iso3166A2name":"DE","iso3166A3name":"DEU","iso3166Number":"276","name":"de.deu","id":81},"middle":"22049","right":"Hamburg"}
 		List<Zipcode> zipcodes = zipcodesResource.findAll(searchCriteria);
@@ -332,8 +346,8 @@ public class AddressBookRestClientTest {
 		Zipcode zc = zipcodesResource.getZipcode(zipcode, city);
 		AssertJUnit.assertNotNull(zc);
 
-		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String>builder().key(germany).value(zcBerlin)
-				.build();
+		KeyValuePair<Country, String> berlin = KeyValuePair.<Country, String> builder().key(germany)
+			.value(zcBerlin).build();
 
 		// http://localhost:8080/zipcode/find/city/from/zipcode
 

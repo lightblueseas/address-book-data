@@ -30,7 +30,8 @@ import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.db.dao.jpa.JpaEntityManagerDao;
 
 @Repository("countriesDao")
-public class CountriesDao extends JpaEntityManagerDao<Countries, Integer> {
+public class CountriesDao extends JpaEntityManagerDao<Countries, Integer>
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

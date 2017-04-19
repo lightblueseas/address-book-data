@@ -38,7 +38,8 @@ import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 
 @ContextConfiguration(locations = "classpath:test-applicationContext.xml")
-public class FederalstatesBusinessServiceTest extends AbstractTestNGSpringContextTests {
+public class FederalstatesBusinessServiceTest extends AbstractTestNGSpringContextTests
+{
 
 	@Autowired
 	private CountriesService countriesService;
@@ -46,18 +47,23 @@ public class FederalstatesBusinessServiceTest extends AbstractTestNGSpringContex
 	private FederalstatesService federalstatesService;
 
 	@Test(enabled = false)
-	public void testFindFederalstatesFromCountryCountries() {
+	public void testFindFederalstatesFromCountryCountries()
+	{
 		final Countries germany = countriesService.find("DE");
-		final List<Federalstates> federalstates = federalstatesService.findFederalstatesFromCountry(germany);
+		final List<Federalstates> federalstates = federalstatesService
+			.findFederalstatesFromCountry(germany);
 		AssertJUnit.assertEquals(16, federalstates.size());
 	}
 
 	@Test(enabled = false)
-	public void testFindFederalstatesFromCountryCountriesString() {
+	public void testFindFederalstatesFromCountryCountriesString()
+	{
 		final Countries germany = countriesService.find("DE");
-		List<Federalstates> federalstates = federalstatesService.findFederalstatesFromCountry(germany, "Hamburg");
+		List<Federalstates> federalstates = federalstatesService
+			.findFederalstatesFromCountry(germany, "Hamburg");
 		AssertJUnit.assertEquals(1, federalstates.size());
-		final Federalstates federalstate = federalstatesService.findFederalstate(germany, "Hamburg");
+		final Federalstates federalstate = federalstatesService.findFederalstate(germany,
+			"Hamburg");
 		AssertJUnit.assertNotNull(federalstate);
 		AssertJUnit.assertEquals("Hamburg", federalstate.getName());
 		federalstates = federalstatesService.findFederalstatesFromCountry(germany);

@@ -57,8 +57,12 @@ import lombok.Setter;
  */
 @Transactional
 @Service("addressesService")
-public class AddressesBusinessService extends AbstractBusinessService<Addresses, Integer, AddressesDao>
-		implements AddressesService {
+public class AddressesBusinessService
+	extends
+		AbstractBusinessService<Addresses, Integer, AddressesDao>
+	implements
+		AddressesService
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -79,7 +83,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Addresses contains(String latitude, String longitude) {
+	public Addresses contains(String latitude, String longitude)
+	{
 		List<Addresses> addresses = find(latitude, longitude);
 		return ListExtensions.getFirst(addresses);
 	}
@@ -88,7 +93,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Addresses contains(Zipcodes zipcode) {
+	public Addresses contains(Zipcodes zipcode)
+	{
 		List<Addresses> addresses = find(zipcode);
 		return ListExtensions.getFirst(addresses);
 	}
@@ -97,19 +103,24 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Addresses createAddress(final String street, final String streetnumber, final String addressComment,
-			final String zipcode, final String city, final String federalstate) {
+	public Addresses createAddress(final String street, final String streetnumber,
+		final String addressComment, final String zipcode, final String city,
+		final String federalstate)
+	{
 
 		final Zipcodes zc = zipcodesService.getZipcode(zipcode, city);
 		Federalstates federalstates;
-		if (zc != null && zc.getCountry() != null) {
+		if (zc != null && zc.getCountry() != null)
+		{
 			federalstates = federalstatesService.findFederalstate(zc.getCountry(), federalstate);
-		} else {
+		}
+		else
+		{
 			federalstates = federalstatesService.findFederalstateFromIso3166A2code(federalstate);
 		}
 
-		final Addresses address = AddressBookFactory.getInstance().newAddresses(addressComment, federalstates, null,
-				null, null, street, streetnumber, zc);
+		final Addresses address = AddressBookFactory.getInstance().newAddresses(addressComment,
+			federalstates, null, null, null, street, streetnumber, zc);
 		return address;
 	}
 
@@ -117,19 +128,24 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Addresses createAddress(final String street, final String streetnumber, final String addressComment,
-			final String zipcode, final String city, final String federalstate, final String geohash,
-			final java.math.BigDecimal latitude, final java.math.BigDecimal longitude) {
+	public Addresses createAddress(final String street, final String streetnumber,
+		final String addressComment, final String zipcode, final String city,
+		final String federalstate, final String geohash, final java.math.BigDecimal latitude,
+		final java.math.BigDecimal longitude)
+	{
 		final Zipcodes zip = zipcodesService.getZipcode(zipcode, city);
 
 		Federalstates federalstates;
-		if (zip != null && zip.getCountry() != null) {
+		if (zip != null && zip.getCountry() != null)
+		{
 			federalstates = federalstatesService.findFederalstate(zip.getCountry(), federalstate);
-		} else {
+		}
+		else
+		{
 			federalstates = federalstatesService.findFederalstateFromIso3166A2code(federalstate);
 		}
-		final Addresses address = AddressBookFactory.getInstance().newAddresses(addressComment, federalstates, geohash,
-				latitude, longitude, street, streetnumber, zip);
+		final Addresses address = AddressBookFactory.getInstance().newAddresses(addressComment,
+			federalstates, geohash, latitude, longitude, street, streetnumber, zip);
 
 		return address;
 	}
@@ -138,7 +154,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Addresses> find(Countries country, String zipcode) {
+	public List<Addresses> find(Countries country, String zipcode)
+	{
 		return find(country, zipcode, null);
 	}
 
@@ -147,16 +164,20 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> find(Countries country, String zipcode, String city) {
+	public List<Addresses> find(Countries country, String zipcode, String city)
+	{
 		String hqlString = HqlStringCreator.forAddresses(country, zipcode, city);
 		final Query query = getQuery(hqlString);
-		if (country != null) {
+		if (country != null)
+		{
 			query.setParameter("country", country);
 		}
-		if (zipcode != null) {
+		if (zipcode != null)
+		{
 			query.setParameter("zipcode", zipcode);
 		}
-		if (city != null) {
+		if (city != null)
+		{
 			query.setParameter("city", city);
 		}
 		List<Addresses> addresses = query.getResultList();
@@ -168,7 +189,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> find(String geohash) {
+	public List<Addresses> find(String geohash)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
@@ -185,7 +207,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> find(String latitude, String longitude) {
+	public List<Addresses> find(String latitude, String longitude)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
@@ -205,7 +228,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> find(String geohash, String latitude, String longitude) {
+	public List<Addresses> find(String geohash, String latitude, String longitude)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
@@ -228,7 +252,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> find(Zipcodes zipcode) {
+	public List<Addresses> find(Zipcodes zipcode)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
@@ -245,7 +270,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> findAddressesWithSameCityname(Countries country, String city) {
+	public List<Addresses> findAddressesWithSameCityname(Countries country, String city)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
@@ -265,7 +291,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> findAddressesWithSameZipcode(Countries country, String zipcode) {
+	public List<Addresses> findAddressesWithSameZipcode(Countries country, String zipcode)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
@@ -284,7 +311,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Addresses> findAll(Countries country) {
+	public List<Addresses> findAll(Countries country)
+	{
 		List<Addresses> addresses = null;
 		Addresses from = Torpedo.from(Addresses.class);
 		Torpedo.where(from.getZipcode().getCountry()).eq(country);
@@ -298,7 +326,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Zipcodes> findAllAddressesWithCountry(Countries country) {
+	public List<Zipcodes> findAllAddressesWithCountry(Countries country)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a.zipcode from Addresses a");
 		sb.append(" ");
@@ -314,7 +343,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Addresses findFirst(Countries country, String zipcode) {
+	public Addresses findFirst(Countries country, String zipcode)
+	{
 		List<Addresses> addresses = find(country, zipcode);
 		return ListExtensions.getFirst(addresses);
 	}
@@ -324,14 +354,17 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> findFirstAndSecondRingNeighbourhood(String geohash) {
+	public List<Addresses> findFirstAndSecondRingNeighbourhood(String geohash)
+	{
 		Map<String, String> adjacentAreas = null;
-		if (geohash != null && !geohash.isEmpty()) {
+		if (geohash != null && !geohash.isEmpty())
+		{
 			adjacentAreas = GeoHashExtensions.getTwentyFiveAreasMap(geohash);
 		}
 		String hqlString = HqlStringCreator.getGeohashFirstAndSecondRingQuery(true);
 		final Query query = getQuery(hqlString);
-		for (Entry<String, String> entry : adjacentAreas.entrySet()) {
+		for (Entry<String, String> entry : adjacentAreas.entrySet())
+		{
 			query.setParameter(entry.getKey(), entry.getValue() + "%");
 		}
 		List<Addresses> addresses = query.getResultList();
@@ -343,14 +376,17 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> findFirstRingNeighbourhood(String geohash) {
+	public List<Addresses> findFirstRingNeighbourhood(String geohash)
+	{
 		Map<String, String> adjacentAreas = null;
-		if (geohash != null && !geohash.isEmpty()) {
+		if (geohash != null && !geohash.isEmpty())
+		{
 			adjacentAreas = GeoHashExtensions.getAllAdjacentAreasMap(geohash);
 		}
 		String hqlString = HqlStringCreator.getGeohashFirstRingQuery(true);
 		final Query query = getQuery(hqlString);
-		for (Entry<String, String> entry : adjacentAreas.entrySet()) {
+		for (Entry<String, String> entry : adjacentAreas.entrySet())
+		{
 			query.setParameter(entry.getKey(), entry.getValue() + "%");
 		}
 		List<Addresses> addresses = query.getResultList();
@@ -362,7 +398,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> findGeohashIsNull() {
+	public List<Addresses> findGeohashIsNull()
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
@@ -378,7 +415,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Addresses> findInvalidAddresses(Countries country, String geohash) {
+	public List<Addresses> findInvalidAddresses(Countries country, String geohash)
+	{
 		return findInvalidAddresses(country, geohash, true);
 	}
 
@@ -387,14 +425,16 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> findInvalidAddresses(Countries country, String geohash, boolean not) {
+	public List<Addresses> findInvalidAddresses(Countries country, String geohash, boolean not)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.zipcode.country=:country");
 		sb.append(" ");
 		sb.append("and a.geohash ");
-		if (not) {
+		if (not)
+		{
 			sb.append("not ");
 		}
 		sb.append("like :geohash");
@@ -411,8 +451,10 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addresses> findNeighbourhood(String geohash) {
-		String hqlString = "select address from Addresses address " + "where address.geohash like :" + Adjacent.CENTER;
+	public List<Addresses> findNeighbourhood(String geohash)
+	{
+		String hqlString = "select address from Addresses address " + "where address.geohash like :"
+			+ Adjacent.CENTER;
 		final Query query = getQuery(hqlString);
 		query.setParameter("center", geohash + "%");
 		List<Addresses> addresses = query.getResultList();
@@ -426,7 +468,8 @@ public class AddressesBusinessService extends AbstractBusinessService<Addresses,
 	 *            the new {@link AddressesDao}.
 	 */
 	@Autowired
-	public void setAddressesDao(AddressesDao addressesDao) {
+	public void setAddressesDao(AddressesDao addressesDao)
+	{
 		setDao(addressesDao);
 	}
 

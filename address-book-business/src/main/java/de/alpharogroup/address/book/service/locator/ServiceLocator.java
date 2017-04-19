@@ -29,7 +29,8 @@ import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 
-public interface ServiceLocator {
+public interface ServiceLocator
+{
 	/**
 	 * Gets the addresses business service.
 	 * 

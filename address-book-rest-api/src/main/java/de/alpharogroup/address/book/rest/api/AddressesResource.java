@@ -41,13 +41,13 @@ import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
 import de.alpharogroup.service.rs.RestfulResource;
 
 /**
- * The interface {@link AddressesResource} provides methods for resolving
- * addresses.
+ * The interface {@link AddressesResource} provides methods for resolving addresses.
  */
 @Path("/address/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface AddressesResource extends RestfulResource<Integer, Address> {
+public interface AddressesResource extends RestfulResource<Integer, Address>
+{
 
 	/**
 	 * Checks if the given latitude and longitude is contained in the database.
@@ -60,11 +60,12 @@ public interface AddressesResource extends RestfulResource<Integer, Address> {
 	 */
 	@GET
 	@Path("/contains/{latitude}/{longitude}")
-	Address contains(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude);
+	Address contains(@PathParam("latitude") String latitude,
+		@PathParam("longitude") String longitude);
 
 	/**
-	 * Checks if the given {@link Zipcode} is contained in the database and
-	 * return the first occurence.
+	 * Checks if the given {@link Zipcode} is contained in the database and return the first
+	 * occurence.
 	 *
 	 * @param zipcode
 	 *            the zipcode
@@ -108,7 +109,8 @@ public interface AddressesResource extends RestfulResource<Integer, Address> {
 	 */
 	@GET
 	@Path("/find/{latitude}/{longitude}")
-	List<Address> find(@PathParam("latitude") String latitude, @PathParam("longitude") String longitude);
+	List<Address> find(@PathParam("latitude") String latitude,
+		@PathParam("longitude") String longitude);
 
 	/**
 	 * Finds a list of {@link Address} from the given {@link Zipcode} object.
@@ -155,8 +157,8 @@ public interface AddressesResource extends RestfulResource<Integer, Address> {
 	Address findFirst(AddressSearchCriteria addressSearchCriteria);
 
 	/**
-	 * Finds a list of {@link Address} from the first and second ring
-	 * neighbourhood areas of the given geohash.
+	 * Finds a list of {@link Address} from the first and second ring neighbourhood areas of the
+	 * given geohash.
 	 *
 	 * @param geohash
 	 *            the geohash
@@ -167,8 +169,7 @@ public interface AddressesResource extends RestfulResource<Integer, Address> {
 	List<Address> findFirstAndSecondRingNeighbourhood(@PathParam("geohash") String geohash);
 
 	/**
-	 * Finds a list of {@link Address} from the first ring neighbourhood areas
-	 * of the given geohash.
+	 * Finds a list of {@link Address} from the first ring neighbourhood areas of the given geohash.
 	 *
 	 * @param geohash
 	 *            the geohash
@@ -188,8 +189,7 @@ public interface AddressesResource extends RestfulResource<Integer, Address> {
 	List<Address> findGeohashIsNull();
 
 	/**
-	 * Finds a list of {@link Address} from the neighbourhood areas of the given
-	 * geohash.
+	 * Finds a list of {@link Address} from the neighbourhood areas of the given geohash.
 	 *
 	 * @param geohash
 	 *            the geohash

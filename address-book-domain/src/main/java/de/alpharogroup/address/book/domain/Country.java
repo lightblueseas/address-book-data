@@ -40,7 +40,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Country extends BaseDomainObject<Integer> {
+public class Country extends BaseDomainObject<Integer>
+{
 
 	/**
 	 * The serialVersionUID.

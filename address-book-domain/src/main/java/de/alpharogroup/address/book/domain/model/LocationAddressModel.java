@@ -41,7 +41,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LocationAddressModel implements LocationModel<Address> {
+public class LocationAddressModel implements LocationModel<Address>
+{
 
 	private static final long serialVersionUID = 1L;
 	private String location;

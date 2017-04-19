@@ -37,21 +37,25 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import de.alpharogroup.xml.sax.handler.BreakParsingException;
 
-public class GoogleGeocodingHandler extends DefaultHandler {
+public class GoogleGeocodingHandler extends DefaultHandler
+{
 
 	/** The Constant LOCATION. */
 	protected static final String LOCATION = "location";
 
 	public static final String LAT = "lat";
 	public static final String LNG = "lng";
+
 	/**
 	 * The main method.
 	 * 
 	 * @param args
 	 *            the arguments
 	 */
-	public static void main(final String[] args) {
-		if (args.length != 1) {
+	public static void main(final String[] args)
+	{
+		if (args.length != 1)
+		{
 			System.err.println("Usage: cmd filename");
 			System.exit(1);
 		}
@@ -60,14 +64,20 @@ public class GoogleGeocodingHandler extends DefaultHandler {
 		DefaultHandler handler = new GoogleGeocodingHandler(map);
 		// Use the default (non-validating) parser
 		SAXParserFactory factory = SAXParserFactory.newInstance();
-		try { // Parse the input
+		try
+		{ // Parse the input
 			SAXParser saxParser = factory.newSAXParser();
 			saxParser.parse(new File(args[0]), handler);
-		} catch (Throwable t) {
-			if (t instanceof BreakParsingException) {
+		}
+		catch (Throwable t)
+		{
+			if (t instanceof BreakParsingException)
+			{
 				// ignore...
 				System.out.println("Parsing is purposely break.");
-			} else {
+			}
+			else
+			{
 				t.printStackTrace();
 			}
 		}
@@ -85,7 +95,8 @@ public class GoogleGeocodingHandler extends DefaultHandler {
 
 	boolean lng = false;
 
-	public GoogleGeocodingHandler(final Map<String, String> data) {
+	public GoogleGeocodingHandler(final Map<String, String> data)
+	{
 		this.data = data;
 	}
 
@@ -102,14 +113,18 @@ public class GoogleGeocodingHandler extends DefaultHandler {
 	 *             the sAX exception {@inheritDoc}
 	 */
 	@Override
-	public void characters(final char[] buf, final int offset, final int len) throws SAXException {
+	public void characters(final char[] buf, final int offset, final int len) throws SAXException
+	{
 		String s = new String(buf, offset, len);
-		if (location) {
-			if (lat) {
+		if (location)
+		{
+			if (lat)
+			{
 				data.put(LAT, s);
 				lat = false;
 			}
-			if (lng) {
+			if (lng)
+			{
 				data.put(LNG, s);
 				lng = false;
 			}
@@ -131,24 +146,30 @@ public class GoogleGeocodingHandler extends DefaultHandler {
 	 *             the sAX exception {@inheritDoc}
 	 */
 	@Override
-	public void startElement(final String namespaceURI, final String simpleName, final String qualifiedName,
-			final Attributes attributes) throws SAXException {
+	public void startElement(final String namespaceURI, final String simpleName,
+		final String qualifiedName, final Attributes attributes) throws SAXException
+	{
 		String elementName = simpleName;
 
-		if ("".equals(elementName)) {
+		if ("".equals(elementName))
+		{
 			elementName = qualifiedName;
 		}
-		if (elementName.equals(LOCATION)) {
+		if (elementName.equals(LOCATION))
+		{
 			location = true;
 		}
-		if (elementName.equals(LAT)) {
+		if (elementName.equals(LAT))
+		{
 			lat = true;
 		}
-		if (elementName.equals(LNG)) {
+		if (elementName.equals(LNG))
+		{
 			lng = true;
 		}
 
-		if (elementName.equals("location_type")) {
+		if (elementName.equals("location_type"))
+		{
 			throw new BreakParsingException("Stopped Parsing file...");
 		}
 	}

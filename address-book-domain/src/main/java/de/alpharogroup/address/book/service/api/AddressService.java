@@ -34,7 +34,8 @@ import de.alpharogroup.service.domain.DomainService;
 /**
  * The interface {@link AddressService}.
  */
-public interface AddressService extends DomainService<Integer, Address> {
+public interface AddressService extends DomainService<Integer, Address>
+{
 
 	/**
 	 * Checks if the given latitude and longitude is contained in the database.
@@ -174,8 +175,8 @@ public interface AddressService extends DomainService<Integer, Address> {
 	Address findFirst(Country country, String zipcode);
 
 	/**
-	 * Finds a list of {@link Address} from the first and second ring
-	 * neighbourhood areas of the given geohash.
+	 * Finds a list of {@link Address} from the first and second ring neighbourhood areas of the
+	 * given geohash.
 	 *
 	 * @param geohash
 	 *            the geohash
@@ -184,8 +185,7 @@ public interface AddressService extends DomainService<Integer, Address> {
 	List<Address> findFirstAndSecondRingNeighbourhood(String geohash);
 
 	/**
-	 * Finds a list of {@link Address} from the first ring neighbourhood areas
-	 * of the given geohash.
+	 * Finds a list of {@link Address} from the first ring neighbourhood areas of the given geohash.
 	 *
 	 * @param geohash
 	 *            the geohash
@@ -225,8 +225,7 @@ public interface AddressService extends DomainService<Integer, Address> {
 	List<Address> findInvalidAddresses(Country country, String geohash, boolean not);
 
 	/**
-	 * Finds a list of {@link Address} from the neighbourhood areas of the given
-	 * geohash.
+	 * Finds a list of {@link Address} from the neighbourhood areas of the given geohash.
 	 *
 	 * @param geohash
 	 *            the geohash

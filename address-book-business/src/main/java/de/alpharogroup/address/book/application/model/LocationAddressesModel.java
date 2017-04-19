@@ -42,7 +42,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class LocationAddressesModel implements Serializable {
+public class LocationAddressesModel implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 	private String location;

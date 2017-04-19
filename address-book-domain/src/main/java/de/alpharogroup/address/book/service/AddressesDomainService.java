@@ -51,8 +51,12 @@ import lombok.Setter;
  */
 @Transactional
 @Service("addressesDomainService")
-public class AddressesDomainService extends
-		AbstractDomainService<Integer, Address, Addresses, AddressesDao, AddressesMapper> implements AddressService {
+public class AddressesDomainService
+	extends
+		AbstractDomainService<Integer, Address, Addresses, AddressesDao, AddressesMapper>
+	implements
+		AddressService
+{
 
 	/** The {@link AddressesService}. */
 	@Autowired
@@ -64,7 +68,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Address contains(String latitude, String longitude) {
+	public Address contains(String latitude, String longitude)
+	{
 		return getMapper().toDomainObject(addressesService.contains(latitude, longitude));
 	}
 
@@ -72,7 +77,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Address contains(Zipcode zipcode) {
+	public Address contains(Zipcode zipcode)
+	{
 		Zipcodes z = getMapper().map(zipcode, Zipcodes.class);
 		return getMapper().toDomainObject(addressesService.contains(z));
 	}
@@ -81,7 +87,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(Country country, String zipcode) {
+	public List<Address> find(Country country, String zipcode)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(addressesService.find(c, zipcode));
 	}
@@ -90,7 +97,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(Country country, String zipcode, String city) {
+	public List<Address> find(Country country, String zipcode, String city)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(addressesService.find(c, zipcode, city));
 	}
@@ -100,7 +108,8 @@ public class AddressesDomainService extends
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Address> find(String geohash) {
+	public List<Address> find(String geohash)
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
@@ -117,7 +126,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(String latitude, String longitude) {
+	public List<Address> find(String latitude, String longitude)
+	{
 		return getMapper().toDomainObjects(addressesService.find(latitude, longitude));
 	}
 
@@ -125,7 +135,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(String geohash, String latitude, String longitude) {
+	public List<Address> find(String geohash, String latitude, String longitude)
+	{
 		return getMapper().toDomainObjects(addressesService.find(geohash, latitude, longitude));
 	}
 
@@ -133,7 +144,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(Zipcode zipcode) {
+	public List<Address> find(Zipcode zipcode)
+	{
 		Zipcodes z = getMapper().map(zipcode, Zipcodes.class);
 		return getMapper().toDomainObjects(addressesService.find(z));
 	}
@@ -142,7 +154,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findAddressesWithSameCityname(Country country, String city) {
+	public List<Address> findAddressesWithSameCityname(Country country, String city)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(addressesService.findAddressesWithSameCityname(c, city));
 	}
@@ -151,7 +164,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findAddressesWithSameZipcode(Country country, String zipcode) {
+	public List<Address> findAddressesWithSameZipcode(Country country, String zipcode)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(addressesService.find(c, zipcode));
 	}
@@ -160,7 +174,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findAll(Country country) {
+	public List<Address> findAll(Country country)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(addressesService.findAll(c));
 	}
@@ -169,7 +184,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Zipcode> findAllAddressesWithCountry(Country country) {
+	public List<Zipcode> findAllAddressesWithCountry(Country country)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		List<Zipcodes> zc = addressesService.findAllAddressesWithCountry(c);
 		return getMapper().map(zc, Zipcode.class);
@@ -179,7 +195,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Address findFirst(Country country, String zipcode) {
+	public Address findFirst(Country country, String zipcode)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObject(addressesService.findFirst(c, zipcode));
 	}
@@ -188,15 +205,18 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findFirstAndSecondRingNeighbourhood(String geohash) {
-		return getMapper().toDomainObjects(addressesService.findFirstAndSecondRingNeighbourhood(geohash));
+	public List<Address> findFirstAndSecondRingNeighbourhood(String geohash)
+	{
+		return getMapper()
+			.toDomainObjects(addressesService.findFirstAndSecondRingNeighbourhood(geohash));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findFirstRingNeighbourhood(String geohash) {
+	public List<Address> findFirstRingNeighbourhood(String geohash)
+	{
 		return getMapper().toDomainObjects(addressesService.findFirstRingNeighbourhood(geohash));
 	}
 
@@ -204,7 +224,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findGeohashIsNull() {
+	public List<Address> findGeohashIsNull()
+	{
 		return getMapper().toDomainObjects(addressesService.findGeohashIsNull());
 	}
 
@@ -212,7 +233,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findInvalidAddresses(Country country, String geohash) {
+	public List<Address> findInvalidAddresses(Country country, String geohash)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(addressesService.findInvalidAddresses(c, geohash));
 	}
@@ -221,7 +243,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findInvalidAddresses(Country country, String geohash, boolean not) {
+	public List<Address> findInvalidAddresses(Country country, String geohash, boolean not)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(addressesService.findInvalidAddresses(c, geohash, not));
 	}
@@ -230,7 +253,8 @@ public class AddressesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findNeighbourhood(String geohash) {
+	public List<Address> findNeighbourhood(String geohash)
+	{
 		List<Addresses> addresses = addressesService.findNeighbourhood(geohash);
 		return getMapper().toDomainObjects(addresses);
 	}
@@ -242,7 +266,8 @@ public class AddressesDomainService extends
 	 *            the new {@link AddressesDao}.
 	 */
 	@Autowired
-	public void setAddressesDao(AddressesDao addressesDao) {
+	public void setAddressesDao(AddressesDao addressesDao)
+	{
 		setDao(addressesDao);
 	}
 
@@ -253,7 +278,8 @@ public class AddressesDomainService extends
 	 *            the new {@link AddressesMapper}.
 	 */
 	@Autowired
-	public void setAddressesMapper(AddressesMapper addressesMapper) {
+	public void setAddressesMapper(AddressesMapper addressesMapper)
+	{
 		setMapper(addressesMapper);
 	}
 }

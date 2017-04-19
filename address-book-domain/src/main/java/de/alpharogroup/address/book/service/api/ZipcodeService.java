@@ -33,7 +33,8 @@ import de.alpharogroup.service.domain.DomainService;
 /**
  * The interface {@link ZipcodeService}.
  */
-public interface ZipcodeService extends DomainService<Integer, Zipcode> {
+public interface ZipcodeService extends DomainService<Integer, Zipcode>
+{
 
 	/**
 	 * Delete all zipcodes.
@@ -59,8 +60,8 @@ public interface ZipcodeService extends DomainService<Integer, Zipcode> {
 	List<Zipcode> find(final Country country);
 
 	/**
-	 * Gets a List of {@link Zipcode} with the given parameters that can be null
-	 * if they shell be ignored in the query.
+	 * Gets a List of {@link Zipcode} with the given parameters that can be null if they shell be
+	 * ignored in the query.
 	 *
 	 * @param country
 	 *            the country
@@ -73,8 +74,8 @@ public interface ZipcodeService extends DomainService<Integer, Zipcode> {
 	List<Zipcode> findAll(Country country, String zipcode, String city);
 
 	/**
-	 * Find the {@link Zipcode} to resolve the city from the given
-	 * {@link Country} object and zipcode string.
+	 * Find the {@link Zipcode} to resolve the city from the given {@link Country} object and
+	 * zipcode string.
 	 *
 	 * @param country
 	 *            the country
@@ -94,8 +95,8 @@ public interface ZipcodeService extends DomainService<Integer, Zipcode> {
 	List<Zipcode> findZipcodes(final String zipcode);
 
 	/**
-	 * Gets the {@link Zipcode} object from the given zipcode string and city.
-	 * If it does not exist it will be create a new {@link Zipcode} object.
+	 * Gets the {@link Zipcode} object from the given zipcode string and city. If it does not exist
+	 * it will be create a new {@link Zipcode} object.
 	 * 
 	 * @param zipcode
 	 *            the zipcode

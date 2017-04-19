@@ -33,7 +33,8 @@ import de.alpharogroup.db.service.api.BusinessService;
 /**
  * The interface {@link FederalstatesService}.
  */
-public interface FederalstatesService extends BusinessService<Federalstates, Integer> {
+public interface FederalstatesService extends BusinessService<Federalstates, Integer>
+{
 
 	/**
 	 * Find the first federal state from country.
@@ -85,23 +86,20 @@ public interface FederalstatesService extends BusinessService<Federalstates, Int
 	List<Federalstates> findFederalstatesFromCountry(final Countries country, String name);
 
 	/**
-	 * Gets the Federalstates from the given String object. Example for the
-	 * format for the given String is(without the double quotes):
-	 * "gr.grc=&gt;gr.a" or "de.deu=&gt;de.bw"
+	 * Gets the Federalstates from the given String object. Example for the format for the given
+	 * String is(without the double quotes): "gr.grc=&gt;gr.a" or "de.deu=&gt;de.bw"
 	 *
 	 * @param string
-	 *            a concat string from country and an optional state string
-	 *            code.
+	 *            a concat string from country and an optional state string code.
 	 * @return the federalstate
-	 * @deprecated use instead
-	 *             {@link FederalstatesService#getFederalstate(String, String)}
+	 * @deprecated use instead {@link FederalstatesService#getFederalstate(String, String)}
 	 */
 	@Deprecated
 	Federalstates getFederalstate(final String string);
 
 	/**
-	 * Gets the Federalstates from the given String objects. Example:
-	 * "country=gr.grc, stateCode=gr.a" or "country=de.deu, stateCode=de.bw"
+	 * Gets the Federalstates from the given String objects. Example: "country=gr.grc,
+	 * stateCode=gr.a" or "country=de.deu, stateCode=de.bw"
 	 *
 	 * @param country
 	 *            the country.

@@ -31,6 +31,7 @@ import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.db.entitymapper.AbstractEntityDOMapper;
 
 @Component
-public class CountriesMapper extends AbstractEntityDOMapper<Countries, Country> {
+public class CountriesMapper extends AbstractEntityDOMapper<Countries, Country>
+{
 
 }

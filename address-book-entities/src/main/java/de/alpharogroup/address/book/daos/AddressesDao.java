@@ -33,7 +33,8 @@ import de.alpharogroup.db.dao.jpa.JpaEntityManagerDao;
  * The Class AddressesDao.
  */
 @Repository("addressesDao")
-public class AddressesDao extends JpaEntityManagerDao<Addresses, Integer> {
+public class AddressesDao extends JpaEntityManagerDao<Addresses, Integer>
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

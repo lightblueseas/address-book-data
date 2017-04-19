@@ -24,7 +24,8 @@
  */
 package de.alpharogroup.address.book.init;
 
-public class GermanZipcodeBean {
+public class GermanZipcodeBean
+{
 
 	String zipcode;
 
@@ -38,11 +39,13 @@ public class GermanZipcodeBean {
 
 	String federalState;
 
-	public GermanZipcodeBean() {
+	public GermanZipcodeBean()
+	{
 	}
 
-	public GermanZipcodeBean(String zipcode, String city, String circleKey, String circle, String federalStateKey,
-			String federalState) {
+	public GermanZipcodeBean(String zipcode, String city, String circleKey, String circle,
+		String federalStateKey, String federalState)
+	{
 		this.zipcode = zipcode;
 		this.city = city;
 		this.circleKey = circleKey;
@@ -51,51 +54,63 @@ public class GermanZipcodeBean {
 		this.federalState = federalState;
 	}
 
-	public String getCircle() {
+	public String getCircle()
+	{
 		return circle;
 	}
 
-	public String getCircleKey() {
+	public String getCircleKey()
+	{
 		return circleKey;
 	}
 
-	public String getCity() {
+	public String getCity()
+	{
 		return city;
 	}
 
-	public String getFederalState() {
+	public String getFederalState()
+	{
 		return federalState;
 	}
 
-	public String getFederalStateKey() {
+	public String getFederalStateKey()
+	{
 		return federalStateKey;
 	}
 
-	public String getZipcode() {
+	public String getZipcode()
+	{
 		return zipcode;
 	}
 
-	public void setCircle(String circle) {
+	public void setCircle(String circle)
+	{
 		this.circle = circle;
 	}
 
-	public void setCircleKey(String circleKey) {
+	public void setCircleKey(String circleKey)
+	{
 		this.circleKey = circleKey;
 	}
 
-	public void setCity(String city) {
+	public void setCity(String city)
+	{
 		this.city = city;
 	}
 
-	public void setFederalState(String federalState) {
+	public void setFederalState(String federalState)
+	{
 		this.federalState = federalState;
 	}
 
-	public void setFederalStateKey(String federalStateKey) {
+	public void setFederalStateKey(String federalStateKey)
+	{
 		this.federalStateKey = federalStateKey;
 	}
 
-	public void setZipcode(String zipcode) {
+	public void setZipcode(String zipcode)
+	{
 		this.zipcode = zipcode;
 	}
 

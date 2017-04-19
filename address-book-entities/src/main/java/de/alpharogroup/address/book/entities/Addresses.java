@@ -45,7 +45,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Addresses extends BaseEntity<Integer> implements Cloneable {
+public class Addresses extends BaseEntity<Integer> implements Cloneable
+{
 
 	/** The serial Version UID */
 	private static final long serialVersionUID = 1L;
@@ -54,8 +55,7 @@ public class Addresses extends BaseEntity<Integer> implements Cloneable {
 	private String addressComment;
 
 	/**
-	 * The federalstate attribute is the federal state from this
-	 * {@link Addresses } object.
+	 * The federalstate attribute is the federal state from this {@link Addresses } object.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "federalstate_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_ADDRESSES_FEDERALSTATE_ID"))
@@ -64,8 +64,8 @@ public class Addresses extends BaseEntity<Integer> implements Cloneable {
 	@Column(length = 16)
 	private String geohash;
 	/**
-	 * The latitude from the address. Latitude is a geographical term denoting
-	 * the north/south angular location of a place on a sphere.
+	 * The latitude from the address. Latitude is a geographical term denoting the north/south
+	 * angular location of a place on a sphere.
 	 */
 	@Column(length = 12)
 	private String latitude;

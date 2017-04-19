@@ -36,17 +36,20 @@ import de.alpharogroup.collections.ListExtensions;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 /**
- * The class {@link AddressesRestResource} provides an implementation of the
- * inteface {@link AddressesResource}.
+ * The class {@link AddressesRestResource} provides an implementation of the inteface
+ * {@link AddressesResource}.
  */
 public class AddressesRestResource extends AbstractRestfulResource<Integer, Address, AddressService>
-		implements AddressesResource {
+	implements
+		AddressesResource
+{
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Address contains(String latitude, String longitude) {
+	public Address contains(String latitude, String longitude)
+	{
 		return getDomainService().contains(latitude, longitude);
 	}
 
@@ -54,7 +57,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Address contains(Zipcode zipcode) {
+	public Address contains(Zipcode zipcode)
+	{
 		return getDomainService().contains(zipcode);
 	}
 
@@ -62,16 +66,18 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(AddressSearchCriteria addressSearchCriteria) {
+	public List<Address> find(AddressSearchCriteria addressSearchCriteria)
+	{
 		List<Address> addresses = getDomainService().find(addressSearchCriteria.getCountry(),
-				addressSearchCriteria.getZipcode(), addressSearchCriteria.getCity());
+			addressSearchCriteria.getZipcode(), addressSearchCriteria.getCity());
 		return addresses;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<Address> find(String geohash) {
+	public List<Address> find(String geohash)
+	{
 		List<Address> addresses = getDomainService().find(geohash);
 		return addresses;
 	}
@@ -80,7 +86,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(String latitude, String longitude) {
+	public List<Address> find(String latitude, String longitude)
+	{
 		List<Address> addresses = getDomainService().find(latitude, longitude);
 		return addresses;
 	}
@@ -89,7 +96,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> find(Zipcode zipcode) {
+	public List<Address> find(Zipcode zipcode)
+	{
 		return getDomainService().find(zipcode);
 	}
 
@@ -97,7 +105,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findAll(Country country) {
+	public List<Address> findAll(Country country)
+	{
 		List<Address> addresses = getDomainService().findAll(country);
 		return addresses;
 	}
@@ -106,7 +115,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Zipcode> findAllAddressesWithCountry(Country country) {
+	public List<Zipcode> findAllAddressesWithCountry(Country country)
+	{
 		List<Zipcode> zipcodes = getDomainService().findAllAddressesWithCountry(country);
 		return zipcodes;
 	}
@@ -115,7 +125,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Address findFirst(AddressSearchCriteria addressSearchCriteria) {
+	public Address findFirst(AddressSearchCriteria addressSearchCriteria)
+	{
 		List<Address> addresses = find(addressSearchCriteria);
 		return ListExtensions.getFirst(addresses);
 	}
@@ -124,7 +135,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findFirstAndSecondRingNeighbourhood(String geohash) {
+	public List<Address> findFirstAndSecondRingNeighbourhood(String geohash)
+	{
 		List<Address> addresses = getDomainService().findFirstAndSecondRingNeighbourhood(geohash);
 		return addresses;
 	}
@@ -133,7 +145,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findFirstRingNeighbourhood(String geohash) {
+	public List<Address> findFirstRingNeighbourhood(String geohash)
+	{
 		List<Address> addresses = getDomainService().findFirstRingNeighbourhood(geohash);
 		return addresses;
 	}
@@ -142,7 +155,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findGeohashIsNull() {
+	public List<Address> findGeohashIsNull()
+	{
 		List<Address> addresses = getDomainService().findGeohashIsNull();
 		return addresses;
 	}
@@ -151,7 +165,8 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Address> findNeighbourhood(String geohash) {
+	public List<Address> findNeighbourhood(String geohash)
+	{
 		List<Address> addresses = getDomainService().findNeighbourhood(geohash);
 		return addresses;
 	}

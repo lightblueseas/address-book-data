@@ -36,17 +36,20 @@ import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 /**
- * The class {@link CountriesRestResource} provides an implementation of the
- * inteface {@link CountriesResource}.
+ * The class {@link CountriesRestResource} provides an implementation of the inteface
+ * {@link CountriesResource}.
  */
 public class CountriesRestResource extends AbstractRestfulResource<Integer, Country, CountryService>
-		implements CountriesResource {
+	implements
+		CountriesResource
+{
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Country find(String iso3166a2name) {
+	public Country find(String iso3166a2name)
+	{
 		return getDomainService().find(iso3166a2name);
 	}
 
@@ -54,7 +57,9 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Country> findAll(String iso3166a2name, String iso3166a3name, String iso3166Number, String name) {
+	public List<Country> findAll(String iso3166a2name, String iso3166a3name, String iso3166Number,
+		String name)
+	{
 		return getDomainService().findAll(iso3166a2name, iso3166a3name, iso3166Number, name);
 	}
 
@@ -62,7 +67,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Country findByName(String name) {
+	public Country findByName(String name)
+	{
 		return getDomainService().findByName(name);
 	}
 
@@ -70,7 +76,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList() {
+	public List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList()
+	{
 		return getDomainService().getCountriesToFederalstatesAsStringList();
 	}
 
@@ -78,7 +85,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList() {
+	public List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList()
+	{
 		return getDomainService().getCountriesToFederalstatesList();
 	}
 
@@ -86,7 +94,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList() {
+	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList()
+	{
 		return getDomainService().getCountriesToZipcodesAndCitiesAsStringList();
 	}
 
@@ -94,7 +103,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList() {
+	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList()
+	{
 		return getDomainService().getCountriesToZipcodesAsStringList();
 	}
 
@@ -102,7 +112,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<Country, Zipcode>> getCountriesToZipcodesList() {
+	public List<KeyValuesPair<Country, Zipcode>> getCountriesToZipcodesList()
+	{
 		return getDomainService().getCountriesToZipcodesList();
 	}
 
@@ -110,7 +121,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList() {
+	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList()
+	{
 		return getDomainService().getGermanCountriesToZipcodesAndCitiesAsStringList();
 	}
 
@@ -118,7 +130,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList() {
+	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList()
+	{
 		return getDomainService().getGermanCountriesToZipcodesAsStringList();
 	}
 
@@ -126,7 +139,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<Country, Zipcode>> getGermanCountriesToZipcodesList() {
+	public List<KeyValuesPair<Country, Zipcode>> getGermanCountriesToZipcodesList()
+	{
 		return getDomainService().getGermanCountriesToZipcodesList();
 	}
 
@@ -134,7 +148,8 @@ public class CountriesRestResource extends AbstractRestfulResource<Integer, Coun
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AddressSearchModel setLocationSearchModel(AddressSearchModel modelObject) {
+	public AddressSearchModel setLocationSearchModel(AddressSearchModel modelObject)
+	{
 		return getDomainService().setLocationSearchModel(modelObject);
 	}
 

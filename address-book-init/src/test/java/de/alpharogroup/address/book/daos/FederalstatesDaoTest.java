@@ -34,13 +34,15 @@ import org.testng.annotations.Test;
 import de.alpharogroup.address.book.entities.Federalstates;
 
 @ContextConfiguration(locations = "classpath:test-applicationContext.xml")
-public class FederalstatesDaoTest extends AbstractTestNGSpringContextTests {
+public class FederalstatesDaoTest extends AbstractTestNGSpringContextTests
+{
 
 	@Autowired
 	private FederalstatesDao federalstatesDao;
 
 	@Test(enabled = false)
-	public void testFindAll() {
+	public void testFindAll()
+	{
 		List<Federalstates> all = federalstatesDao.findAll();
 		System.out.println(all.size());
 	}

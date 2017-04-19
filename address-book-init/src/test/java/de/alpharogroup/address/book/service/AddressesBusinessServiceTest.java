@@ -50,7 +50,8 @@ import de.alpharogroup.jgeohash.distance.MeasuringUnit;
 import de.alpharogroup.xml.XmlExtensions;
 
 @ContextConfiguration(locations = "classpath:test-applicationContext.xml")
-public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTests {
+public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTests
+{
 
 	@Autowired
 	private CountriesService countriesService;
@@ -60,7 +61,8 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	private AddressesService addressesService;
 
 	@Test(enabled = false)
-	public void getAllSwitzerlandAddresses() {
+	public void getAllSwitzerlandAddresses()
+	{
 		final Countries country = countriesService.find("DE");
 		final List<Zipcodes> countryZipcodes = zipcodesService.find(country);
 		System.out.println("All zipcodes from austria:" + countryZipcodes.size());
@@ -70,7 +72,8 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	}
 
 	@Test(enabled = false)
-	public void getNeighbourhood() {
+	public void getNeighbourhood()
+	{
 		List<Addresses> addresses = addressesService.findNeighbourhood("u336");
 		System.out.println("addresses found:" + addresses);
 		System.out.println("addresses size:" + addresses.size());
@@ -82,24 +85,30 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		System.out.println("addresses size:" + addresses.size());
 	}
 
-	protected File getProcessedDir() {
+	protected File getProcessedDir()
+	{
 		final File smr = PathFinder.getSrcMainResourcesDir();
 		final File processedDir = PathFinder.getRelativePath(smr, "zipcodes", "processed");
 		return processedDir;
 	}
 
 	@Test(enabled = false)
-	public void testCreateAddress() {
-		Addresses addr = addressesService.createAddress("Alter Teichweg", "188", "", "22049", "Hamburg", "Hamburg");
+	public void testCreateAddress()
+	{
+		Addresses addr = addressesService.createAddress("Alter Teichweg", "188", "", "22049",
+			"Hamburg", "Hamburg");
 		System.out.println(addr);
-		addr = addressesService.createAddress("Alter Teichweg", "188", "", "22049", "Hamburg", null);
+		addr = addressesService.createAddress("Alter Teichweg", "188", "", "22049", "Hamburg",
+			null);
 		System.out.println(addr);
 	}
 
 	@Test(enabled = false)
-	public void testFindGeohashNull() {
+	public void testFindGeohashNull()
+	{
 		final List<Addresses> addresses = addressesService.findGeohashIsNull();
-		for (final Addresses address : addresses) {
+		for (final Addresses address : addresses)
+		{
 			final String l = address.getLatitude();
 			final String longtidude = address.getLongitude();
 			final double lat = Double.parseDouble(l);
@@ -112,34 +121,41 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	}
 
 	@Test(enabled = false)
-	public void testGetInvalidAddresses() {
+	public void testGetInvalidAddresses()
+	{
 		final Countries country = countriesService.find("DE");
 		System.out.println(country.getName());
-		final List<Addresses> addresses = addressesService.findInvalidAddresses(country, "u4", false);
+		final List<Addresses> addresses = addressesService.findInvalidAddresses(country, "u4",
+			false);
 		System.out.println("addresses size:" + addresses.size());
-		for (final Addresses address : addresses) {
+		for (final Addresses address : addresses)
+		{
 
-			System.out.println("processed :id:" + address.getId() + ":" + address.getZipcode().getZipcode() + " "
-					+ address.getZipcode().getCity());
+			System.out.println("processed :id:" + address.getId() + ":"
+				+ address.getZipcode().getZipcode() + " " + address.getZipcode().getCity());
 		}
-		for (final Addresses address : addresses) {
-			System.out
-					.println("to process:" + address.getZipcode().getZipcode() + " " + address.getZipcode().getCity());
+		for (final Addresses address : addresses)
+		{
+			System.out.println("to process:" + address.getZipcode().getZipcode() + " "
+				+ address.getZipcode().getCity());
 			final List<Addresses> addressesSameCityName = addressesService
-					.findAddressesWithSameCityname(address.getZipcode().getCountry(), address.getZipcode().getCity());
+				.findAddressesWithSameCityname(address.getZipcode().getCountry(),
+					address.getZipcode().getCity());
 			// List<Addresses> addressesSameCityName =
 			// addressesService.findAddressesWithSameZipcode(address.getZipcode().getCountry(),
 			// address.getZipcode().getZipcode());
 			addressesSameCityName.remove(address);
-			for (final Addresses address2 : addressesSameCityName) {
-				if (address2.getGeohash().startsWith("u")) {
+			for (final Addresses address2 : addressesSameCityName)
+			{
+				if (address2.getGeohash().startsWith("u"))
+				{
 					final Addresses freshFromDb = addressesService.get(address.getId());
 					freshFromDb.setGeohash(address2.getGeohash());
 					freshFromDb.setLatitude(address2.getLatitude());
 					freshFromDb.setLongitude(address2.getLongitude());
 					addressesService.merge(freshFromDb);
 					System.out.println("processed:" + freshFromDb.getZipcode().getZipcode() + " "
-							+ freshFromDb.getZipcode().getCity());
+						+ freshFromDb.getZipcode().getCity());
 					break;
 				}
 			}
@@ -158,48 +174,63 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	}
 
 	@Test(enabled = false)
-	public void validateAddressesWithSameCityname() {
+	public void validateAddressesWithSameCityname()
+	{
 		final Countries country = countriesService.find("DE");
 		final List<Addresses> addresses = addressesService.findAll(country);
-		for (final Iterator<Addresses> iterator = addresses.iterator(); iterator.hasNext();) {
+		for (final Iterator<Addresses> iterator = addresses.iterator(); iterator.hasNext();)
+		{
 			final Addresses address = iterator.next();
 			final List<Addresses> addressesSameCityName = addressesService
-					.findAddressesWithSameCityname(address.getZipcode().getCountry(), address.getZipcode().getCity());
-			if (4 < addressesSameCityName.size()) {
+				.findAddressesWithSameCityname(address.getZipcode().getCountry(),
+					address.getZipcode().getCity());
+			if (4 < addressesSameCityName.size())
+			{
 				continue;
 			}
-			for (final Addresses address2 : addressesSameCityName) {
-				System.out.println(address2.getZipcode().getZipcode() + " " + address2.getZipcode().getCity());
+			for (final Addresses address2 : addressesSameCityName)
+			{
+				System.out.println(
+					address2.getZipcode().getZipcode() + " " + address2.getZipcode().getCity());
 			}
 		}
 	}
 
 	@Test(enabled = false)
-	public void valideAddressZipcodes() throws IOException {
+	public void valideAddressZipcodes() throws IOException
+	{
 		final File smr = PathFinder.getSrcMainResourcesDir();
 		final File deDir = PathFinder.getRelativePath(smr, "zipcodes", "de");
 		final File input = new File(deDir, "DeZipcodes.xml");
 		final String notPrZipcodes = ReadFileExtensions.readFromFile(input);
-		final List<DeZipcodeBean> deZipcodeBeanList = XmlExtensions.toObjectWithXStream(notPrZipcodes);
+		final List<DeZipcodeBean> deZipcodeBeanList = XmlExtensions
+			.toObjectWithXStream(notPrZipcodes);
 
 		final Countries country = countriesService.find("DE");
-		for (final DeZipcodeBean bean : deZipcodeBeanList) {
-			final List<Addresses> addresses = addressesService.find(country, bean.getZipcode(), bean.getCity());
-			if (1 < addresses.size()) {
+		for (final DeZipcodeBean bean : deZipcodeBeanList)
+		{
+			final List<Addresses> addresses = addressesService.find(country, bean.getZipcode(),
+				bean.getCity());
+			if (1 < addresses.size())
+			{
 				System.out.println("ambiguous:" + bean);
 				continue;
 			}
 			final Addresses addressInDb = ListExtensions.getFirst(addresses);
 
-			if (addressInDb != null) {
+			if (addressInDb != null)
+			{
 				final double latDb = Double.parseDouble(addressInDb.getLatitude());
 				final double lngDb = Double.parseDouble(addressInDb.getLongitude());
 				double latBean;
 				double lngBean;
-				try {
+				try
+				{
 					latBean = Double.parseDouble(bean.getLatitude());
 					lngBean = Double.parseDouble(bean.getLongitude());
-				} catch (final NumberFormatException e1) {
+				}
+				catch (final NumberFormatException e1)
+				{
 					// TODO Auto-generated catch block
 					System.out.println("=================================");
 					System.out.println("This bean will is not processed:" + bean);
@@ -209,12 +240,16 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 				}
 
 				final double distance = DistanceCalculator.distance(latDb, lngDb, latBean, lngBean,
-						MeasuringUnit.KILOMETER);
-				if (30.0 < distance) {
+					MeasuringUnit.KILOMETER);
+				if (30.0 < distance)
+				{
 					GeoHashPoint point;
-					try {
+					try
+					{
 						point = new GeoHashPoint(bean.getLatitude(), bean.getLongitude());
-					} catch (final Exception e) {
+					}
+					catch (final Exception e)
+					{
 						// TODO Auto-generated catch block
 						System.out.println("=================================");
 						System.out.println("This bean will is not processed:" + bean);

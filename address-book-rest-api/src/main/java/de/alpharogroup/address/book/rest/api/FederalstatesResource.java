@@ -42,14 +42,15 @@ import de.alpharogroup.service.rs.RestfulResource;
 @Path("/federalstate/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface FederalstatesResource extends RestfulResource<Integer, Federalstate> {
+public interface FederalstatesResource extends RestfulResource<Integer, Federalstate>
+{
 
 	/**
 	 * Find the first federal state from country.
 	 * 
 	 * @param countryWithName
-	 *            the {@link KeyValuePair} object that encapsulate the country
-	 *            with the name of the federal state
+	 *            the {@link KeyValuePair} object that encapsulate the country with the name of the
+	 *            federal state
 	 * @return the the first federal state or null if not found.
 	 */
 	@POST
@@ -65,7 +66,8 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 */
 	@GET
 	@Path("/find/federalstate/{iso3166A2code}/")
-	Federalstate findFederalstateFromIso3166A2code(@PathParam("iso3166A2code") final String iso3166A2code);
+	Federalstate findFederalstateFromIso3166A2code(
+		@PathParam("iso3166A2code") final String iso3166A2code);
 
 	/**
 	 * Find federalstate name from iso3166 a2code.
@@ -76,7 +78,8 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 */
 	@GET
 	@Path("/find/federalstatestring/{iso3166A2code}/")
-	String findFederalstateNameFromIso3166A2code(@PathParam("iso3166A2code") final String iso3166A2code);
+	String findFederalstateNameFromIso3166A2code(
+		@PathParam("iso3166A2code") final String iso3166A2code);
 
 	/**
 	 * Find federalstates from country.
@@ -93,17 +96,18 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	 * Find federal states from country.
 	 * 
 	 * @param countryWithName
-	 *            the {@link KeyValuePair} object that encapsulate the country
-	 *            with the name of the federal state
+	 *            the {@link KeyValuePair} object that encapsulate the country with the name of the
+	 *            federal state
 	 * @return the list of found federal states.
 	 */
 	@POST
 	@Path("/find/federalstates/country/with/name")
-	List<Federalstate> findFederalstatesFromCountry(final KeyValuePair<Country, String> countryWithName);
+	List<Federalstate> findFederalstatesFromCountry(
+		final KeyValuePair<Country, String> countryWithName);
 
 	/**
-	 * Gets the Federalstate from the given String objects. Example:
-	 * "country=gr.grc, stateCode=gr.a" or "country=de.deu, stateCode=de.bw"
+	 * Gets the Federalstate from the given String objects. Example: "country=gr.grc,
+	 * stateCode=gr.a" or "country=de.deu, stateCode=de.bw"
 	 *
 	 * @param country
 	 *            the country.
@@ -114,5 +118,5 @@ public interface FederalstatesResource extends RestfulResource<Integer, Federals
 	@GET
 	@Path("/get/federalstate/{country}/{statecode}/")
 	Federalstate getFederalstate(@PathParam("country") final String country,
-			@PathParam("statecode") final String stateCode);
+		@PathParam("statecode") final String stateCode);
 }

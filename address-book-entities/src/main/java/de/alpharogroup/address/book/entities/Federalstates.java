@@ -42,8 +42,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The entity class {@link Federalstates} is keeping the information for the
- * federal states from the countries.
+ * The entity class {@link Federalstates} is keeping the information for the federal states from the
+ * countries.
  */
 
 @Entity
@@ -55,8 +55,9 @@ import lombok.Setter;
 		@NamedNativeQuery(name = Federalstates.FIND_FEDERALSTATES_FROM_COUNTRY, query = "select * from federalstates fs where fs.country_id=:country", resultClass = Federalstates.class) })
 @NamedQueries({
 		@NamedQuery(name = Federalstates.FIND_FEDERALSTATE_FROM_COUNTRY_AND_NAME, query = "select fs from Federalstates fs"
-				+ " where fs.country=:country" + " and fs.name=:name") })
-public class Federalstates extends BaseEntity<Integer> implements Cloneable {
+			+ " where fs.country=:country" + " and fs.name=:name") })
+public class Federalstates extends BaseEntity<Integer> implements Cloneable
+{
 
 	public static final String FIND_FEDERALSTATE_FROM_COUNTRY_AND_NAME = "findFederalstateFromCountryAndName";
 

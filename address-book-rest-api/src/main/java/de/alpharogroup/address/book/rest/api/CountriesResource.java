@@ -44,11 +44,11 @@ import de.alpharogroup.service.rs.RestfulResource;
 @Path("/country/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface CountriesResource extends RestfulResource<Integer, Country> {
+public interface CountriesResource extends RestfulResource<Integer, Country>
+{
 
 	/**
-	 * Find the {@link Country} object from the given ISO 3166 {@link String}
-	 * object.
+	 * Find the {@link Country} object from the given ISO 3166 {@link String} object.
 	 *
 	 * @param iso3166A2name
 	 *            the iso3166 a2name
@@ -74,8 +74,8 @@ public interface CountriesResource extends RestfulResource<Integer, Country> {
 	@GET
 	@Path("/find/{iso3166A2name}/{iso3166A3name}/{iso3166Number}/{name}")
 	List<Country> findAll(@PathParam("iso3166A2name") String iso3166A2name,
-			@PathParam("iso3166A3name") String iso3166A3name, @PathParam("iso3166Number") String iso3166Number,
-			@PathParam("name") String name);
+		@PathParam("iso3166A3name") String iso3166A3name,
+		@PathParam("iso3166Number") String iso3166Number, @PathParam("name") String name);
 
 	/**
 	 * Find the {@link Country} object by name.
@@ -89,9 +89,8 @@ public interface CountriesResource extends RestfulResource<Integer, Country> {
 	Country findByName(String name);
 
 	/**
-	 * Gets a list with the mapping-class: the key is the name of the country
-	 * and as value the corresponding federal states as a List of Iso3166A2code
-	 * String objects.
+	 * Gets a list with the mapping-class: the key is the name of the country and as value the
+	 * corresponding federal states as a List of Iso3166A2code String objects.
 	 * 
 	 * @return the countries to federalstates as string list
 	 */
@@ -100,8 +99,8 @@ public interface CountriesResource extends RestfulResource<Integer, Country> {
 	List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList();
 
 	/**
-	 * Gets a list with the mapping-class: the key as Country object and as
-	 * value the corresponding federal states as a List of Federalstate objects.
+	 * Gets a list with the mapping-class: the key as Country object and as value the corresponding
+	 * federal states as a List of Federalstate objects.
 	 * 
 	 * @return the countries to federalstates list
 	 */
@@ -110,9 +109,8 @@ public interface CountriesResource extends RestfulResource<Integer, Country> {
 	List<KeyValuesPair<Country, Federalstate>> getCountriesToFederalstatesList();
 
 	/**
-	 * Gets a list with the mapping-class: the key is the name of the country
-	 * and as value the corresponding zipcodes and cities as a List of String
-	 * objects.
+	 * Gets a list with the mapping-class: the key is the name of the country and as value the
+	 * corresponding zipcodes and cities as a List of String objects.
 	 *
 	 * @return the countries to zipcodes and cities as string list
 	 */
@@ -121,8 +119,8 @@ public interface CountriesResource extends RestfulResource<Integer, Country> {
 	List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList();
 
 	/**
-	 * Gets a list with the mapping-class: the key is the name of the country
-	 * and as value the corresponding zipcodes as a List of String objects.
+	 * Gets a list with the mapping-class: the key is the name of the country and as value the
+	 * corresponding zipcodes as a List of String objects.
 	 *
 	 * @return the countries to zipcodes as string list
 	 */
@@ -131,8 +129,8 @@ public interface CountriesResource extends RestfulResource<Integer, Country> {
 	List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList();
 
 	/**
-	 * Gets a list with the mapping-class: the key as Country object and as
-	 * value the corresponding Zipcodes as a List of Zipcode objects.
+	 * Gets a list with the mapping-class: the key as Country object and as value the corresponding
+	 * Zipcodes as a List of Zipcode objects.
 	 *
 	 * @return the countries to zipcodes list
 	 */
@@ -159,11 +157,10 @@ public interface CountriesResource extends RestfulResource<Integer, Country> {
 	List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList();
 
 	/**
-	 * Gets a list with the mapping-class: the key is the name of the country
-	 * and as value the corresponding zipcodes as a List of String objects.
+	 * Gets a list with the mapping-class: the key is the name of the country and as value the
+	 * corresponding zipcodes as a List of String objects.
 	 *
-	 * @return the countries to zipcodes as string list for german speeking
-	 *         countries only
+	 * @return the countries to zipcodes as string list for german speeking countries only
 	 */
 	@GET
 	@Path("/get/germancountry2zipcodes/list/")

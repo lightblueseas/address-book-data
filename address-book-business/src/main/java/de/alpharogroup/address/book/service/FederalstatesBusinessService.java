@@ -45,8 +45,12 @@ import de.alpharogroup.db.service.jpa.AbstractBusinessService;
  */
 @Transactional
 @Service("federalstatesService")
-public class FederalstatesBusinessService extends AbstractBusinessService<Federalstates, Integer, FederalstatesDao>
-		implements FederalstatesService {
+public class FederalstatesBusinessService
+	extends
+		AbstractBusinessService<Federalstates, Integer, FederalstatesDao>
+	implements
+		FederalstatesService
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -55,7 +59,8 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Federalstates findFederalstate(final Countries country, final String name) {
+	public Federalstates findFederalstate(final Countries country, final String name)
+	{
 		return ListExtensions.getFirst(findFederalstatesFromCountry(country, name));
 	}
 
@@ -64,7 +69,8 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Federalstates findFederalstateFromIso3166A2code(final String iso3166A2code) {
+	public Federalstates findFederalstateFromIso3166A2code(final String iso3166A2code)
+	{
 		final String hqlString = "select fs from Federalstates fs where fs.iso3166A2code=:iso3166A2code";
 		final Query query = getQuery(hqlString);
 		query.setParameter("iso3166A2code", iso3166A2code);
@@ -76,7 +82,8 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String findFederalstateNameFromIso3166A2code(final String iso3166A2code) {
+	public String findFederalstateNameFromIso3166A2code(final String iso3166A2code)
+	{
 		final String hqlString = "select fs.name from Federalstates fs where fs.iso3166A2code=:iso3166A2code";
 		final Query query = getQuery(hqlString);
 		query.setParameter("iso3166A2code", iso3166A2code);
@@ -89,10 +96,11 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Federalstates> findFederalstatesFromCountry(final Countries country) {
+	public List<Federalstates> findFederalstatesFromCountry(final Countries country)
+	{
 		final TypedQuery<Federalstates> typedQuery = getDao().getEntityManager()
-				.createNamedQuery(Federalstates.FIND_FEDERALSTATES_FROM_COUNTRY, Federalstates.class)
-				.setParameter("country", country);
+			.createNamedQuery(Federalstates.FIND_FEDERALSTATES_FROM_COUNTRY, Federalstates.class)
+			.setParameter("country", country);
 		final List<Federalstates> federalstates = typedQuery.getResultList();
 		return federalstates;
 	}
@@ -101,10 +109,13 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Federalstates> findFederalstatesFromCountry(final Countries country, final String name) {
+	public List<Federalstates> findFederalstatesFromCountry(final Countries country,
+		final String name)
+	{
 		final TypedQuery<Federalstates> typedQuery = getDao().getEntityManager()
-				.createNamedQuery(Federalstates.FIND_FEDERALSTATE_FROM_COUNTRY_AND_NAME, Federalstates.class)
-				.setParameter("country", country).setParameter("name", name);
+			.createNamedQuery(Federalstates.FIND_FEDERALSTATE_FROM_COUNTRY_AND_NAME,
+				Federalstates.class)
+			.setParameter("country", country).setParameter("name", name);
 		final List<Federalstates> federalstates = typedQuery.getResultList();
 		return federalstates;
 	}
@@ -114,14 +125,18 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	 */
 	@Deprecated
 	@Override
-	public Federalstates getFederalstate(final String string) {
+	public Federalstates getFederalstate(final String string)
+	{
 		final String seperatedString = "=>";
 		final String[] splittedString = string.split(seperatedString);
 		Federalstates federalstate;
-		if (splittedString.length == 1) {
+		if (splittedString.length == 1)
+		{
 			final String coutryString = splittedString[0];
 			federalstate = getFederalstate(coutryString, null);
-		} else {
+		}
+		else
+		{
 			final String coutryString = splittedString[0];
 			final String federalStateString = splittedString[1];
 			federalstate = getFederalstate(coutryString, federalStateString);
@@ -133,8 +148,10 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Federalstates getFederalstate(String country, String stateCode) {
-		if (stateCode != null) {
+	public Federalstates getFederalstate(String country, String stateCode)
+	{
+		if (stateCode != null)
+		{
 			return findFederalstateFromIso3166A2code(stateCode);
 		}
 		final int dot = country.indexOf('.');
@@ -150,7 +167,8 @@ public class FederalstatesBusinessService extends AbstractBusinessService<Federa
 	 *            the new {@link FederalstatesDao}.
 	 */
 	@Autowired
-	public void setFederalstatesDao(final FederalstatesDao federalstatesDao) {
+	public void setFederalstatesDao(final FederalstatesDao federalstatesDao)
+	{
 		setDao(federalstatesDao);
 	}
 

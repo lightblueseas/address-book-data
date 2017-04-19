@@ -42,7 +42,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddressSearchModel {
+public class AddressSearchModel
+{
 
 	/** The model object. */
 	private LocationAddressModel location;

@@ -30,7 +30,8 @@ import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.db.dao.jpa.JpaEntityManagerDao;
 
 @Repository("federalstatesDao")
-public class FederalstatesDao extends JpaEntityManagerDao<Federalstates, Integer> {
+public class FederalstatesDao extends JpaEntityManagerDao<Federalstates, Integer>
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

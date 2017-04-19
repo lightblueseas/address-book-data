@@ -31,6 +31,7 @@ import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.db.entitymapper.AbstractEntityDOMapper;
 
 @Component
-public class FederalstatesMapper extends AbstractEntityDOMapper<Federalstates, Federalstate> {
+public class FederalstatesMapper extends AbstractEntityDOMapper<Federalstates, Federalstate>
+{
 
 }

@@ -44,7 +44,8 @@ import de.alpharogroup.service.rs.RestfulResource;
 @Path("/zipcode/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface ZipcodesResource extends RestfulResource<Integer, Zipcode> {
+public interface ZipcodesResource extends RestfulResource<Integer, Zipcode>
+{
 
 	/**
 	 * Checks if the given zipcode string exists.
@@ -69,8 +70,8 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode> {
 	List<Zipcode> find(final Country country);
 
 	/**
-	 * Gets a List of {@link Zipcode} with the given parameters that can be null
-	 * if they shell be ignored in the query.
+	 * Gets a List of {@link Zipcode} with the given parameters that can be null if they shell be
+	 * ignored in the query.
 	 *
 	 * @param searchCriteria
 	 *            the search criteria
@@ -81,13 +82,11 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode> {
 	List<Zipcode> findAll(Triple<Country, String, String> searchCriteria);
 
 	/**
-	 * Find the {@link Zipcode} to resolve the city from the given
-	 * {@link Country} object and zipcode string encapsulated as a
-	 * {@link KeyValuePair} object as parameter.
+	 * Find the {@link Zipcode} to resolve the city from the given {@link Country} object and
+	 * zipcode string encapsulated as a {@link KeyValuePair} object as parameter.
 	 *
 	 * @param countryWithZipcode
-	 *            the {@link KeyValuePair} object that encapsulate the country
-	 *            with the zipcode
+	 *            the {@link KeyValuePair} object that encapsulate the country with the zipcode
 	 * @return the {@link Zipcode} object
 	 */
 	@POST
@@ -106,8 +105,8 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode> {
 	List<Zipcode> findZipcodes(@PathParam("zipcode") final String zipcode);
 
 	/**
-	 * Gets the {@link Zipcode} object from the given zipcode string and city.
-	 * If it does not exist it will be create a new {@link Zipcode} object.
+	 * Gets the {@link Zipcode} object from the given zipcode string and city. If it does not exist
+	 * it will be create a new {@link Zipcode} object.
 	 * 
 	 * @param zipcode
 	 *            the zipcode
@@ -117,6 +116,7 @@ public interface ZipcodesResource extends RestfulResource<Integer, Zipcode> {
 	 */
 	@GET
 	@Path("/get/{zipcode}/{city}")
-	Zipcode getZipcode(@PathParam("zipcode") final String zipcode, @PathParam("city") final String city);
+	Zipcode getZipcode(@PathParam("zipcode") final String zipcode,
+		@PathParam("city") final String city);
 
 }

@@ -40,7 +40,8 @@ import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.jgeohash.GeoHashPoint;
 
 @ContextConfiguration(locations = "classpath:test-applicationContext.xml")
-public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestNGSpringContextTests {
+public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestNGSpringContextTests
+{
 
 	@Autowired
 	private CountriesService countriesService;
@@ -50,7 +51,8 @@ public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestN
 	private AddressesService addressesService;
 
 	@Test(enabled = false)
-	public void getAllSwitzerlandAddresses() {
+	public void getAllSwitzerlandAddresses()
+	{
 		Countries country = countriesService.find("DE");
 		List<Zipcodes> countryZipcodes = zipcodesService.find(country);
 		System.out.println("All zipcodes from austria:" + countryZipcodes.size());
@@ -60,9 +62,11 @@ public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestN
 	}
 
 	@Test(enabled = false)
-	public void testFindGeohashNull() {
+	public void testFindGeohashNull()
+	{
 		List<Addresses> addresses = addressesService.findGeohashIsNull();
-		for (Addresses address : addresses) {
+		for (Addresses address : addresses)
+		{
 			String l = address.getLatitude();
 			String longtidude = address.getLongitude();
 			double lat = Double.parseDouble(l);

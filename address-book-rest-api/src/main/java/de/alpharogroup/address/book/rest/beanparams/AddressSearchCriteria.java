@@ -43,7 +43,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddressSearchCriteria {
+public class AddressSearchCriteria
+{
 
 	/** The country. */
 	private Country country;

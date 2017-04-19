@@ -48,8 +48,11 @@ import lombok.Setter;
 @Transactional
 @Service("federalstatesDomainService")
 public class FederalstatesDomainService
-		extends AbstractDomainService<Integer, Federalstate, Federalstates, FederalstatesDao, FederalstatesMapper>
-		implements FederalstateService {
+	extends
+		AbstractDomainService<Integer, Federalstate, Federalstates, FederalstatesDao, FederalstatesMapper>
+	implements
+		FederalstateService
+{
 
 	/** The {@link FederalstatesService}. */
 	@Autowired
@@ -61,24 +64,28 @@ public class FederalstatesDomainService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Federalstate findFederalstate(Country country, String name) {
-		return getMapper().toDomainObject(
-				federalstatesService.findFederalstate(getMapper().getMapper().map(country, Countries.class), name));
+	public Federalstate findFederalstate(Country country, String name)
+	{
+		return getMapper().toDomainObject(federalstatesService
+			.findFederalstate(getMapper().getMapper().map(country, Countries.class), name));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Federalstate findFederalstateFromIso3166A2code(final String iso3166a2code) {
-		return getMapper().toDomainObject(federalstatesService.findFederalstateFromIso3166A2code(iso3166a2code));
+	public Federalstate findFederalstateFromIso3166A2code(final String iso3166a2code)
+	{
+		return getMapper()
+			.toDomainObject(federalstatesService.findFederalstateFromIso3166A2code(iso3166a2code));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String findFederalstateNameFromIso3166A2code(String iso3166a2code) {
+	public String findFederalstateNameFromIso3166A2code(String iso3166a2code)
+	{
 		return federalstatesService.findFederalstateNameFromIso3166A2code(iso3166a2code);
 	}
 
@@ -86,7 +93,8 @@ public class FederalstatesDomainService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Federalstate> findFederalstatesFromCountry(Country country) {
+	public List<Federalstate> findFederalstatesFromCountry(Country country)
+	{
 		Countries c = getMapper().getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(federalstatesService.findFederalstatesFromCountry(c));
 	}
@@ -95,9 +103,11 @@ public class FederalstatesDomainService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Federalstate> findFederalstatesFromCountry(Country country, String name) {
+	public List<Federalstate> findFederalstatesFromCountry(Country country, String name)
+	{
 		Countries c = getMapper().getMapper().map(country, Countries.class);
-		return getMapper().toDomainObjects(federalstatesService.findFederalstatesFromCountry(c, name));
+		return getMapper()
+			.toDomainObjects(federalstatesService.findFederalstatesFromCountry(c, name));
 	}
 
 	/**
@@ -105,7 +115,8 @@ public class FederalstatesDomainService
 	 */
 	@Deprecated
 	@Override
-	public Federalstate getFederalstate(String string) {
+	public Federalstate getFederalstate(String string)
+	{
 		return getMapper().toDomainObject(federalstatesService.getFederalstate(string));
 	}
 
@@ -113,7 +124,8 @@ public class FederalstatesDomainService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Federalstate getFederalstate(String country, String stateCode) {
+	public Federalstate getFederalstate(String country, String stateCode)
+	{
 		return getMapper().toDomainObject(federalstatesService.getFederalstate(country, stateCode));
 	}
 
@@ -124,7 +136,8 @@ public class FederalstatesDomainService
 	 *            the new {@link FederalstatesDao}.
 	 */
 	@Autowired
-	public void setFederalstatesDao(final FederalstatesDao federalstatesDao) {
+	public void setFederalstatesDao(final FederalstatesDao federalstatesDao)
+	{
 		setDao(federalstatesDao);
 	}
 
@@ -135,7 +148,8 @@ public class FederalstatesDomainService
 	 *            the new {@link FederalstatesMapper}.
 	 */
 	@Autowired
-	public void setFederalstatesMapper(FederalstatesMapper mapper) {
+	public void setFederalstatesMapper(FederalstatesMapper mapper)
+	{
 		setMapper(mapper);
 	}
 

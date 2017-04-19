@@ -48,8 +48,12 @@ import lombok.Setter;
  */
 @Transactional
 @Service("zipcodesDomainService")
-public class ZipcodesDomainService extends
-		AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper> implements ZipcodeService {
+public class ZipcodesDomainService
+	extends
+		AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
+	implements
+		ZipcodeService
+{
 
 	/** The {@link ZipcodesService}. */
 	@Autowired
@@ -61,7 +65,8 @@ public class ZipcodesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteAllZipcodes() {
+	public void deleteAllZipcodes()
+	{
 		zipcodesService.deleteAllZipcodes();
 	}
 
@@ -69,7 +74,8 @@ public class ZipcodesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean existsZipcode(String zipcode) {
+	public boolean existsZipcode(String zipcode)
+	{
 		return zipcodesService.existsZipcode(zipcode);
 	}
 
@@ -77,9 +83,11 @@ public class ZipcodesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Zipcode> find(Country country) {
+	public List<Zipcode> find(Country country)
+	{
 		List<Zipcode> zcs = new ArrayList<>();
-		if (country != null) {
+		if (country != null)
+		{
 			Countries countries = getMapper().map(country, Countries.class);
 			return getMapper().toDomainObjects(zipcodesService.find(countries));
 		}
@@ -90,7 +98,8 @@ public class ZipcodesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Zipcode> findAll(Country country, String zipcode, String city) {
+	public List<Zipcode> findAll(Country country, String zipcode, String city)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(zipcodesService.findAll(c, zipcode, city));
 	}
@@ -99,16 +108,18 @@ public class ZipcodesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Zipcode findCityFromZipcode(Country country, String zipcode) {
-		return getMapper().toDomainObject(
-				zipcodesService.findCityFromZipcode(getMapper().map(country, Countries.class), zipcode));
+	public Zipcode findCityFromZipcode(Country country, String zipcode)
+	{
+		return getMapper().toDomainObject(zipcodesService
+			.findCityFromZipcode(getMapper().map(country, Countries.class), zipcode));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Zipcode> findZipcodes(String zipcode) {
+	public List<Zipcode> findZipcodes(String zipcode)
+	{
 		return getMapper().toDomainObjects(zipcodesService.findZipcodes(zipcode));
 	}
 
@@ -116,7 +127,8 @@ public class ZipcodesDomainService extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Zipcode getZipcode(String zipcode, String city) {
+	public Zipcode getZipcode(String zipcode, String city)
+	{
 		return getMapper().toDomainObject(zipcodesService.getZipcode(zipcode, city));
 	}
 
@@ -127,7 +139,8 @@ public class ZipcodesDomainService extends
 	 *            the new {@link ZipcodesDao}.
 	 */
 	@Autowired
-	public void setZipcodesDao(ZipcodesDao zipcodesDao) {
+	public void setZipcodesDao(ZipcodesDao zipcodesDao)
+	{
 		setDao(zipcodesDao);
 	}
 
@@ -138,7 +151,8 @@ public class ZipcodesDomainService extends
 	 *            the new {@link ZipcodesMapper}.
 	 */
 	@Autowired
-	public void setZipcodesMapper(ZipcodesMapper mapper) {
+	public void setZipcodesMapper(ZipcodesMapper mapper)
+	{
 		setMapper(mapper);
 	}
 }

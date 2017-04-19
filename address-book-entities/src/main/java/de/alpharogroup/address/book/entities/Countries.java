@@ -37,8 +37,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The entity class {@link Countries} is keeping the information for all
- * countries in the world.
+ * The entity class {@link Countries} is keeping the information for all countries in the world.
  */
 @Entity
 @Table(name = "countries")
@@ -46,7 +45,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Countries extends BaseEntity<Integer> implements Cloneable {
+public class Countries extends BaseEntity<Integer> implements Cloneable
+{
 
 	/** The serial Version UID. */
 	private static final long serialVersionUID = 1L;

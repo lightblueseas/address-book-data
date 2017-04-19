@@ -31,6 +31,7 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.db.entitymapper.AbstractEntityDOMapper;
 
 @Component
-public class ZipcodesMapper extends AbstractEntityDOMapper<Zipcodes, Zipcode> {
+public class ZipcodesMapper extends AbstractEntityDOMapper<Zipcodes, Zipcode>
+{
 
 }

@@ -48,7 +48,9 @@ import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 @Transactional
 @Service("zipcodesService")
 public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, Integer, ZipcodesDao>
-		implements ZipcodesService {
+	implements
+		ZipcodesService
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -57,9 +59,11 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public void deleteAllZipcodes() {
+	public void deleteAllZipcodes()
+	{
 		final List<Zipcodes> zipcodes = this.findAll();
-		for (final Iterator<Zipcodes> iterator = zipcodes.iterator(); iterator.hasNext();) {
+		for (final Iterator<Zipcodes> iterator = zipcodes.iterator(); iterator.hasNext();)
+		{
 			final Zipcodes zipcode = iterator.next();
 			delete(zipcode);
 		}
@@ -69,10 +73,12 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public boolean existsZipcode(final String zipcode) {
+	public boolean existsZipcode(final String zipcode)
+	{
 		final List<Zipcodes> zipcodes = findAll(null, zipcode, null);
 		findAll(null, zipcode, null);
-		if (zipcodes != null && !zipcodes.isEmpty()) {
+		if (zipcodes != null && !zipcodes.isEmpty())
+		{
 			return true;
 		}
 		return false;
@@ -82,7 +88,8 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public List<Zipcodes> find(final Countries country) {
+	public List<Zipcodes> find(final Countries country)
+	{
 		return findAll(country, null, null);
 	}
 
@@ -91,16 +98,20 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Zipcodes> findAll(final Countries country, final String zipcode, final String city) {
+	public List<Zipcodes> findAll(final Countries country, final String zipcode, final String city)
+	{
 		final String hqlString = HqlStringCreator.forZipcodes(country, zipcode, city);
 		final Query query = getQuery(hqlString);
-		if (country != null) {
+		if (country != null)
+		{
 			query.setParameter("country", country);
 		}
-		if (zipcode != null && !zipcode.isEmpty()) {
+		if (zipcode != null && !zipcode.isEmpty())
+		{
 			query.setParameter("zipcode", zipcode);
 		}
-		if (city != null && !city.isEmpty()) {
+		if (city != null && !city.isEmpty())
+		{
 			query.setParameter("city", city);
 
 		}
@@ -112,7 +123,8 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public Zipcodes findCityFromZipcode(final Countries country, final String zipcode) {
+	public Zipcodes findCityFromZipcode(final Countries country, final String zipcode)
+	{
 		final List<Zipcodes> zipcodes = findAll(country, zipcode, null);
 		return ListExtensions.getFirst(zipcodes);
 
@@ -122,7 +134,8 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public List<Zipcodes> findZipcodes(final String zipcode) {
+	public List<Zipcodes> findZipcodes(final String zipcode)
+	{
 		return findAll(null, zipcode, null);
 	}
 
@@ -130,10 +143,12 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 * {@inheritDoc}.
 	 */
 	@Override
-	public Zipcodes getZipcode(final String zipcode, final String city) {
+	public Zipcodes getZipcode(final String zipcode, final String city)
+	{
 		final List<Zipcodes> zipcodes = findZipcodes(zipcode);
 		Zipcodes zc = ListExtensions.getFirst(zipcodes);
-		if (zc == null) {
+		if (zc == null)
+		{
 			zc = AddressBookFactory.getInstance().newZipcodes(null, null, city, zipcode);
 		}
 		return zc;
@@ -146,7 +161,8 @@ public class ZipcodesBusinessService extends AbstractBusinessService<Zipcodes, I
 	 *            the new {@link ZipcodesDao}.
 	 */
 	@Autowired
-	public void setZipcodesDao(final ZipcodesDao zipcodesDao) {
+	public void setZipcodesDao(final ZipcodesDao zipcodesDao)
+	{
 		setDao(zipcodesDao);
 	}
 

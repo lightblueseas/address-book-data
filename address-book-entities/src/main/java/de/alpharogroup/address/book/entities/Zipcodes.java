@@ -38,15 +38,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The entity class {@link Zipcodes} is keeping the information for the cities
- * and the corresponding zipcodes.
+ * The entity class {@link Zipcodes} is keeping the information for the cities and the corresponding
+ * zipcodes.
  */
 @Entity
 @Table(name = "zipcodes")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Zipcodes extends BaseEntity<Integer> implements Cloneable {
+public class Zipcodes extends BaseEntity<Integer> implements Cloneable
+{
 
 	/** The serial Version UID */
 	private static final long serialVersionUID = 1L;

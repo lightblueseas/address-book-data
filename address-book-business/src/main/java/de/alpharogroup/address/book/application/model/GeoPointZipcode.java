@@ -34,8 +34,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The class {@link GeoPointZipcode} associate a {@link Zipcodes} object with a
- * {@link GeoHashPoint} object.
+ * The class {@link GeoPointZipcode} associate a {@link Zipcodes} object with a {@link GeoHashPoint}
+ * object.
  */
 @Getter
 @Setter
@@ -43,7 +43,8 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class GeoPointZipcode {
+public class GeoPointZipcode
+{
 
 	/** The geo hash point. */
 	private GeoHashPoint geoHashPoint;

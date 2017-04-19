@@ -40,8 +40,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.alpharogroup.address.book.application.model.LocationModel;
 import de.alpharogroup.address.book.application.model.AddressesSearchModel;
+import de.alpharogroup.address.book.application.model.LocationModel;
 import de.alpharogroup.address.book.daos.CountriesDao;
 import de.alpharogroup.address.book.entities.Addresses;
 import de.alpharogroup.address.book.entities.Countries;
@@ -63,8 +63,12 @@ import lombok.Setter;
  */
 @Transactional
 @Service("countriesService")
-public class CountriesBusinessService extends AbstractBusinessService<Countries, Integer, CountriesDao>
-		implements CountriesService {
+public class CountriesBusinessService
+	extends
+		AbstractBusinessService<Countries, Integer, CountriesDao>
+	implements
+		CountriesService
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -128,7 +132,8 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Countries find(String iso3166A2name) {
+	public Countries find(String iso3166A2name)
+	{
 		return ListExtensions.getFirst(findAll(iso3166A2name, null, null, null));
 	}
 
@@ -137,19 +142,26 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Countries> findAll(String iso3166A2name, String iso3166A3name, String iso3166Number, String name) {
-		final String hqlString = HqlStringCreator.forCountries(iso3166A2name, iso3166A3name, iso3166Number, name);
+	public List<Countries> findAll(String iso3166A2name, String iso3166A3name, String iso3166Number,
+		String name)
+	{
+		final String hqlString = HqlStringCreator.forCountries(iso3166A2name, iso3166A3name,
+			iso3166Number, name);
 		final Query query = getQuery(hqlString);
-		if (iso3166A2name != null && !iso3166A2name.isEmpty()) {
+		if (iso3166A2name != null && !iso3166A2name.isEmpty())
+		{
 			query.setParameter("iso3166A2name", iso3166A2name);
 		}
-		if (iso3166A3name != null && !iso3166A3name.isEmpty()) {
+		if (iso3166A3name != null && !iso3166A3name.isEmpty())
+		{
 			query.setParameter("iso3166A3name", iso3166A3name);
 		}
-		if (iso3166Number != null && !iso3166Number.isEmpty()) {
+		if (iso3166Number != null && !iso3166Number.isEmpty())
+		{
 			query.setParameter("iso3166Number", iso3166Number);
 		}
-		if (name != null && !name.isEmpty()) {
+		if (name != null && !name.isEmpty())
+		{
 			query.setParameter("name", name);
 		}
 		List<Countries> countries = query.getResultList();
@@ -160,7 +172,8 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Countries findByName(String name) {
+	public Countries findByName(String name)
+	{
 		return ListExtensions.getFirst(findAll(null, null, null, name));
 	}
 
@@ -168,21 +181,25 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList() {
-		if (this.countriesToFederalstatesAsStringList == null) {
+	public List<KeyValuesPair<String, String>> getCountriesToFederalstatesAsStringList()
+	{
+		if (this.countriesToFederalstatesAsStringList == null)
+		{
 			this.countriesToFederalstatesAsStringList = new ArrayList<>();
 			List<KeyValuesPair<Countries, Federalstates>> countriesToFederalstatesList = getCountriesToFederalstatesList();
 
-			for (KeyValuesPair<Countries, Federalstates> entry : countriesToFederalstatesList) {
+			for (KeyValuesPair<Countries, Federalstates> entry : countriesToFederalstatesList)
+			{
 				Countries country = entry.getKey();
 				Collection<Federalstates> federalstates = entry.getValues();
 				List<String> fd = new ArrayList<String>();
-				for (Federalstates federalstate : federalstates) {
+				for (Federalstates federalstate : federalstates)
+				{
 					fd.add(federalstate.getIso3166A2code());
 				}
 
-				this.countriesToFederalstatesAsStringList
-						.add(KeyValuesPair.<String, String>builder().key(country.getName()).values(fd).build());
+				this.countriesToFederalstatesAsStringList.add(KeyValuesPair
+					.<String, String> builder().key(country.getName()).values(fd).build());
 			}
 		}
 		return this.countriesToFederalstatesAsStringList;
@@ -193,16 +210,21 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 */
 	@Override
 	@Deprecated
-	public Map<String, List<String>> getCountriesToFederalstatesAsStringMap() {
-		if (this.countriesToFederalstatesAsStringMap == null) {
+	public Map<String, List<String>> getCountriesToFederalstatesAsStringMap()
+	{
+		if (this.countriesToFederalstatesAsStringMap == null)
+		{
 			this.countriesToFederalstatesAsStringMap = new HashMap<String, List<String>>();
 			Map<Countries, List<Federalstates>> countriesToFederalstatesMap = getCountriesToFederalstatesMap();
 
-			for (Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap.entrySet()) {
+			for (Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap
+				.entrySet())
+			{
 				Countries country = entry.getKey();
 				List<Federalstates> federalstates = entry.getValue();
 				List<String> fd = new ArrayList<String>();
-				for (Federalstates federalstate : federalstates) {
+				for (Federalstates federalstate : federalstates)
+				{
 					fd.add(federalstate.getIso3166A2code());
 				}
 				this.countriesToFederalstatesAsStringMap.put(country.getName(), fd);
@@ -215,19 +237,25 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<Countries, Federalstates>> getCountriesToFederalstatesList() {
-		if (this.countriesToFederalstatesList == null) {
+	public List<KeyValuesPair<Countries, Federalstates>> getCountriesToFederalstatesList()
+	{
+		if (this.countriesToFederalstatesList == null)
+		{
 			this.countriesToFederalstatesList = new ArrayList<>();
 			List<Countries> countries = findAll();
-			Collections.sort(countries, new Comparator<Countries>() {
+			Collections.sort(countries, new Comparator<Countries>()
+			{
 				@Override
-				public int compare(Countries o1, Countries o2) {
+				public int compare(Countries o1, Countries o2)
+				{
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
-			for (Countries country : countries) {
-				this.countriesToFederalstatesList.add(KeyValuesPair.<Countries, Federalstates>builder().key(country)
-						.values(federalstatesService.findFederalstatesFromCountry(country)).build());
+			for (Countries country : countries)
+			{
+				this.countriesToFederalstatesList.add(KeyValuesPair
+					.<Countries, Federalstates> builder().key(country)
+					.values(federalstatesService.findFederalstatesFromCountry(country)).build());
 			}
 		}
 		return this.countriesToFederalstatesList;
@@ -238,18 +266,24 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 */
 	@Override
 	@Deprecated
-	public Map<Countries, List<Federalstates>> getCountriesToFederalstatesMap() {
-		if (this.countriesToFederalstatesMap == null) {
+	public Map<Countries, List<Federalstates>> getCountriesToFederalstatesMap()
+	{
+		if (this.countriesToFederalstatesMap == null)
+		{
 			this.countriesToFederalstatesMap = new LinkedHashMap<>();
 			List<Countries> countries = findAll();
-			Collections.sort(countries, new Comparator<Countries>() {
+			Collections.sort(countries, new Comparator<Countries>()
+			{
 				@Override
-				public int compare(Countries o1, Countries o2) {
+				public int compare(Countries o1, Countries o2)
+				{
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
-			for (Countries country : countries) {
-				List<Federalstates> federalstates = federalstatesService.findFederalstatesFromCountry(country);
+			for (Countries country : countries)
+			{
+				List<Federalstates> federalstates = federalstatesService
+					.findFederalstatesFromCountry(country);
 				this.countriesToFederalstatesMap.put(country, federalstates);
 			}
 		}
@@ -260,20 +294,24 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList() {
-		if (this.countriesToZipcodesAndCitiesAsStringList == null) {
+	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAndCitiesAsStringList()
+	{
+		if (this.countriesToZipcodesAndCitiesAsStringList == null)
+		{
 			this.countriesToZipcodesAndCitiesAsStringList = new ArrayList<>();
 			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesList();
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap) {
+			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
+			{
 				Countries country = entry.getKey();
 				Collection<Zipcodes> zipcodes = entry.getValues();
 				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes) {
+				for (Zipcodes zipcode : zipcodes)
+				{
 					zc.add(zipcode.getZipcode() + " " + zipcode.getCity());
 					zc.add(zipcode.getCity() + " " + zipcode.getZipcode());
 				}
-				this.countriesToZipcodesAndCitiesAsStringList
-						.add(KeyValuesPair.<String, String>builder().key(country.getName()).values(zc).build());
+				this.countriesToZipcodesAndCitiesAsStringList.add(KeyValuesPair
+					.<String, String> builder().key(country.getName()).values(zc).build());
 			}
 		}
 		return this.countriesToZipcodesAndCitiesAsStringList;
@@ -283,15 +321,19 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, List<String>> getCountriesToZipcodesAndCitiesAsStringMap() {
-		if (this.countriesToZipcodesAndCitiesAsStringMap == null) {
+	public Map<String, List<String>> getCountriesToZipcodesAndCitiesAsStringMap()
+	{
+		if (this.countriesToZipcodesAndCitiesAsStringMap == null)
+		{
 			this.countriesToZipcodesAndCitiesAsStringMap = new HashMap<String, List<String>>();
 			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet()) {
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
+			{
 				Countries country = entry.getKey();
 				List<Zipcodes> zipcodes = entry.getValue();
 				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes) {
+				for (Zipcodes zipcode : zipcodes)
+				{
 					zc.add(zipcode.getZipcode() + " " + zipcode.getCity());
 					zc.add(zipcode.getCity() + " " + zipcode.getZipcode());
 				}
@@ -305,21 +347,25 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList() {
-		if (this.countriesToZipcodesAsStringList == null) {
+	public List<KeyValuesPair<String, String>> getCountriesToZipcodesAsStringList()
+	{
+		if (this.countriesToZipcodesAsStringList == null)
+		{
 			this.countriesToZipcodesAsStringList = new ArrayList<>();
 			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeList = getCountriesToZipcodesList();
 
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeList) {
+			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeList)
+			{
 				Countries country = entry.getKey();
 				Collection<Zipcodes> zipcodes = entry.getValues();
 				List<String> zc = new ArrayList<>();
-				for (Zipcodes zipcode : zipcodes) {
+				for (Zipcodes zipcode : zipcodes)
+				{
 					zc.add(zipcode.getZipcode());
 				}
 				;
-				this.countriesToZipcodesAsStringList
-						.add(KeyValuesPair.<String, String>builder().key(country.getName()).values(zc).build());
+				this.countriesToZipcodesAsStringList.add(KeyValuesPair.<String, String> builder()
+					.key(country.getName()).values(zc).build());
 			}
 		}
 		return this.countriesToZipcodesAsStringList;
@@ -330,15 +376,19 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 */
 	@Override
 	@Deprecated
-	public Map<String, List<String>> getCountriesToZipcodesAsStringMap() {
-		if (this.countriesToZipcodesAsStringMap == null) {
+	public Map<String, List<String>> getCountriesToZipcodesAsStringMap()
+	{
+		if (this.countriesToZipcodesAsStringMap == null)
+		{
 			this.countriesToZipcodesAsStringMap = new HashMap<String, List<String>>();
 			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet()) {
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
+			{
 				Countries country = entry.getKey();
 				List<Zipcodes> zipcodes = entry.getValue();
 				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes) {
+				for (Zipcodes zipcode : zipcodes)
+				{
 					zc.add(zipcode.getZipcode());
 				}
 				this.countriesToZipcodesAsStringMap.put(country.getName(), zc);
@@ -351,20 +401,25 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<Countries, Zipcodes>> getCountriesToZipcodesList() {
-		if (this.countriesToZipcodesList == null) {
+	public List<KeyValuesPair<Countries, Zipcodes>> getCountriesToZipcodesList()
+	{
+		if (this.countriesToZipcodesList == null)
+		{
 			this.countriesToZipcodesList = new ArrayList<>();
 			List<Countries> countries = findAll();
-			Collections.sort(countries, new Comparator<Countries>() {
+			Collections.sort(countries, new Comparator<Countries>()
+			{
 				@Override
-				public int compare(Countries o1, Countries o2) {
+				public int compare(Countries o1, Countries o2)
+				{
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
-			for (Countries country : countries) {
+			for (Countries country : countries)
+			{
 				List<Zipcodes> zipcodes = zipcodesService.find(country);
-				this.countriesToZipcodesList
-						.add(KeyValuesPair.<Countries, Zipcodes>builder().key(country).values(zipcodes).build());
+				this.countriesToZipcodesList.add(KeyValuesPair.<Countries, Zipcodes> builder()
+					.key(country).values(zipcodes).build());
 			}
 		}
 		return this.countriesToZipcodesList;
@@ -375,17 +430,22 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 */
 	@Override
 	@Deprecated
-	public Map<Countries, List<Zipcodes>> getCountriesToZipcodesMap() {
-		if (this.countriesToZipcodesMap == null) {
+	public Map<Countries, List<Zipcodes>> getCountriesToZipcodesMap()
+	{
+		if (this.countriesToZipcodesMap == null)
+		{
 			this.countriesToZipcodesMap = new LinkedHashMap<Countries, List<Zipcodes>>();
 			List<Countries> countries = findAll();
-			Collections.sort(countries, new Comparator<Countries>() {
+			Collections.sort(countries, new Comparator<Countries>()
+			{
 				@Override
-				public int compare(Countries o1, Countries o2) {
+				public int compare(Countries o1, Countries o2)
+				{
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
-			for (Countries country : countries) {
+			for (Countries country : countries)
+			{
 				List<Zipcodes> zipcodes = zipcodesService.find(country);
 				this.countriesToZipcodesMap.put(country, zipcodes);
 			}
@@ -397,20 +457,24 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList() {
-		if (this.germanCountriesToZipcodesAndCitiesAsStringList == null) {
+	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAndCitiesAsStringList()
+	{
+		if (this.germanCountriesToZipcodesAndCitiesAsStringList == null)
+		{
 			this.germanCountriesToZipcodesAndCitiesAsStringList = new ArrayList<>();
 			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesList();
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap) {
+			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
+			{
 				Countries country = entry.getKey();
 				Collection<Zipcodes> zipcodes = entry.getValues();
 				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes) {
+				for (Zipcodes zipcode : zipcodes)
+				{
 					zc.add(zipcode.getZipcode() + " " + zipcode.getCity());
 					zc.add(zipcode.getCity() + " " + zipcode.getZipcode());
 				}
-				this.germanCountriesToZipcodesAndCitiesAsStringList
-						.add(KeyValuesPair.<String, String>builder().key(country.getName()).values(zc).build());
+				this.germanCountriesToZipcodesAndCitiesAsStringList.add(KeyValuesPair
+					.<String, String> builder().key(country.getName()).values(zc).build());
 			}
 		}
 		return this.germanCountriesToZipcodesAndCitiesAsStringList;
@@ -420,15 +484,19 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, List<String>> getGermanCountriesToZipcodesAndCitiesAsStringMap() {
-		if (this.germanCountriesToZipcodesAndCitiesAsStringMap == null) {
+	public Map<String, List<String>> getGermanCountriesToZipcodesAndCitiesAsStringMap()
+	{
+		if (this.germanCountriesToZipcodesAndCitiesAsStringMap == null)
+		{
 			this.germanCountriesToZipcodesAndCitiesAsStringMap = new HashMap<String, List<String>>();
 			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet()) {
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
+			{
 				Countries country = entry.getKey();
 				List<Zipcodes> zipcodes = entry.getValue();
 				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes) {
+				for (Zipcodes zipcode : zipcodes)
+				{
 					zc.add(zipcode.getZipcode() + " " + zipcode.getCity());
 					zc.add(zipcode.getCity() + " " + zipcode.getZipcode());
 				}
@@ -442,19 +510,23 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList() {
-		if (this.germanCountriesToZipcodesAsStringList == null) {
+	public List<KeyValuesPair<String, String>> getGermanCountriesToZipcodesAsStringList()
+	{
+		if (this.germanCountriesToZipcodesAsStringList == null)
+		{
 			this.germanCountriesToZipcodesAsStringList = new ArrayList<>();
 			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesList();
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap) {
+			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
+			{
 				Countries country = entry.getKey();
 				Collection<Zipcodes> zipcodes = entry.getValues();
 				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes) {
+				for (Zipcodes zipcode : zipcodes)
+				{
 					zc.add(zipcode.getZipcode());
 				}
-				this.germanCountriesToZipcodesAsStringList
-						.add(KeyValuesPair.<String, String>builder().key(country.getName()).values(zc).build());
+				this.germanCountriesToZipcodesAsStringList.add(KeyValuesPair
+					.<String, String> builder().key(country.getName()).values(zc).build());
 			}
 		}
 		return this.germanCountriesToZipcodesAsStringList;
@@ -465,15 +537,19 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 */
 	@Override
 	@Deprecated
-	public Map<String, List<String>> getGermanCountriesToZipcodesAsStringMap() {
-		if (this.germanCountriesToZipcodesAsStringMap == null) {
+	public Map<String, List<String>> getGermanCountriesToZipcodesAsStringMap()
+	{
+		if (this.germanCountriesToZipcodesAsStringMap == null)
+		{
 			this.germanCountriesToZipcodesAsStringMap = new HashMap<String, List<String>>();
 			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet()) {
+			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
+			{
 				Countries country = entry.getKey();
 				List<Zipcodes> zipcodes = entry.getValue();
 				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes) {
+				for (Zipcodes zipcode : zipcodes)
+				{
 					zc.add(zipcode.getZipcode());
 				}
 				this.germanCountriesToZipcodesAsStringMap.put(country.getName(), zc);
@@ -486,34 +562,42 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<KeyValuesPair<Countries, Zipcodes>> getGermanCountriesToZipcodesList() {
-		if (this.germanCountriesToZipcodesList == null) {
+	public List<KeyValuesPair<Countries, Zipcodes>> getGermanCountriesToZipcodesList()
+	{
+		if (this.germanCountriesToZipcodesList == null)
+		{
 			this.germanCountriesToZipcodesList = new ArrayList<>();
 			List<Countries> countries = new ArrayList<>();
 			countries.add(find("DE"));
 			countries.add(find("AT"));
 			countries.add(find("CH"));
-			Collections.sort(countries, new Comparator<Countries>() {
+			Collections.sort(countries, new Comparator<Countries>()
+			{
 				@Override
-				public int compare(Countries object, Countries compareWithObject) {
+				public int compare(Countries object, Countries compareWithObject)
+				{
 					// Check if one of the objects are null
-					if ((object != null) && (compareWithObject == null)) {
+					if ((object != null) && (compareWithObject == null))
+					{
 						return 1;// compareWithObject is null so its bigger
 					}
-					if ((object == null) && (compareWithObject != null)) {
+					if ((object == null) && (compareWithObject != null))
+					{
 						return -1; // object is null so its smaller
 					}
-					if (object == compareWithObject) {
+					if (object == compareWithObject)
+					{
 						return 0;// it is the same Object
 					}
 					// Null check completed so we can compare the objects
 					return object.getName().compareTo(compareWithObject.getName());
 				}
 			});
-			for (Countries country : countries) {
+			for (Countries country : countries)
+			{
 				List<Zipcodes> zipcodes = zipcodesService.find(country);
-				this.germanCountriesToZipcodesList
-						.add(KeyValuesPair.<Countries, Zipcodes>builder().key(country).values(zipcodes).build());
+				this.germanCountriesToZipcodesList.add(KeyValuesPair.<Countries, Zipcodes> builder()
+					.key(country).values(zipcodes).build());
 			}
 		}
 		return this.germanCountriesToZipcodesList;
@@ -524,31 +608,39 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 */
 	@Override
 	@Deprecated
-	public Map<Countries, List<Zipcodes>> getGermanCountriesToZipcodesMap() {
-		if (this.germanCountriesToZipcodesMap == null) {
+	public Map<Countries, List<Zipcodes>> getGermanCountriesToZipcodesMap()
+	{
+		if (this.germanCountriesToZipcodesMap == null)
+		{
 			this.germanCountriesToZipcodesMap = new LinkedHashMap<>();
 			List<Countries> countries = new ArrayList<Countries>();
 			countries.add(find("DE"));
 			countries.add(find("AT"));
 			countries.add(find("CH"));
-			Collections.sort(countries, new Comparator<Countries>() {
+			Collections.sort(countries, new Comparator<Countries>()
+			{
 				@Override
-				public int compare(Countries object, Countries compareWithObject) {
+				public int compare(Countries object, Countries compareWithObject)
+				{
 					// Check if one of the objects are null
-					if ((object != null) && (compareWithObject == null)) {
+					if ((object != null) && (compareWithObject == null))
+					{
 						return 1;// compareWithObject is null so its bigger
 					}
-					if ((object == null) && (compareWithObject != null)) {
+					if ((object == null) && (compareWithObject != null))
+					{
 						return -1; // object is null so its smaller
 					}
-					if (object == compareWithObject) {
+					if (object == compareWithObject)
+					{
 						return 0;// it is the same Object
 					}
 					// Null check completed so we can compare the objects
 					return object.getName().compareTo(compareWithObject.getName());
 				}
 			});
-			for (Countries country : countries) {
+			for (Countries country : countries)
+			{
 				List<Zipcodes> zipcodes = zipcodesService.find(country);
 				this.germanCountriesToZipcodesMap.put(country, zipcodes);
 			}
@@ -563,7 +655,8 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 *            the new {@link CountriesDao}.
 	 */
 	@Autowired
-	public void setCountriesDao(CountriesDao countriesDao) {
+	public void setCountriesDao(CountriesDao countriesDao)
+	{
 		setDao(countriesDao);
 	}
 
@@ -572,22 +665,32 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 */
 	@Deprecated
 	@Override
-	public String setLocationModel(LocationModel<Addresses> modelObject, String zc) {
+	public String setLocationModel(LocationModel<Addresses> modelObject, String zc)
+	{
 		String errorKey = null;
-		if (zc == null) {
+		if (zc == null)
+		{
 			errorKey = "global.location.error.label";
-		} else {
+		}
+		else
+		{
 			Countries country = findByName(modelObject.getSelectedCountryName());
 			Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country, zc);
-			if (zipcode != null) {
+			if (zipcode != null)
+			{
 				List<Addresses> addresses = getAddressesService().find(zipcode);
 				Addresses address = ListExtensions.getFirst(addresses);
-				if (address != null) {
+				if (address != null)
+				{
 					modelObject.setAddress(address);
-				} else {
+				}
+				else
+				{
 					errorKey = "global.location.error.label";
 				}
-			} else {
+			}
+			else
+			{
 				errorKey = "global.location.error.label";
 			}
 		}
@@ -598,22 +701,33 @@ public class CountriesBusinessService extends AbstractBusinessService<Countries,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AddressesSearchModel setLocationSearchModel(AddressesSearchModel modelObject) {
+	public AddressesSearchModel setLocationSearchModel(AddressesSearchModel modelObject)
+	{
 		String errorKey = null;
-		if (modelObject.getZipcode() == null) {
+		if (modelObject.getZipcode() == null)
+		{
 			errorKey = "global.location.error.label";
-		} else {
+		}
+		else
+		{
 			Countries country = findByName(modelObject.getLocation().getSelectedCountryName());
-			Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country, modelObject.getZipcode());
-			if (zipcode != null) {
+			Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country,
+				modelObject.getZipcode());
+			if (zipcode != null)
+			{
 				List<Addresses> addresses = getAddressesService().find(zipcode);
 				Addresses address = ListExtensions.getFirst(addresses);
-				if (address != null) {
+				if (address != null)
+				{
 					modelObject.getLocation().setAddress(address);
-				} else {
+				}
+				else
+				{
 					errorKey = "global.location.error.label";
 				}
-			} else {
+			}
+			else
+			{
 				errorKey = "global.location.error.label";
 			}
 			modelObject.setErrorKey(errorKey);

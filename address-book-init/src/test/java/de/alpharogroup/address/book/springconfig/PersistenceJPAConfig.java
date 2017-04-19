@@ -42,7 +42,8 @@ package de.alpharogroup.address.book.springconfig;
 
 //@Configuration
 //@EnableTransactionManagement
-public class PersistenceJPAConfig {
+public class PersistenceJPAConfig
+{
 
 	// @Bean
 	// public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

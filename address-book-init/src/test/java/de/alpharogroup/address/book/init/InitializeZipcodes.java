@@ -54,7 +54,8 @@ import de.alpharogroup.file.write.WriteFileExtensions;
 import de.alpharogroup.lang.ClassExtensions;
 import de.alpharogroup.xml.XmlExtensions;
 
-public class InitializeZipcodes {
+public class InitializeZipcodes
+{
 
 	private static CountriesService countriesService;
 
@@ -68,19 +69,23 @@ public class InitializeZipcodes {
 	public static final String DB_HOST = "localhost";
 	public static final String INSERT_ZIPCODES_PREFIX = "INSERT INTO zipcodes ( id, city, zipcode, country_id) VALUES \n";
 
-	public static Set<Zipcodes> findExistingZipcodesFromAddresses() {
+	public static Set<Zipcodes> findExistingZipcodesFromAddresses()
+	{
 		List<Addresses> addresses = addressesService.findAll();
 		Set<Zipcodes> processed = new HashSet<Zipcodes>();
-		for (Addresses address : addresses) {
+		for (Addresses address : addresses)
+		{
 			Zipcodes zc = address.getZipcode();
-			if (zc != null) {
+			if (zc != null)
+			{
 				processed.add(address.getZipcode());
 			}
 		}
 		return processed;
 	}
 
-	private static List<GermanZipcodeBean> getGermanZipcodeBeanList() throws IOException {
+	private static List<GermanZipcodeBean> getGermanZipcodeBeanList() throws IOException
+	{
 		File smr = PathFinder.getSrcMainResourcesDir();
 		File deDir = PathFinder.getRelativePath(smr, "zipcodes", "de");
 
@@ -90,7 +95,8 @@ public class InitializeZipcodes {
 		return list;
 	}
 
-	protected static void getZipcodesFromProperties() throws IOException {
+	protected static void getZipcodesFromProperties() throws IOException
+	{
 		Properties deZipCity = new Properties();
 		InputStream is = ClassExtensions.getResourceAsStream("zipcodes/CH_zip_city.properties");
 		deZipCity.load(is);
@@ -99,11 +105,13 @@ public class InitializeZipcodes {
 		sb.append(INSERT_ZIPCODES_PREFIX);
 		int countryId = 213;
 		int count = 44603;
-		for (Entry<Object, Object> entry : entries) {
-			String key = (String) entry.getKey();
-			String value = (String) entry.getValue();
+		for (Entry<Object, Object> entry : entries)
+		{
+			String key = (String)entry.getKey();
+			String value = (String)entry.getValue();
 			String[] splitted = value.split(";");
-			for (String s : splitted) {
+			for (String s : splitted)
+			{
 				String repl = s.replaceAll("'", "''");
 				sb.append("(" + count + ", '" + repl + "', '" + key + "', " + countryId + "),\n");
 
@@ -113,10 +121,11 @@ public class InitializeZipcodes {
 		System.out.println(sb.toString());
 	}
 
-	protected static void initializeSpringBeans() {
+	protected static void initializeSpringBeans()
+	{
 		@SuppressWarnings("resource")
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-				new String[] { "test-applicationContext.xml" });
+			new String[] { "test-applicationContext.xml" });
 
 		addressesService = applicationContext.getBean(AddressesService.class);
 		countriesService = applicationContext.getBean(CountriesService.class);
@@ -130,16 +139,20 @@ public class InitializeZipcodes {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public static void main(final String[] args) throws ClassNotFoundException, SQLException, IOException {
+	public static void main(final String[] args)
+		throws ClassNotFoundException, SQLException, IOException
+	{
 		// initializeSpringBeans();
 		readGermanZipcodes();
 	}
 
-	public static void printGermanZipcodeBeans() throws IOException {
+	public static void printGermanZipcodeBeans() throws IOException
+	{
 
 		List<GermanZipcodeBean> list = getGermanZipcodeBeanList();
 		int i = 1;
-		for (GermanZipcodeBean bean : list) {
+		for (GermanZipcodeBean bean : list)
+		{
 			String zipcode = bean.getZipcode();
 
 			String city = bean.getCity();
@@ -152,13 +165,14 @@ public class InitializeZipcodes {
 
 			String federalState = bean.getFederalState();
 
-			System.out.println(i++ + ".)" + zipcode + "\t" + city + "\t" + circleKey + "\t" + circle + "\t"
-					+ federalStateKey + "\t" + federalState);
+			System.out.println(i++ + ".)" + zipcode + "\t" + city + "\t" + circleKey + "\t" + circle
+				+ "\t" + federalStateKey + "\t" + federalState);
 		}
 
 	}
 
-	public static void readGermanZipcodes() throws IOException {
+	public static void readGermanZipcodes() throws IOException
+	{
 		File smr = PathFinder.getSrcMainResourcesDir();
 		File deDir = PathFinder.getRelativePath(smr, "zipcodes", "de");
 
@@ -166,7 +180,8 @@ public class InitializeZipcodes {
 
 		List<DeZipcodeBean> deZipcodeBeanList = new ArrayList<DeZipcodeBean>();
 		List<String> lines = CsvFileExtensions.readFileToList(deZipcodesCsvFile);
-		for (String line : lines) {
+		for (String line : lines)
+		{
 			String[] entries = line.split("	");
 			int last = entries.length - 1;
 			int beforeLast = last - 1;
@@ -184,7 +199,8 @@ public class InitializeZipcodes {
 		WriteFileExtensions.string2File(output, xml);
 	}
 
-	public static void readUnitedKingdomCountries() throws IOException {
+	public static void readUnitedKingdomCountries() throws IOException
+	{
 		// File smr = PathFinder.getSrcMainResourcesDir();
 		// File ukDir = PathFinder.getRelativePathTo(smr, "zipcodes",
 		// "uk");
@@ -227,7 +243,8 @@ public class InitializeZipcodes {
 
 	}
 
-	protected static void verifyZipcodes() throws IOException {
+	protected static void verifyZipcodes() throws IOException
+	{
 		// alien id, native id
 		Map<String, String> federalStateMap = new HashMap<String, String>();
 		federalStateMap.put("08", "2631");// Baden-Württemberg
@@ -250,13 +267,15 @@ public class InitializeZipcodes {
 		List<GermanZipcodeBean> list = getGermanZipcodeBeanList();
 		Countries germany = countriesService.find("DE");
 
-		for (GermanZipcodeBean bean : list) {
+		for (GermanZipcodeBean bean : list)
+		{
 			String zipcode = bean.getZipcode();
 			String federalStateKey = bean.getFederalStateKey();
 			Addresses address = addressesService.findFirst(germany, zipcode);
-			if (address != null) {
+			if (address != null)
+			{
 				Federalstates federalstate = federalstatesService
-						.get(Integer.valueOf(federalStateMap.get(federalStateKey)));
+					.get(Integer.valueOf(federalStateMap.get(federalStateKey)));
 				address.setFederalstate(federalstate);
 				addressesService.merge(address);
 			}

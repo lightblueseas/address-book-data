@@ -29,7 +29,8 @@ import java.io.Serializable;
 /**
  * The interface {@link LocationModel}.
  */
-public interface LocationModel<T> extends Serializable {
+public interface LocationModel<T> extends Serializable
+{
 
 	/**
 	 * Gets the address.

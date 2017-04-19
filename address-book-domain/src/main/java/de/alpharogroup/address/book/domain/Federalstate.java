@@ -40,7 +40,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Federalstate extends BaseDomainObject<Integer> {
+public class Federalstate extends BaseDomainObject<Integer>
+{
 
 	/**
 	 * The serialVersionUID.

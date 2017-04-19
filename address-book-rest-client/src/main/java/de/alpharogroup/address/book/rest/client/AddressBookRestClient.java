@@ -32,10 +32,11 @@ import de.alpharogroup.cxf.rest.client.AbstractRestClient;
 import lombok.Getter;
 
 /**
- * The class {@link AddressBookRestClient} is a rest client for accessing the
- * rest services from the address-book database.
+ * The class {@link AddressBookRestClient} is a rest client for accessing the rest services from the
+ * address-book database.
  */
-public class AddressBookRestClient extends AbstractRestClient {
+public class AddressBookRestClient extends AbstractRestClient
+{
 
 	/**
 	 * The {@link AddressesResource}.
@@ -62,10 +63,10 @@ public class AddressBookRestClient extends AbstractRestClient {
 	private final ZipcodesResource zipcodesResource;
 
 	/**
-	 * Instantiates a new {@link AddressBookRestClient} with the default base
-	 * url.
+	 * Instantiates a new {@link AddressBookRestClient} with the default base url.
 	 */
-	public AddressBookRestClient() {
+	public AddressBookRestClient()
+	{
 		this(DEFAULT_BASE_HTTP_URL);
 	}
 
@@ -75,7 +76,8 @@ public class AddressBookRestClient extends AbstractRestClient {
 	 * @param baseUrl
 	 *            the base url
 	 */
-	public AddressBookRestClient(final String baseUrl) {
+	public AddressBookRestClient(final String baseUrl)
+	{
 		super(baseUrl);
 		addressesResource = newResource(AddressesResource.class);
 

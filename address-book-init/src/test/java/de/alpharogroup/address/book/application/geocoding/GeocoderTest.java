@@ -31,14 +31,17 @@ import java.util.Map;
 
 import org.testng.annotations.Test;
 
-public class GeocoderTest {
+public class GeocoderTest
+{
 
 	@Test(enabled = false)
-	public void testGetGeocodingData() {
+	public void testGetGeocodingData()
+	{
 	}
 
 	@Test(enabled = true)
-	public void testGetGeolocationAsXml() throws MalformedURLException, IOException {
+	public void testGetGeolocationAsXml() throws MalformedURLException, IOException
+	{
 		String response = null;
 		// Send data again...
 		response = Geocoder.getGeolocationAsXml("64658 Faustenbach");
@@ -46,7 +49,8 @@ public class GeocoderTest {
 	}
 
 	@Test(enabled = false)
-	public void testGetGoogleXmlResponse() throws MalformedURLException, IOException {
+	public void testGetGoogleXmlResponse() throws MalformedURLException, IOException
+	{
 		String response = null;
 		// Construct data
 		String params = Geocoder.getUrlParams("10779 Berlin", false);
@@ -56,11 +60,13 @@ public class GeocoderTest {
 	}
 
 	@Test(enabled = false)
-	public void testGetJsonResponse() {
+	public void testGetJsonResponse()
+	{
 	}
 
 	@Test(enabled = false)
-	public void testGetPlainTextResponse() throws MalformedURLException, IOException {
+	public void testGetPlainTextResponse() throws MalformedURLException, IOException
+	{
 		// Does not work...
 		String response = null;
 		Map<String, String> parameters = new LinkedHashMap<String, String>();
@@ -75,15 +81,18 @@ public class GeocoderTest {
 	}
 
 	@Test(enabled = false)
-	public void testGetUrlParameters() {
+	public void testGetUrlParameters()
+	{
 	}
 
 	@Test(enabled = false)
-	public void testGetUrlParams() {
+	public void testGetUrlParams()
+	{
 	}
 
 	@Test(enabled = false)
-	public void testSetGeocodingData() {
+	public void testSetGeocodingData()
+	{
 	}
 
 }

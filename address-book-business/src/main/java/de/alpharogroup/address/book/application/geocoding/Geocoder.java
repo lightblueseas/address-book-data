@@ -52,7 +52,8 @@ import de.alpharogroup.xml.XmlExtensions;
 /**
  * The Class Geocoder gets data from google and geohash.org.
  */
-public class Geocoder {
+public class Geocoder
+{
 
 	/** The Constant HTTP_MAPS_GOOGLE_COM_MAPS_API_GEOCODE_JSON. */
 	public static final String HTTP_MAPS_GOOGLE_COM_MAPS_API_GEOCODE_JSON = "http://maps.google.com/maps/api/geocode/json";
@@ -64,8 +65,8 @@ public class Geocoder {
 	public static final String HTTP_GEOHASH_ORG = "http://geohash.org/";
 
 	/**
-	 * Gets the geo code data from the given String that represents an xml
-	 * string that is returned from the google geo code service.
+	 * Gets the geo code data from the given String that represents an xml string that is returned
+	 * from the google geo code service.
 	 * 
 	 * @param xmldata
 	 *            the xmldata
@@ -78,7 +79,8 @@ public class Geocoder {
 	 *             Indicates a serious configuration error.
 	 */
 	public static GeoHashPoint getGeocodingData(final String xmldata)
-			throws ParserConfigurationException, SAXException, IOException {
+		throws ParserConfigurationException, SAXException, IOException
+	{
 		GeoHashPoint model = null;
 		Map<String, String> data = new HashMap<>();
 		// Use an instance of ourselves as the SAX event handler
@@ -91,7 +93,8 @@ public class Geocoder {
 		SAXParser saxParser = factory.newSAXParser();
 		saxParser.parse(XmlExtensions.getInputSource(xmldata), handler);
 
-		if (data.size() == 2) {
+		if (data.size() == 2)
+		{
 			String l = data.get(GoogleGeocodingHandler.LAT);
 			String longtidude = data.get(GoogleGeocodingHandler.LNG);
 			double lat = Double.parseDouble(l);
@@ -103,8 +106,7 @@ public class Geocoder {
 	}
 
 	/**
-	 * Gets the geo code data from the given Zipcodes Object. This method
-	 * invokes in backround the
+	 * Gets the geo code data from the given Zipcodes Object. This method invokes in backround the
 	 * 
 	 * @param address
 	 *            the address
@@ -119,8 +121,10 @@ public class Geocoder {
 	 *             Indicates a serious configuration error.
 	 */
 	public static GeoHashPoint getGeocodingData(final Zipcodes address)
-			throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
-		String responseFromGoogle = Geocoder.getGeolocationAsXml(address.getZipcode() + " " + address.getCity());
+		throws MalformedURLException, IOException, ParserConfigurationException, SAXException
+	{
+		String responseFromGoogle = Geocoder
+			.getGeolocationAsXml(address.getZipcode() + " " + address.getCity());
 		GeoHashPoint geoHashModel = Geocoder.getGeocodingData(responseFromGoogle);
 		return geoHashModel;
 	}
@@ -136,7 +140,9 @@ public class Geocoder {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static String getGeolocationAsXml(final String address) throws MalformedURLException, IOException {
+	public static String getGeolocationAsXml(final String address)
+		throws MalformedURLException, IOException
+	{
 		String params = getUrlParams(address, false);
 		String response = getGoogleXmlResponse(params);
 		return response;
@@ -153,7 +159,9 @@ public class Geocoder {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static String getGoogleXmlResponse(final String params) throws MalformedURLException, IOException {
+	public static String getGoogleXmlResponse(final String params)
+		throws MalformedURLException, IOException
+	{
 		URL url = new URL(HTTP_MAPS_GOOGLE_COM_MAPS_API_GEOCODE_XML + params);
 		URLConnection conn = url.openConnection();
 		conn.setDoOutput(true);
@@ -172,7 +180,9 @@ public class Geocoder {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static String getJsonResponse(final String params) throws MalformedURLException, IOException {
+	public static String getJsonResponse(final String params)
+		throws MalformedURLException, IOException
+	{
 		URL url = new URL(HTTP_MAPS_GOOGLE_COM_MAPS_API_GEOCODE_JSON + params);
 		URLConnection conn = url.openConnection();
 		conn.setDoOutput(true);
@@ -191,7 +201,9 @@ public class Geocoder {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public static String getPlainTextResponse(final String geohash) throws MalformedURLException, IOException {
+	public static String getPlainTextResponse(final String geohash)
+		throws MalformedURLException, IOException
+	{
 		URL url = new URL(HTTP_GEOHASH_ORG + geohash);
 		URLConnection conn = url.openConnection();
 		conn.setDoOutput(true);
@@ -201,13 +213,17 @@ public class Geocoder {
 		return sb.toString();
 	}
 
-	private static StringBuilder getResponse(URLConnection connection) throws IOException {
+	private static StringBuilder getResponse(URLConnection connection) throws IOException
+	{
 		StringBuilder sb;
 		try ( // Get the response
-				BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			BufferedReader rd = new BufferedReader(
+				new InputStreamReader(connection.getInputStream())))
+		{
 			String line;
 			sb = new StringBuilder();
-			while ((line = rd.readLine()) != null) {
+			while ((line = rd.readLine()) != null)
+			{
 				// Process line...
 				sb.append(line).append("\n");
 			}
@@ -224,15 +240,19 @@ public class Geocoder {
 	 * @throws UnsupportedEncodingException
 	 *             the unsupported encoding exception
 	 */
-	public static String getUrlParameters(final Map<String, String> parameters) throws UnsupportedEncodingException {
+	public static String getUrlParameters(final Map<String, String> parameters)
+		throws UnsupportedEncodingException
+	{
 		String result = "";
-		if (parameters != null && 1 <= parameters.size()) {
+		if (parameters != null && 1 <= parameters.size())
+		{
 			StringBuilder sb = new StringBuilder();
 			sb.append("?");
 			Set<Entry<String, String>> entries = parameters.entrySet();
-			for (Entry<String, String> entry : entries) {
+			for (Entry<String, String> entry : entries)
+			{
 				sb.append(URLEncoder.encode(entry.getKey(), "UTF-8")).append("=")
-						.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+					.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
 				sb.append("&");
 			}
 			result = sb.toString().trim().substring(0, sb.toString().trim().length() - 1);
@@ -251,11 +271,14 @@ public class Geocoder {
 	 * @throws UnsupportedEncodingException
 	 *             the unsupported encoding exception
 	 */
-	public static String getUrlParams(final String address, final boolean sensor) throws UnsupportedEncodingException {
+	public static String getUrlParams(final String address, final boolean sensor)
+		throws UnsupportedEncodingException
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("?").append(URLEncoder.encode("address", "UTF-8")).append("=")
-				.append(URLEncoder.encode(address, "UTF-8")).append("&").append(URLEncoder.encode("sensor", "UTF-8"))
-				.append("=").append(URLEncoder.encode(sensor + "", "UTF-8"));
+			.append(URLEncoder.encode(address, "UTF-8")).append("&")
+			.append(URLEncoder.encode("sensor", "UTF-8")).append("=")
+			.append(URLEncoder.encode(sensor + "", "UTF-8"));
 		return sb.toString();
 	}
 
@@ -274,11 +297,14 @@ public class Geocoder {
 	 *             Indicates a serious configuration error.
 	 */
 	public static void setGeocodingData(final Addresses address)
-			throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
-		String responseFromGoogle = Geocoder.getGeolocationAsXml(address.getStreet() + " " + address.getStreetnumber()
-				+ " " + address.getZipcode().getZipcode() + " " + address.getZipcode().getCity());
+		throws MalformedURLException, IOException, ParserConfigurationException, SAXException
+	{
+		String responseFromGoogle = Geocoder
+			.getGeolocationAsXml(address.getStreet() + " " + address.getStreetnumber() + " "
+				+ address.getZipcode().getZipcode() + " " + address.getZipcode().getCity());
 		GeoHashPoint geoHashModel = Geocoder.getGeocodingData(responseFromGoogle);
-		if (geoHashModel != null) {
+		if (geoHashModel != null)
+		{
 			address.setGeohash(geoHashModel.getGeohash());
 			address.setLatitude(geoHashModel.getLat().toString());
 			address.setLongitude(geoHashModel.getLng().toString());

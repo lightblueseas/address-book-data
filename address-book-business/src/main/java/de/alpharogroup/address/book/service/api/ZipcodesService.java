@@ -33,7 +33,8 @@ import de.alpharogroup.db.service.api.BusinessService;
 /**
  * The interface {@link ZipcodesService}.
  */
-public interface ZipcodesService extends BusinessService<Zipcodes, Integer> {
+public interface ZipcodesService extends BusinessService<Zipcodes, Integer>
+{
 
 	/**
 	 * Delete all zipcodes.
@@ -59,8 +60,8 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer> {
 	List<Zipcodes> find(final Countries country);
 
 	/**
-	 * Gets a List from Zipcodes with the given parameters that can be null if
-	 * they shell be ignored in the query.
+	 * Gets a List from Zipcodes with the given parameters that can be null if they shell be ignored
+	 * in the query.
 	 *
 	 * @param country
 	 *            the country
@@ -93,8 +94,8 @@ public interface ZipcodesService extends BusinessService<Zipcodes, Integer> {
 	List<Zipcodes> findZipcodes(final String zipcode);
 
 	/**
-	 * Gets the {@link Zipcodes} object from the given zipcode string and city.
-	 * If it does not exist it will be create a new {@link Zipcodes} object.
+	 * Gets the {@link Zipcodes} object from the given zipcode string and city. If it does not exist
+	 * it will be create a new {@link Zipcodes} object.
 	 * 
 	 * @param zipcode
 	 *            the zipcode
