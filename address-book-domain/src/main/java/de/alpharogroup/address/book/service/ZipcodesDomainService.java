@@ -1,8 +1,31 @@
+/**
+ * The MIT License
+ *
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *  *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *  *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package de.alpharogroup.address.book.service;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +39,6 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.mapper.ZipcodesMapper;
 import de.alpharogroup.address.book.service.api.ZipcodeService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
-import de.alpharogroup.address.book.service.util.HqlStringCreator;
 import de.alpharogroup.service.domain.AbstractDomainService;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,11 +48,13 @@ import lombok.Setter;
  */
 @Transactional
 @Service("zipcodesDomainService")
-public class ZipcodesDomainService extends
-AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
-	implements ZipcodeService
+public class ZipcodesDomainService
+	extends
+		AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
+	implements
+		ZipcodeService
 {
-	
+
 	/** The {@link ZipcodesService}. */
 	@Autowired
 	@Getter
@@ -38,57 +62,44 @@ AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
 	private ZipcodesService zipcodesService;
 
 	/**
-	 * Sets the specific {@link ZipcodesDao}.
-	 *
-	 * @param zipcodesDao
-	 *            the new {@link ZipcodesDao}.
-	 */
-	@Autowired
-	public void setZipcodesDao(ZipcodesDao zipcodesDao){
-		setDao(zipcodesDao);
-	}
-	/**
-	 * Sets the specific {@link ZipcodesMapper}.
-	 *
-	 * @param mapper
-	 *            the new {@link ZipcodesMapper}.
-	 */
-	@Autowired
-	public void setZipcodesMapper(ZipcodesMapper mapper) {
-		setMapper(mapper);
-	}
-
-
-	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Zipcode> find(String country, String zipcode, String city)
+	public void deleteAllZipcodes()
 	{
-		final String hqlString = HqlStringCreator.forZipcodes(country, zipcode, city);
-		final Query query = getDao().getQuery(hqlString);
-		if(country != null){
-			query.setParameter("country", country);			
-		}
-		if(zipcode != null && !zipcode.isEmpty()){
-			query.setParameter("zipcode", zipcode);			
-		}
-		if(city != null && !city.isEmpty()){
-			query.setParameter("city", city);
-			
-		}
-
-		final List<Zipcodes> entities = query.getResultList();
-		final List<Zipcode> bos = getMapper().toDomainObjects(entities);		
-		return bos;
+		zipcodesService.deleteAllZipcodes();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Zipcode> findAll(Country country, String zipcode, String city) {
+	public boolean existsZipcode(String zipcode)
+	{
+		return zipcodesService.existsZipcode(zipcode);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Zipcode> find(Country country)
+	{
+		List<Zipcode> zcs = new ArrayList<>();
+		if (country != null)
+		{
+			Countries countries = getMapper().map(country, Countries.class);
+			return getMapper().toDomainObjects(zipcodesService.find(countries));
+		}
+		return zcs;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Zipcode> findAll(Country country, String zipcode, String city)
+	{
 		Countries c = getMapper().map(country, Countries.class);
 		return getMapper().toDomainObjects(zipcodesService.findAll(c, zipcode, city));
 	}
@@ -97,23 +108,18 @@ AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteAllZipcodes() {
-		zipcodesService.deleteAllZipcodes();
+	public Zipcode findCityFromZipcode(Country country, String zipcode)
+	{
+		return getMapper().toDomainObject(zipcodesService
+			.findCityFromZipcode(getMapper().map(country, Countries.class), zipcode));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean existsZipcode(String zipcode) {
-		return zipcodesService.existsZipcode(zipcode);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Zipcode> findZipcodes(String zipcode) {
+	public List<Zipcode> findZipcodes(String zipcode)
+	{
 		return getMapper().toDomainObjects(zipcodesService.findZipcodes(zipcode));
 	}
 
@@ -121,23 +127,32 @@ AbstractDomainService<Integer, Zipcode, Zipcodes, ZipcodesDao, ZipcodesMapper>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Zipcode getZipcode(String zipcode, String city) {
+	public Zipcode getZipcode(String zipcode, String city)
+	{
 		return getMapper().toDomainObject(zipcodesService.getZipcode(zipcode, city));
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Sets the specific {@link ZipcodesDao}.
+	 *
+	 * @param zipcodesDao
+	 *            the new {@link ZipcodesDao}.
 	 */
-	@Override
-	public List<Zipcode> find(Country country) {
-		return getMapper().toDomainObjects(zipcodesService.find(getMapper().map(country, Countries.class)));
+	@Autowired
+	public void setZipcodesDao(ZipcodesDao zipcodesDao)
+	{
+		setDao(zipcodesDao);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Sets the specific {@link ZipcodesMapper}.
+	 *
+	 * @param mapper
+	 *            the new {@link ZipcodesMapper}.
 	 */
-	@Override
-	public Zipcode findCityFromZipcode(Country country, String zipcode) {
-		return getMapper().toDomainObject(zipcodesService.findCityFromZipcode(getMapper().map(country, Countries.class), zipcode));
+	@Autowired
+	public void setZipcodesMapper(ZipcodesMapper mapper)
+	{
+		setMapper(mapper);
 	}
 }

@@ -5,14 +5,14 @@
 
 	<parent>
 		<groupId>de.alpharogroup</groupId>
-		<artifactId>mvn-persistence-parent</artifactId>
-		<version>2.40.0</version>
+		<artifactId>persistence-api</artifactId>
+		<version>3.28.0</version>
 		<relativePath />
 	</parent>
 
 	<artifactId>address-book-data</artifactId>
 	<packaging>pom</packaging>
-	<version>3.9.0</version>
+	<version>3.11.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
@@ -28,6 +28,28 @@
 		<developerConnection>scm:git:git@github.com:lightblueseas/address-book-data.git</developerConnection>
 		<url>git:@github.com:lightblueseas/address-book-data.git</url>
 	</scm>
+	
+	<developers>
+
+		<developer>
+			<id>astrapi69</id>
+			<name>Asterios Raptis</name>
+			<timezone>Berlin</timezone>
+			<roles>
+				<role>Project manager</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+
+	</developers>
+	
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<ciManagement>
 		<system>travis-ci</system>
@@ -51,10 +73,10 @@
 
 	<properties>
 		<!-- MYSTIC-CRYPT versions -->
-		<mystic-crypt.version>4.7.0</mystic-crypt.version>
+		<mystic-crypt.version>4.20.0</mystic-crypt.version>
 		<randomizer.version>${mystic-crypt.version}</randomizer.version>
 		<!-- JGEOHASH LOCATION version -->
-		<jgeohash.version>2.3.0</jgeohash.version>
+		<jgeohash.version>2.4.0</jgeohash.version>
 		<jgeohash-core.version>${jgeohash.version}</jgeohash-core.version>
 		<jgeohash-geoip.version>${jgeohash.version}</jgeohash-geoip.version>
 	</properties>
@@ -84,6 +106,12 @@
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
 				<artifactId>address-book-rest-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.alpharogroup</groupId>
+				<artifactId>address-book-rest-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- MYSTIC-CRYPT DEPENDENCIES -->

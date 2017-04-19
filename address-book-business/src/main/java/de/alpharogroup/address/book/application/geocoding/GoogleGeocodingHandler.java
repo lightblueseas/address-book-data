@@ -1,3 +1,27 @@
+/**
+ * The MIT License
+ *
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *  *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *  *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package de.alpharogroup.address.book.application.geocoding;
 
 import java.io.File;
@@ -7,40 +31,26 @@ import java.util.Map;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import de.alpharogroup.xml.sax.handler.BreakParsingException;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import de.alpharogroup.xml.sax.handler.BreakParsingException;
+
 public class GoogleGeocodingHandler extends DefaultHandler
 {
 
-
-	/** The data. */
-	private final Map<String, String> data;
-
-
 	/** The Constant LOCATION. */
 	protected static final String LOCATION = "location";
+
 	public static final String LAT = "lat";
 	public static final String LNG = "lng";
 
-	/** The found attr. */
-	boolean location = false;
-
-	boolean lat = false;
-
-	boolean lng = false;
-
-	public GoogleGeocodingHandler(final Map<String, String> data)
-	{
-		this.data = data;
-	}
-
 	/**
 	 * The main method.
-	 * @param args the arguments
+	 * 
+	 * @param args
+	 *            the arguments
 	 */
 	public static void main(final String[] args)
 	{
@@ -55,7 +65,7 @@ public class GoogleGeocodingHandler extends DefaultHandler
 		// Use the default (non-validating) parser
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try
-		{	// Parse the input
+		{ // Parse the input
 			SAXParser saxParser = factory.newSAXParser();
 			saxParser.parse(new File(args[0]), handler);
 		}
@@ -73,6 +83,21 @@ public class GoogleGeocodingHandler extends DefaultHandler
 		}
 		System.out.println(map);
 		System.exit(0);
+	}
+
+	/** The data. */
+	private final Map<String, String> data;
+
+	/** The found attr. */
+	boolean location = false;
+
+	boolean lat = false;
+
+	boolean lng = false;
+
+	public GoogleGeocodingHandler(final Map<String, String> data)
+	{
+		this.data = data;
 	}
 
 	/**

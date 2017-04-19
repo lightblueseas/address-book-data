@@ -1,3 +1,27 @@
+/**
+ * The MIT License
+ *
+ * Copyright (C) 2015 Asterios Raptis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *  *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *  *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package de.alpharogroup.address.book.service;
 
 import java.io.File;
@@ -9,7 +33,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -32,6 +55,8 @@ import de.alpharogroup.address.book.service.api.AddressesService;
 import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
+import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.file.write.WriteFileExtensions;
@@ -52,50 +77,104 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	private FederalstatesService federalstatesService;
 
 	@Test(enabled = false)
-	public void testFindUsers()
+	public void fillNotProcessedZipcodesWithGeocodeData() throws IOException
 	{
-		final Map<String, List<String>> map = countriesService.getCountriesToZipcodesAsStringMap();
-		for (final Entry<String, List<String>> entry : map.entrySet())
+		final List<Zipcodes> npZipcodes = getNotProcessedList();
+		System.out.println("Not processed:" + npZipcodes.size());
+		final List<Zipcodes> newNpZipcodes = new ArrayList<Zipcodes>();
+		int count = 1;
+		for (Zipcodes zipcode : npZipcodes)
 		{
-			final String country = entry.getKey();
-			if (0 < entry.getValue().size())
+			if (addressesService.contains(zipcode) != null)
 			{
-				System.out.println(country);
-				for (final String zipcode : entry.getValue())
-				{
-					System.out.println(zipcode);
-				}
-				System.out.println("=====================================================");
-				System.out.println("=====================================================");
-				System.out.println("=====================================================");
+				System.out.println(
+					"np" + (count++) + "). " + zipcode.getZipcode() + " " + zipcode.getCity());
+				continue;
 			}
+			final Addresses found = findNextAddressToZipcode(zipcode);
+			if (found == null)
+			{
+				newNpZipcodes.add(zipcode);
+				continue;
+			}
+
+			Addresses address;
+			zipcode = zipcodesService.get(zipcode.getId());
+			address = AddressBookFactory.getInstance().newAddresses(null, null, found.getGeohash(),
+				null, found.getLatitude(), found.getLongitude(), null, null, zipcode);
+			System.out.println((count++) + "). " + zipcode.getZipcode() + " " + zipcode.getCity());
+
+			addressesService.merge(address);
+			if (found.getFederalstate() != null)
+			{
+				final Federalstates fs = federalstatesService.get(found.getFederalstate().getId());
+				address.setFederalstate(fs);
+			}
+			addressesService.merge(address);
 		}
-		System.out.println(map);
+		final String xmlNP = XmlExtensions.toXmlWithXStream(newNpZipcodes);
+		WriteFileExtensions.string2File(getNotProcessedFile(), xmlNP);
 	}
 
-	@Test(enabled = false)
-	public void testNotProcessed() throws MalformedURLException, IOException
+	public Set<Zipcodes> findExistingZipcodesFromAddresses()
 	{
-		final File processedDir = getProcessedDir();
-
-		List<Zipcodes> notProcessed = new ArrayList<Zipcodes>();
-
-		final File npZipcodesFile = new File(processedDir, "npZipcodes.xml");
-
-		final String notPrZipcodes = ReadFileExtensions.readFromFile(npZipcodesFile);
-		notProcessed = XmlExtensions.toObjectWithXStream(notPrZipcodes);
-
-		System.out.println("Not processed zipcodes:" + notProcessed.size());
-		for (final Zipcodes zc : notProcessed)
+		final List<Addresses> addresses = addressesService.findAll();
+		final Set<Zipcodes> processed = new HashSet<Zipcodes>();
+		for (final Addresses address : addresses)
 		{
-			System.out.println(zc.getZipcode() + " " + zc.getCity());
+			final Zipcodes zc = address.getZipcode();
+			if (zc != null)
+			{
+				processed.add(address.getZipcode());
+			}
 		}
+		return processed;
+	}
+
+	public Addresses findNextAddressToZipcode(final Zipcodes zipcode)
+	{
+		final String zcString = zipcode.getZipcode();
+		List<Addresses> addresses = addressesService.find(zipcode.getCountry(),
+			zipcode.getZipcode());
+		Addresses found = ListExtensions.getFirst(addresses);
+		if (found != null)
+		{
+			return found;
+		}
+		int zcInt = Integer.valueOf(zcString) - 1;
+		final Countries country = countriesService.get(zipcode.getCountry().getId());
+		int count = 0;
+		while (found == null)
+		{
+			count++;
+			if (count == 3)
+			{
+				break;
+			}
+			final List<Zipcodes> zcs = zipcodesService.findAll(country, zcInt + "", null);
+			Zipcodes zc = ListExtensions.getFirst(zcs);
+			if (zc != null)
+			{
+				addresses = addressesService.find(zc);
+				found = ListExtensions.getFirst(addresses);
+				if (found != null)
+				{
+					break;
+				}
+				if (found == null)
+				{
+					System.out.println(zcInt);
+					zcInt--;
+				}
+			}
+		}
+		return found;
 	}
 
 	@SuppressWarnings("static-access")
 	@Test(enabled = false)
-	public void getGeoHashCodesWithGermanZipcodes() throws MalformedURLException, IOException,
-		ParserConfigurationException, SAXException
+	public void getGeoHashCodesWithGermanZipcodes()
+		throws MalformedURLException, IOException, ParserConfigurationException, SAXException
 	{
 		final File processedDir = getProcessedDir();
 
@@ -136,8 +215,8 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 			}
 			try
 			{
-				address = addressesService.contains(point.getLat().toString().trim(), point
-					.getLng().toString().trim());
+				address = addressesService.contains(point.getLat().toString().trim(),
+					point.getLng().toString().trim());
 			}
 			catch (final Exception e1)
 			{
@@ -164,19 +243,101 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		WriteFileExtensions.string2File(npZipcodesFile, xmlNP);
 	}
 
-	public Set<Zipcodes> findExistingZipcodesFromAddresses()
+	private List<GeoPointZipcode> getGeoPointZipcodesList() throws IOException
 	{
-		final List<Addresses> addresses = addressesService.findAll();
-		final Set<Zipcodes> processed = new HashSet<Zipcodes>();
-		for (final Addresses address : addresses)
+		final File processedDir = getProcessedDir();
+
+		final File geoZipcodesFile = new File(processedDir, "geoZipcodes.xml");
+		final String geoZipcodes = ReadFileExtensions.readFromFile(geoZipcodesFile);
+		final List<GeoPointZipcode> geoPointZipcodes = XmlExtensions
+			.toObjectWithXStream(geoZipcodes);
+		return geoPointZipcodes;
+	}
+
+	private List<GermanZipcodeBean> getGermanZipcodeBeanList() throws IOException
+	{
+		final File smr = PathFinder.getSrcMainResourcesDir();
+		final File deDir = PathFinder.getRelativePath(smr, "zipcodes", "de");
+
+		final File germanZipcodesXmlFile = new File(deDir, "GermanZipcodes.xml");
+		final String notPrZipcodes = ReadFileExtensions.readFromFile(germanZipcodesXmlFile);
+		final List<GermanZipcodeBean> list = XmlExtensions.toObjectWithXStream(notPrZipcodes);
+		return list;
+	}
+
+	@Test(enabled = false)
+	public void getLatestNotProcessedZipcodes()
+	{
+		final List<Zipcodes> processed = new ArrayList<Zipcodes>(
+			findExistingZipcodesFromAddresses());
+		final Countries germany = countriesService.find("SK");
+		final List<Zipcodes> allGermanZipcodes = zipcodesService.findAll(germany, null, null);
+		allGermanZipcodes.removeAll(processed);
+
+		final String xmlNP = XmlExtensions.toXmlWithXStream(allGermanZipcodes);
+		WriteFileExtensions.string2File(getNotProcessedFile(), xmlNP);
+	}
+
+	private File getNotProcessedFile()
+	{
+		final File processedDir = getProcessedDir();
+
+		final File npZipcodesFile = new File(processedDir, "npZipcodes.xml");
+		return npZipcodesFile;
+	}
+
+	private List<Zipcodes> getNotProcessedList() throws IOException
+	{
+		final File npZipcodesFile = getNotProcessedFile();
+		final String notPrZipcodes = ReadFileExtensions.readFromFile(npZipcodesFile);
+		final List<Zipcodes> notProcessed = XmlExtensions.toObjectWithXStream(notPrZipcodes);
+		return notProcessed;
+	}
+
+	private File getProcessedDir()
+	{
+		final File smr = PathFinder.getSrcMainResourcesDir();
+		final File processedDir = PathFinder.getRelativePath(smr, "zipcodes", "processed");
+		return processedDir;
+	}
+
+	@Test(enabled = false)
+	public void loadFromGeoZipcodesFileAndSaveToDb() throws IOException
+	{
+		final File processedDir = getProcessedDir();
+
+		final File zipcodesFile = new File(processedDir, "zipcodes.xml");
+		final List<Zipcodes> processed = new ArrayList<Zipcodes>(
+			findExistingZipcodesFromAddresses());
+
+		final File geoZipcodesFile = new File(processedDir, "geoZipcodes.xml");
+		final List<GeoPointZipcode> geoPointZipcodes = getGeoPointZipcodesList();
+		int count = 1;
+		System.out.println("geoPointZipcodes size is:" + geoPointZipcodes.size());
+		for (int i = 0; i < geoPointZipcodes.size(); i++)
 		{
-			final Zipcodes zc = address.getZipcode();
-			if (zc != null)
+			final GeoPointZipcode geoPointZipcode = geoPointZipcodes.get(i);
+			final Zipcodes zc = geoPointZipcode.getZipcode();
+			final GeoHashPoint point = geoPointZipcode.getGeoHashPoint();
+			Addresses address;
+			address = addressesService.contains(zc);
+
+			if (address == null)
 			{
-				processed.add(address.getZipcode());
+
+				address = AddressBookFactory.getInstance().newAddresses(null, null,
+					point.getGeohash(), point.getLat(), point.getLng(), null, null, zc);
+				System.out.println((count++) + "). " + zc.getZipcode() + " " + zc.getCity());
+
+				addressesService.merge(address);
 			}
+			processed.add(zc);
 		}
-		return processed;
+		final String xml = XmlExtensions.toXmlWithXStream(processed);
+		WriteFileExtensions.string2File(zipcodesFile, xml);
+		final String xmlGeo = XmlExtensions.toXmlWithXStream(geoPointZipcodes);
+		WriteFileExtensions.string2File(geoZipcodesFile, xmlGeo);
+		System.out.println("Finished at:" + new Date(System.currentTimeMillis()));
 	}
 
 	@SuppressWarnings("static-access")
@@ -187,7 +348,8 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		final File processedDir = getProcessedDir();
 		final File geoZipcodesFile = new File(processedDir, "geoZipcodes.xml");
 
-		final List<Zipcodes> processed = new ArrayList<Zipcodes>(findExistingZipcodesFromAddresses());
+		final List<Zipcodes> processed = new ArrayList<Zipcodes>(
+			findExistingZipcodesFromAddresses());
 		System.out.println("Already processed:" + processed.size());
 
 		final List<Zipcodes> notProcessed = getNotProcessedList();
@@ -222,7 +384,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 						notProcessed.add(zc);
 						continue;
 					}
-					geopoint = new GeoPointZipcode(zc, point);
+					geopoint = GeoPointZipcode.builder().zipcode(zc).geoHashPoint(point).build();
 					System.out.println((count++) + "). " + zc.getZipcode() + " " + zc.getCity());
 				}
 				else
@@ -232,8 +394,8 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 
 				try
 				{
-					address = addressesService.contains(point.getLat().toString().trim(), point
-						.getLng().toString().trim());
+					address = addressesService.contains(point.getLat().toString().trim(),
+						point.getLng().toString().trim());
 				}
 				catch (final Exception e1)
 				{
@@ -266,51 +428,6 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		System.out.println("Finished at:" + new Date(System.currentTimeMillis()));
 	}
 
-	private File getProcessedDir()
-	{
-		final File smr = PathFinder.getSrcMainResourcesDir();
-		final File processedDir = PathFinder.getRelativePath(smr, "zipcodes", "processed");
-		return processedDir;
-	}
-
-	@Test(enabled = false)
-	public void loadFromGeoZipcodesFileAndSaveToDb() throws IOException
-	{
-		final File processedDir = getProcessedDir();
-
-		final File zipcodesFile = new File(processedDir, "zipcodes.xml");
-		final List<Zipcodes> processed = new ArrayList<Zipcodes>(findExistingZipcodesFromAddresses());
-
-		final File geoZipcodesFile = new File(processedDir, "geoZipcodes.xml");
-		final List<GeoPointZipcode> geoPointZipcodes = getGeoPointZipcodesList();
-		int count = 1;
-		System.out.println("geoPointZipcodes size is:" + geoPointZipcodes.size());
-		for (int i = 0; i < geoPointZipcodes.size(); i++)
-		{
-			final GeoPointZipcode geoPointZipcode = geoPointZipcodes.get(i);
-			final Zipcodes zc = geoPointZipcode.getZipcode();
-			final GeoHashPoint point = geoPointZipcode.getGeoHashPoint();
-			Addresses address;
-			address = addressesService.contains(zc);
-
-			if (address == null)
-			{
-
-				address = AddressBookFactory.getInstance().newAddresses(null, null,
-					point.getGeohash(), point.getLat(), point.getLng(), null, null, zc);
-				System.out.println((count++) + "). " + zc.getZipcode() + " " + zc.getCity());
-
-				addressesService.merge(address);
-			}
-			processed.add(zc);
-		}
-		final String xml = XmlExtensions.toXmlWithXStream(processed);
-		WriteFileExtensions.string2File(zipcodesFile, xml);
-		final String xmlGeo = XmlExtensions.toXmlWithXStream(geoPointZipcodes);
-		WriteFileExtensions.string2File(geoZipcodesFile, xmlGeo);
-		System.out.println("Finished at:" + new Date(System.currentTimeMillis()));
-	}
-
 	@Test(enabled = false)
 	public void testDeleteDuplicateEntries()
 	{
@@ -334,52 +451,69 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	}
 
 	@Test(enabled = false)
-	public void getLatestNotProcessedZipcodes()
+	public void testFindUsers()
 	{
-		final List<Zipcodes> processed = new ArrayList<Zipcodes>(findExistingZipcodesFromAddresses());
-		final Countries germany = countriesService.find("SK");
-		final List<Zipcodes> allGermanZipcodes = zipcodesService.findAll(germany, null, null);
-		allGermanZipcodes.removeAll(processed);
-
-		final String xmlNP = XmlExtensions.toXmlWithXStream(allGermanZipcodes);
-		WriteFileExtensions.string2File(getNotProcessedFile(), xmlNP);
+		final List<KeyValuesPair<String, String>> map = countriesService
+			.getCountriesToZipcodesAsStringList();
+		for (final KeyValuesPair<String, String> entry : map)
+		{
+			final String country = entry.getKey();
+			if (0 < entry.getValues().size())
+			{
+				System.out.println(country);
+				for (final String zipcode : entry.getValues())
+				{
+					System.out.println(zipcode);
+				}
+				System.out.println("=====================================================");
+				System.out.println("=====================================================");
+				System.out.println("=====================================================");
+			}
+		}
+		System.out.println(map);
 	}
 
-	private List<GermanZipcodeBean> getGermanZipcodeBeanList() throws IOException
-	{
-		final File smr = PathFinder.getSrcMainResourcesDir();
-		final File deDir = PathFinder.getRelativePath(smr, "zipcodes", "de");
-
-		final File germanZipcodesXmlFile = new File(deDir, "GermanZipcodes.xml");
-		final String notPrZipcodes = ReadFileExtensions.readFromFile(germanZipcodesXmlFile);
-		final List<GermanZipcodeBean> list = XmlExtensions.toObjectWithXStream(notPrZipcodes);
-		return list;
-	}
-
-	private List<Zipcodes> getNotProcessedList() throws IOException
-	{
-		final File npZipcodesFile = getNotProcessedFile();
-		final String notPrZipcodes = ReadFileExtensions.readFromFile(npZipcodesFile);
-		final List<Zipcodes> notProcessed = XmlExtensions.toObjectWithXStream(notPrZipcodes);
-		return notProcessed;
-	}
-
-	private File getNotProcessedFile()
+	@Test(enabled = false)
+	public void testNotProcessed() throws MalformedURLException, IOException
 	{
 		final File processedDir = getProcessedDir();
+
+		List<Zipcodes> notProcessed = new ArrayList<Zipcodes>();
 
 		final File npZipcodesFile = new File(processedDir, "npZipcodes.xml");
-		return npZipcodesFile;
+
+		final String notPrZipcodes = ReadFileExtensions.readFromFile(npZipcodesFile);
+		notProcessed = XmlExtensions.toObjectWithXStream(notPrZipcodes);
+
+		System.out.println("Not processed zipcodes:" + notProcessed.size());
+		for (final Zipcodes zc : notProcessed)
+		{
+			System.out.println(zc.getZipcode() + " " + zc.getCity());
+		}
 	}
 
-	private List<GeoPointZipcode> getGeoPointZipcodesList() throws IOException
+	@Test(enabled = false)
+	public void verifyNotProcessed() throws IOException
 	{
-		final File processedDir = getProcessedDir();
+		final List<GermanZipcodeBean> list = getGermanZipcodeBeanList();
+		final Map<String, GermanZipcodeBean> zipcodeToBeanMap = new HashMap<String, GermanZipcodeBean>();
+		for (final GermanZipcodeBean germanZipcodeBean : list)
+		{
+			zipcodeToBeanMap.put(germanZipcodeBean.getZipcode(), germanZipcodeBean);
+		}
 
-		final File geoZipcodesFile = new File(processedDir, "geoZipcodes.xml");
-		final String geoZipcodes = ReadFileExtensions.readFromFile(geoZipcodesFile);
-		final List<GeoPointZipcode> geoPointZipcodes = XmlExtensions.toObjectWithXStream(geoZipcodes);
-		return geoPointZipcodes;
+		final List<Zipcodes> npZipcodes = getNotProcessedList();
+		System.out.println("Not processed:" + npZipcodes.size());
+		int count = 0;
+		for (final Zipcodes zipcode : npZipcodes)
+		{
+			if (zipcodeToBeanMap.containsKey(zipcode.getZipcode()))
+			{
+				count++;
+				System.out.println(zipcode.getZipcode() + " " + zipcode.getCity());
+			}
+		}
+		System.out.println("count:" + count);
 	}
 
 	@Test(enabled = false)
@@ -422,117 +556,6 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 				addressesService.merge(address);
 			}
 		}
-	}
-
-	@Test(enabled = false)
-	public void verifyNotProcessed() throws IOException
-	{
-		final List<GermanZipcodeBean> list = getGermanZipcodeBeanList();
-		final Map<String, GermanZipcodeBean> zipcodeToBeanMap = new HashMap<String, GermanZipcodeBean>();
-		for (final GermanZipcodeBean germanZipcodeBean : list)
-		{
-			zipcodeToBeanMap.put(germanZipcodeBean.getZipcode(), germanZipcodeBean);
-		}
-
-		final List<Zipcodes> npZipcodes = getNotProcessedList();
-		System.out.println("Not processed:" + npZipcodes.size());
-		int count = 0;
-		for (final Zipcodes zipcode : npZipcodes)
-		{
-			if (zipcodeToBeanMap.containsKey(zipcode.getZipcode()))
-			{
-				count++;
-				System.out.println(zipcode.getZipcode() + " " + zipcode.getCity());
-			}
-		}
-		System.out.println("count:" + count);
-	}
-
-	@Test(enabled = false)
-	public void fillNotProcessedZipcodesWithGeocodeData() throws IOException
-	{
-		final List<Zipcodes> npZipcodes = getNotProcessedList();
-		System.out.println("Not processed:" + npZipcodes.size());
-		final List<Zipcodes> newNpZipcodes = new ArrayList<Zipcodes>();
-		int count = 1;
-		for (Zipcodes zipcode : npZipcodes)
-		{
-			if (addressesService.contains(zipcode) != null)
-			{
-				System.out.println("np" + (count++) + "). " + zipcode.getZipcode() + " "
-					+ zipcode.getCity());
-				continue;
-			}
-			final Addresses found = findNextAddressToZipcode(zipcode);
-			if (found == null)
-			{
-				newNpZipcodes.add(zipcode);
-				continue;
-			}
-
-			Addresses address;
-			zipcode = zipcodesService.get(zipcode.getId());
-			address = AddressBookFactory.getInstance().newAddresses(null, null, found.getGeohash(),
-				null, found.getLatitude(), found.getLongitude(), null, null, zipcode);
-			System.out.println((count++) + "). " + zipcode.getZipcode() + " " + zipcode.getCity());
-
-			addressesService.merge(address);
-			if (found.getFederalstate() != null)
-			{
-				final Federalstates fs = federalstatesService.get(found.getFederalstate().getId());
-				address.setFederalstate(fs);
-			}
-			addressesService.merge(address);
-		}
-		final String xmlNP = XmlExtensions.toXmlWithXStream(newNpZipcodes);
-		WriteFileExtensions.string2File(getNotProcessedFile(), xmlNP);
-	}
-
-	public Addresses findNextAddressToZipcode(final Zipcodes zipcode)
-	{
-		final String zcString = zipcode.getZipcode();
-		List<Addresses> addresses = addressesService.find(zipcode.getCountry(),
-			zipcode.getZipcode());
-		Addresses found = null;
-		if (addresses != null && !addresses.isEmpty())
-		{
-			found = addresses.get(0);
-		}
-		if (found != null)
-		{
-			return found;
-		}
-		int zcInt = Integer.valueOf(zcString) - 1;
-		final Countries country = countriesService.get(zipcode.getCountry().getId());
-		int count = 0;
-		while (found == null)
-		{
-			count++;
-			if (count == 3)
-			{
-				break;
-			}
-			final List<Zipcodes> zcs = zipcodesService.findAll(country, zcInt + "", null);
-			if (zcs != null && !zcs.isEmpty())
-			{
-				final Zipcodes zc = zcs.get(0);
-				addresses = addressesService.find(zc);
-				if (addresses != null && !addresses.isEmpty())
-				{
-					found = addresses.get(0);
-				}
-				if (found != null)
-				{
-					break;
-				}
-				if (found == null)
-				{
-					System.out.println(zcInt);
-					zcInt--;
-				}
-			}
-		}
-		return found;
 	}
 
 }
