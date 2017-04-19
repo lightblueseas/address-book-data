@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>3.28.0-SNAPSHOT</version>
+		<version>3.28.0</version>
 		<relativePath />
 	</parent>
 
 	<artifactId>address-book-data</artifactId>
 	<packaging>pom</packaging>
-	<version>3.11.0-SNAPSHOT</version>
+	<version>3.11.0</version>
 	<inceptionYear>2015</inceptionYear>
 
 	<name>${project.artifactId}</name>
@@ -73,10 +73,10 @@
 
 	<properties>
 		<!-- MYSTIC-CRYPT versions -->
-		<mystic-crypt.version>4.20.0-SNAPSHOT</mystic-crypt.version>
+		<mystic-crypt.version>4.20.0</mystic-crypt.version>
 		<randomizer.version>${mystic-crypt.version}</randomizer.version>
 		<!-- JGEOHASH LOCATION version -->
-		<jgeohash.version>2.4.0-SNAPSHOT</jgeohash.version>
+		<jgeohash.version>2.4.0</jgeohash.version>
 		<jgeohash-core.version>${jgeohash.version}</jgeohash-core.version>
 		<jgeohash-geoip.version>${jgeohash.version}</jgeohash-geoip.version>
 	</properties>
