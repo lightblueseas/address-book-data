@@ -64,7 +64,7 @@ import de.alpharogroup.jgeohash.GeoHashPoint;
 import de.alpharogroup.random.RandomExtensions;
 import de.alpharogroup.xml.XmlExtensions;
 
-@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
 public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTests
 {
 	@Autowired
@@ -81,7 +81,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	{
 		final List<Zipcodes> npZipcodes = getNotProcessedList();
 		System.out.println("Not processed:" + npZipcodes.size());
-		final List<Zipcodes> newNpZipcodes = new ArrayList<Zipcodes>();
+		final List<Zipcodes> newNpZipcodes = new ArrayList<>();
 		int count = 1;
 		for (Zipcodes zipcode : npZipcodes)
 		{
@@ -119,7 +119,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	public Set<Zipcodes> findExistingZipcodesFromAddresses()
 	{
 		final List<Addresses> addresses = addressesService.findAll();
-		final Set<Zipcodes> processed = new HashSet<Zipcodes>();
+		final Set<Zipcodes> processed = new HashSet<>();
 		for (final Addresses address : addresses)
 		{
 			final Zipcodes zc = address.getZipcode();
@@ -152,7 +152,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 				break;
 			}
 			final List<Zipcodes> zcs = zipcodesService.findAll(country, zcInt + "", null);
-			Zipcodes zc = ListExtensions.getFirst(zcs);
+			final Zipcodes zc = ListExtensions.getFirst(zcs);
 			if (zc != null)
 			{
 				addresses = addressesService.find(zc);
@@ -178,12 +178,12 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	{
 		final File processedDir = getProcessedDir();
 
-		List<Zipcodes> processed = new ArrayList<Zipcodes>(findExistingZipcodesFromAddresses());
+		List<Zipcodes> processed = new ArrayList<>(findExistingZipcodesFromAddresses());
 		System.out.println("Already processed:" + processed.size());
-		List<Zipcodes> notProcessed = new ArrayList<Zipcodes>();
+		List<Zipcodes> notProcessed = new ArrayList<>();
 
 		final File npZipcodesFile = new File(processedDir, "npZipcodes.xml");
-		processed = new ArrayList<Zipcodes>(findExistingZipcodesFromAddresses());
+		processed = new ArrayList<>(findExistingZipcodesFromAddresses());
 
 		final Countries germany = countriesService.find("SK");
 		final List<Zipcodes> germanZipcodes = zipcodesService.find(germany);
@@ -268,7 +268,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	@Test(enabled = false)
 	public void getLatestNotProcessedZipcodes()
 	{
-		final List<Zipcodes> processed = new ArrayList<Zipcodes>(
+		final List<Zipcodes> processed = new ArrayList<>(
 			findExistingZipcodesFromAddresses());
 		final Countries germany = countriesService.find("SK");
 		final List<Zipcodes> allGermanZipcodes = zipcodesService.findAll(germany, null, null);
@@ -307,7 +307,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		final File processedDir = getProcessedDir();
 
 		final File zipcodesFile = new File(processedDir, "zipcodes.xml");
-		final List<Zipcodes> processed = new ArrayList<Zipcodes>(
+		final List<Zipcodes> processed = new ArrayList<>(
 			findExistingZipcodesFromAddresses());
 
 		final File geoZipcodesFile = new File(processedDir, "geoZipcodes.xml");
@@ -348,7 +348,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		final File processedDir = getProcessedDir();
 		final File geoZipcodesFile = new File(processedDir, "geoZipcodes.xml");
 
-		final List<Zipcodes> processed = new ArrayList<Zipcodes>(
+		final List<Zipcodes> processed = new ArrayList<>(
 			findExistingZipcodesFromAddresses());
 		System.out.println("Already processed:" + processed.size());
 
@@ -357,7 +357,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 		final List<Zipcodes> countryZipcodes = zipcodesService.findAll();
 		countryZipcodes.removeAll(processed);
 		System.out.println("Not processed:" + notProcessed.size());
-		final List<GeoPointZipcode> geopoints = new ArrayList<GeoPointZipcode>();
+		final List<GeoPointZipcode> geopoints = new ArrayList<>();
 		countryZipcodes.removeAll(notProcessed);
 		int iterations = 2600;
 		if (countryZipcodes.size() < iterations)
@@ -478,7 +478,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	{
 		final File processedDir = getProcessedDir();
 
-		List<Zipcodes> notProcessed = new ArrayList<Zipcodes>();
+		List<Zipcodes> notProcessed = new ArrayList<>();
 
 		final File npZipcodesFile = new File(processedDir, "npZipcodes.xml");
 
@@ -496,7 +496,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	public void verifyNotProcessed() throws IOException
 	{
 		final List<GermanZipcodeBean> list = getGermanZipcodeBeanList();
-		final Map<String, GermanZipcodeBean> zipcodeToBeanMap = new HashMap<String, GermanZipcodeBean>();
+		final Map<String, GermanZipcodeBean> zipcodeToBeanMap = new HashMap<>();
 		for (final GermanZipcodeBean germanZipcodeBean : list)
 		{
 			zipcodeToBeanMap.put(germanZipcodeBean.getZipcode(), germanZipcodeBean);
@@ -520,7 +520,7 @@ public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	protected void verifyZipcodes() throws IOException
 	{
 		// alien id, native id
-		final Map<String, String> federalStateMap = new HashMap<String, String>();
+		final Map<String, String> federalStateMap = new HashMap<>();
 		federalStateMap.put("08", "2631");// Baden-Württemberg
 		federalStateMap.put("09", "2632");// Bayern
 		federalStateMap.put("11", "2633");// Berlin

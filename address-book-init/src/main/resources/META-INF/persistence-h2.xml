@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="addressbook"
+                          transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+        <class>de.alpharogroup.address.book.entities.Addresses</class>
+        <class>de.alpharogroup.address.book.entities.Countries</class>
+        <class>de.alpharogroup.address.book.entities.Federalstates</class>
+        <class>de.alpharogroup.address.book.entities.Zipcodes</class>
+        
+        <properties>
+			<property name="hibernate.connection.driver_class" value="org.h2.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:h2:mem:./addressbook;USER=SA;PASSWORD=;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1"/>
+			<property name="hibernate.connection.user" value="sa" />
+			<property name="hibernate.connection.password" value="" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>

@@ -39,7 +39,7 @@ import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.jgeohash.GeoHashPoint;
 
-@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
 public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestNGSpringContextTests
 {
 
@@ -53,10 +53,10 @@ public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestN
 	@Test(enabled = false)
 	public void getAllSwitzerlandAddresses()
 	{
-		Countries country = countriesService.find("DE");
-		List<Zipcodes> countryZipcodes = zipcodesService.find(country);
+		final Countries country = countriesService.find("DE");
+		final List<Zipcodes> countryZipcodes = zipcodesService.find(country);
 		System.out.println("All zipcodes from austria:" + countryZipcodes.size());
-		List<Zipcodes> zipcodesChInDb = addressesService.findAllAddressesWithCountry(country);
+		final List<Zipcodes> zipcodesChInDb = addressesService.findAllAddressesWithCountry(country);
 		countryZipcodes.removeAll(zipcodesChInDb);
 		System.out.println("All zipcodes from austria not in db:" + countryZipcodes.size());
 	}
@@ -64,15 +64,15 @@ public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestN
 	@Test(enabled = false)
 	public void testFindGeohashNull()
 	{
-		List<Addresses> addresses = addressesService.findGeohashIsNull();
-		for (Addresses address : addresses)
+		final List<Addresses> addresses = addressesService.findGeohashIsNull();
+		for (final Addresses address : addresses)
 		{
-			String l = address.getLatitude();
-			String longtidude = address.getLongitude();
-			double lat = Double.parseDouble(l);
-			double lng = Double.parseDouble(longtidude);
-			GeoHashPoint geoHashPoint = new GeoHashPoint(lat, lng);
-			Addresses addr = addressesService.get(address.getId());
+			final String l = address.getLatitude();
+			final String longtidude = address.getLongitude();
+			final double lat = Double.parseDouble(l);
+			final double lng = Double.parseDouble(longtidude);
+			final GeoHashPoint geoHashPoint = new GeoHashPoint(lat, lng);
+			final Addresses addr = addressesService.get(address.getId());
 			addr.setGeohash(geoHashPoint.getGeohash());
 			addressesService.merge(addr);
 		}

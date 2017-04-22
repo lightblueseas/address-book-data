@@ -49,7 +49,7 @@ import de.alpharogroup.jgeohash.distance.DistanceCalculator;
 import de.alpharogroup.jgeohash.distance.MeasuringUnit;
 import de.alpharogroup.xml.XmlExtensions;
 
-@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
 public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTests
 {
 
@@ -60,7 +60,7 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	@Autowired
 	private AddressesService addressesService;
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void getAllSwitzerlandAddresses()
 	{
 		final Countries country = countriesService.find("DE");

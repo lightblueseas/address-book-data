@@ -24,6 +24,8 @@
  */
 package de.alpharogroup.address.book.daos;
 
+import static org.testng.AssertJUnit.assertNotNull;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +35,17 @@ import org.testng.annotations.Test;
 
 import de.alpharogroup.address.book.entities.Federalstates;
 
-@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
 public class FederalstatesDaoTest extends AbstractTestNGSpringContextTests
 {
 
 	@Autowired
 	private FederalstatesDao federalstatesDao;
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testFindAll()
 	{
-		List<Federalstates> all = federalstatesDao.findAll();
-		System.out.println(all.size());
+		final List<Federalstates> all = federalstatesDao.findAll();
+		assertNotNull(all);
 	}
 }

@@ -37,7 +37,7 @@ import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 
-@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
 public class FederalstatesBusinessServiceTest extends AbstractTestNGSpringContextTests
 {
 

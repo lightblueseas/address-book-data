@@ -24,6 +24,8 @@
  */
 package de.alpharogroup.address.book.daos;
 
+import static org.testng.AssertJUnit.assertNotNull;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +35,17 @@ import org.testng.annotations.Test;
 
 import de.alpharogroup.address.book.entities.Zipcodes;
 
-@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
 public class ZipcodesDaoTest extends AbstractTestNGSpringContextTests
 {
 	@Autowired
 	private ZipcodesDao zipcodesDao;
 
-	@Test(enabled = false)
-	public List<Zipcodes> testFindAll()
+	@Test(enabled = true)
+	public void testFindAll()
 	{
-		return zipcodesDao.findAll();
+		final List<Zipcodes> all = zipcodesDao.findAll();
+		assertNotNull(all);
 	}
 
 }
