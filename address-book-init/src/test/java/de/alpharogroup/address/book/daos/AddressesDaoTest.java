@@ -35,14 +35,14 @@ import org.testng.annotations.Test;
 
 import de.alpharogroup.address.book.entities.Addresses;
 
-@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
 public class AddressesDaoTest extends AbstractTestNGSpringContextTests
 {
 
 	@Autowired
 	private AddressesDao addressesDao;
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testSaveAddresses()
 	{
 		final List<Addresses> all = addressesDao.findAll();

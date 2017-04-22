@@ -60,7 +60,7 @@ public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTes
 	@Autowired
 	private AddressesService addressesService;
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void getAllSwitzerlandAddresses()
 	{
 		final Countries country = countriesService.find("DE");

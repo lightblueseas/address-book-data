@@ -39,7 +39,7 @@ import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.jgeohash.GeoHashPoint;
 
-@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
 public class ReadUnitedKingdomCountriesBusinessServiceTest extends AbstractTestNGSpringContextTests
 {
 

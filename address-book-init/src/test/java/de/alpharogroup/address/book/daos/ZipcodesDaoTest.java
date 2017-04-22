@@ -35,13 +35,13 @@ import org.testng.annotations.Test;
 
 import de.alpharogroup.address.book.entities.Zipcodes;
 
-@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
 public class ZipcodesDaoTest extends AbstractTestNGSpringContextTests
 {
 	@Autowired
 	private ZipcodesDao zipcodesDao;
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testFindAll()
 	{
 		final List<Zipcodes> all = zipcodesDao.findAll();

@@ -64,7 +64,7 @@ import de.alpharogroup.jgeohash.GeoHashPoint;
 import de.alpharogroup.random.RandomExtensions;
 import de.alpharogroup.xml.XmlExtensions;
 
-@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
 public class CountriesBusinessServiceTest extends AbstractTestNGSpringContextTests
 {
 	@Autowired

@@ -35,13 +35,13 @@ import org.testng.annotations.Test;
 
 import de.alpharogroup.address.book.entities.Countries;
 
-@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
 public class CountriesDaoTest extends AbstractTestNGSpringContextTests
 {
 	@Autowired
 	private CountriesDao countriesDao;
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testFindAll()
 	{
 		final List<Countries> all = countriesDao.findAll();
