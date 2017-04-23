@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="de.alpharogroup.address.book.entities" v="1.5.4" status="GENERATED" xs="false" id="_1492944347216115" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:mapped-superclass xre="false" compositePrimaryKeyClass="BaseEntityPK" access="FIELD" sm="false" abs="true" class="BaseEntity" visibile="true" minimized="false" rootElement="_1492944347216115" id="_1492944347232122">
+        <annotation n="@lombok.Getter"/>
+        <annotation n="@lombok.Setter"/>
+        <annotation n="@lombok.NoArgsConstructor"/>
+        <jpa:attributes>
+            <jpa:id attribute-type="PK" visibile="true" name="id" id="_1492944347232123">
+                <jpa:column name="id" nullable="false"/>
+                <jpa:generated-value strategy="AUTO"/>
+                <jpa:sequence-generator name="id"/>
+            </jpa:id>
+        </jpa:attributes>
+    </jpa:mapped-superclass>
+    <jpa:entity xre="false" compositePrimaryKeyClass="FederalstatesPK" sm="false" abs="false" class="Federalstates" superclassId="_1492944347232122" visibile="true" minimized="false" rootElement="_1492944347216115" id="_1492944347231116">
+        <inf>java.lang.Cloneable</inf>
+        <annotation n="@lombok.Getter"/>
+        <annotation n="@lombok.Setter"/>
+        <annotation n="@lombok.NoArgsConstructor"/>
+        <jpa:attributes>
+            <basic attribute-type="String" visibile="true" name="iso3166A2code" id="_1492944347231118">
+                <jpa:column name="iso3166_a2code" length="6"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="name" id="_1492944347231119"/>
+            <basic attribute-type="String" visibile="true" name="subdivisionCategory" id="_1492944347231120">
+                <jpa:column name="subdivision_category" length="128"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="subdivisionName" id="_1492944347231121">
+                <jpa:column name="subdivision_name" length="56"/>
+            </basic>
+            <many-to-one connected-entity-id="_1492944347283137" visibile="true" name="country" id="_1492944347231117">
+                <cascade>
+                    <jpa:cascade-all/>
+                </cascade>
+                <join-column name="country_id"/>
+            </many-to-one>
+        </jpa:attributes>
+        <jpa:nq name="findFederalstateFromCountryAndName">
+            <jpa:query>select fs from Federalstates fs where fs.country=:country and fs.name=:name</jpa:query>
+        </jpa:nq>
+        <jpa:nnq name="findFederalstatesFromCountry" result-class="de.alpharogroup.address.book.entities.Federalstates">
+            <jpa:query>select * from federalstates fs where fs.country_id=:country</jpa:query>
+        </jpa:nnq>
+        <jpa:table name="federalstates"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="ZipcodesPK" sm="false" abs="false" class="Zipcodes" superclassId="_1492944347232122" visibile="true" minimized="false" rootElement="_1492944347216115" id="_1492944347245124">
+        <inf>java.lang.Cloneable</inf>
+        <annotation n="@lombok.Getter"/>
+        <annotation n="@lombok.Setter"/>
+        <annotation n="@lombok.NoArgsConstructor"/>
+        <jpa:attributes>
+            <basic attribute-type="String" visibile="true" name="zipcode" id="_1492944347246126">
+                <jpa:column nullable="false" length="10"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="city" id="_1492944347246127"/>
+            <many-to-one connected-entity-id="_1492944347283137" visibile="true" name="country" id="_1492944347245125">
+                <cascade>
+                    <jpa:cascade-all/>
+                </cascade>
+                <join-column name="country_id" nullable="true"/>
+            </many-to-one>
+        </jpa:attributes>
+        <jpa:table name="zipcodes"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="AddressesPK" sm="false" abs="false" class="Addresses" superclassId="_1492944347232122" visibile="true" minimized="false" rootElement="_1492944347216115" id="_1492944347259128">
+        <inf>java.lang.Cloneable</inf>
+        <annotation n="@lombok.Getter"/>
+        <annotation n="@lombok.Setter"/>
+        <annotation n="@lombok.NoArgsConstructor"/>
+        <jpa:attributes>
+            <basic attribute-type="String" visibile="true" name="addressComment" id="_1492944347259129">
+                <jpa:column name="address_comment" length="100"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="geohash" id="_1492944347259131"/>
+            <basic attribute-type="String" visibile="true" name="latitude" id="_1492944347259132"/>
+            <basic attribute-type="String" visibile="true" name="longitude" id="_1492944347259133"/>
+            <basic attribute-type="String" visibile="true" name="street" id="_1492944347259134"/>
+            <basic attribute-type="String" visibile="true" name="streetnumber" id="_1492944347259135"/>
+            <many-to-one connected-entity-id="_1492944347231116" visibile="true" name="federalstate" id="_1492944347259130">
+                <cascade>
+                    <jpa:cascade-all/>
+                </cascade>
+                <join-column name="federalstate_id" nullable="true"/>
+            </many-to-one>
+            <many-to-one connected-entity-id="_1492944347245124" visibile="true" name="zipcode" id="_1492944347259136">
+                <cascade>
+                    <jpa:cascade-all/>
+                </cascade>
+                <join-column name="zipcode_id" nullable="true"/>
+            </many-to-one>
+        </jpa:attributes>
+        <jpa:table name="addresses"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyClass="CountriesPK" sm="false" abs="false" class="Countries" superclassId="_1492944347232122" visibile="true" minimized="false" rootElement="_1492944347216115" id="_1492944347283137">
+        <inf>java.lang.Cloneable</inf>
+        <annotation n="@org.hibernate.annotations.Cache(usage=org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)"/>
+        <annotation n="@lombok.Getter"/>
+        <annotation n="@lombok.Setter"/>
+        <annotation n="@lombok.NoArgsConstructor"/>
+        <jpa:attributes>
+            <basic attribute-type="String" visibile="true" name="iso3166A2name" id="_1492944347283138">
+                <jpa:column name="iso3166_a2name" length="2"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="iso3166A3name" id="_1492944347283139">
+                <jpa:column name="iso3166_a3name" length="3"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="iso3166Number" id="_1492944347283140">
+                <jpa:column name="iso3166_number" length="3"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="name" id="_1492944347283141"/>
+        </jpa:attributes>
+        <jpa:table name="countries"/>
+    </jpa:entity>
+    <jpa:diagram>
+        <plane elementRef="_1492944347216115"/>
+    </jpa:diagram>
+</jpa:entity-mappings>
