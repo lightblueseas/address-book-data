@@ -12,6 +12,8 @@ The source code comes under the liberal MIT License, making address-book-data gr
 # Build status and latest maven version
 [![Build Status](https://travis-ci.org/lightblueseas/address-book-data.svg?branch=master)](https://travis-ci.org/lightblueseas/address-book-data)
 
+This erd-diagramm was created with the awesome [SQuirreL SQL Client](http://squirrel-sql.sourceforge.net/)
+
 ## Maven Central
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/address-book-data/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/address-book-data)
