@@ -15,7 +15,7 @@ This erd-diagramm was created with the awesome [SQuirreL SQL Client](http://squi
 
 The source code comes under the liberal MIT License, making address-book-data great for all types of applications that need address relevant data.
 
-# Build status and latest maven version
+# Build status
 [![Build Status](https://travis-ci.org/lightblueseas/address-book-data.svg?branch=master)](https://travis-ci.org/lightblueseas/address-book-data)
 
 ## Maven Central
