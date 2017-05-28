@@ -57,3 +57,8 @@
 /gradle
 /reports
 /.dbeaver-data-sources.xml
+
+################
+# travis files #
+################
+/.travis
