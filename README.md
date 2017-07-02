@@ -34,7 +34,7 @@ You can first define the version properties:
 	<properties>
 			...
 		<!-- address-book-data version -->
-		<address-book-data.version>3.11.0</address-book-data.version>
+		<address-book-data.version>3.12.0</address-book-data.version>
 		<address-book-business.version>${address-book-data.version}</address-book-business.version>
 		<address-book-domain.version>${address-book-data.version}</address-book-domain.version>
 		<address-book-entities.version>${address-book-data.version}</address-book-entities.version>
