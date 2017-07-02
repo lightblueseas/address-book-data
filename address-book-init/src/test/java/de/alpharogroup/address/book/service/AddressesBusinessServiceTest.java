@@ -49,7 +49,7 @@ import de.alpharogroup.jgeohash.distance.DistanceCalculator;
 import de.alpharogroup.jgeohash.distance.MeasuringUnit;
 import de.alpharogroup.xml.XmlExtensions;
 
-@ContextConfiguration(locations = "classpath:test-applicationContext.xml")
+@ContextConfiguration(locations = "classpath:test-h2-applicationContext.xml")
 public class AddressesBusinessServiceTest extends AbstractTestNGSpringContextTests
 {
 

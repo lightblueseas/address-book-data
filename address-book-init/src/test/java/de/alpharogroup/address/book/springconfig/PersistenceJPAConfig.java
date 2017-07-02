@@ -24,70 +24,93 @@
  */
 package de.alpharogroup.address.book.springconfig;
 
-//import java.util.Properties;
-//
-//import javax.persistence.EntityManagerFactory;
-//import javax.sql.DataSource;
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-//import org.springframework.jdbc.datasource.DriverManagerDataSource;
-//import org.springframework.orm.jpa.JpaTransactionManager;
-//import org.springframework.orm.jpa.JpaVendorAdapter;
-//import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-//import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-//import org.springframework.transaction.PlatformTransactionManager;
-//import org.springframework.transaction.annotation.EnableTransactionManagement;
+import java.util.Properties;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //@Configuration
 //@EnableTransactionManagement
+@ComponentScan(basePackages = {
+		"de.alpharogroup.address.book.daos",
+		"de.alpharogroup.address.book.entities",
+		"de.alpharogroup.address.book.mapper",
+		"de.alpharogroup.address.book.service.api",
+		"de.alpharogroup.address.book.service",
+		"de.alpharogroup.address.book.service.mapper" })
 public class PersistenceJPAConfig
 {
+	@Autowired
+	private EntityManagerFactory entityManagerFactory;
 
-	// @Bean
-	// public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-	// LocalContainerEntityManagerFactoryBean em = new
-	// LocalContainerEntityManagerFactoryBean();
-	// em.setDataSource(dataSource());
-	// em.setPackagesToScan(new String[] { "address.book.model" });
-	//
-	// JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-	// em.setJpaVendorAdapter(vendorAdapter);
-	// em.setJpaProperties(additionalProperties());
-	//
-	// return em;
-	// }
-	//
-	// @Bean
-	// public DataSource dataSource(){
-	// DriverManagerDataSource dataSource = new DriverManagerDataSource();
-	// dataSource.setDriverClassName("org.postgresql.Driver");
-	// dataSource.setUrl("jdbc:postgresql://localhost:5432/addressbook");
-	// dataSource.setUsername( "postgres" );
-	// dataSource.setPassword( "secret" );
-	// return dataSource;
-	// }
-	//
-	// @Bean
-	// public PlatformTransactionManager transactionManager(EntityManagerFactory
-	// emf){
-	// JpaTransactionManager transactionManager = new JpaTransactionManager();
-	// transactionManager.setEntityManagerFactory(emf);
-	// return transactionManager;
-	// }
-	//
-	// @Bean
-	// public PersistenceExceptionTranslationPostProcessor
-	// exceptionTranslation(){
-	// return new PersistenceExceptionTranslationPostProcessor();
-	// }
-	//
-	// Properties additionalProperties() {
-	// Properties properties = new Properties();
-	// properties.setProperty("hibernate.show_sql", "true");
-	// properties.setProperty("hibernate.dialect",
-	// "org.hibernate.dialect.PostgreSQLDialect");
-	// return properties;
-	// }
+	@Autowired
+	private DataSource dataSource;
+
+//	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory()
+	{
+		final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+		em.setDataSource(dataSource());
+		em.setPersistenceUnitName("addressbook");
+
+		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		em.setJpaVendorAdapter(vendorAdapter);
+		em.setJpaProperties(additionalProperties());
+		return em;
+	}
+
+//	@Bean
+	public DataSource dataSource()
+	{
+		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/addressbook");
+		dataSource.setUsername("postgres");
+		dataSource.setPassword("r2SB2FvFKHLcnyL0");
+		return dataSource;
+	}
+
+//	@Bean
+	public JdbcTemplate jdbcTemplate() {
+		JdbcTemplate jdbcTemplate;
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		return jdbcTemplate;
+	}
+
+//	@Bean
+	public PlatformTransactionManager transactionManager()
+	{
+		final JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
+		return transactionManager;
+	}
+
+//	@Bean
+	public PersistenceExceptionTranslationPostProcessor exceptionTranslation()
+	{
+		return new PersistenceExceptionTranslationPostProcessor();
+	}
+
+	Properties additionalProperties()
+	{
+		final Properties properties = new Properties();
+		properties.setProperty("hibernate.generateDdl", "true");
+		properties.setProperty("hibernate.show_sql", "true");
+		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+		return properties;
+	}
 }

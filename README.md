@@ -1,15 +1,21 @@
-# address-book-data
+# Overview
 
 
 Parent project that holds module projects for the persistence of address data.
 
 The project holds backend data for simple address data management.
 
+# ERD-Diagramm
+
+The erd-diagramm for this database looks as follows: ![erd-diagramm](https://github.com/lightblueseas/address-book-data/blob/develop/address-book-init/src/main/resources/erd/erd-diagramm-addressbook.png)
+
+This erd-diagramm was created with the awesome [SQuirreL SQL Client](http://squirrel-sql.sourceforge.net/)
+
 ## License
 
 The source code comes under the liberal MIT License, making address-book-data great for all types of applications that need address relevant data.
 
-# Build status and latest maven version
+# Build status
 [![Build Status](https://travis-ci.org/lightblueseas/address-book-data.svg?branch=master)](https://travis-ci.org/lightblueseas/address-book-data)
 
 ## Maven Central
@@ -28,7 +34,7 @@ You can first define the version properties:
 	<properties>
 			...
 		<!-- address-book-data version -->
-		<address-book-data.version>3.11.0</address-book-data.version>
+		<address-book-data.version>3.12.0</address-book-data.version>
 		<address-book-business.version>${address-book-data.version}</address-book-business.version>
 		<address-book-domain.version>${address-book-data.version}</address-book-domain.version>
 		<address-book-entities.version>${address-book-data.version}</address-book-entities.version>

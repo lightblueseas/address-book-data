@@ -24,6 +24,8 @@
  */
 package de.alpharogroup.address.book.daos;
 
+import static org.testng.AssertJUnit.assertNotNull;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +42,9 @@ public class CountriesDaoTest extends AbstractTestNGSpringContextTests
 	private CountriesDao countriesDao;
 
 	@Test(enabled = false)
-	public List<Countries> testFindAll()
+	public void testFindAll()
 	{
-		return countriesDao.findAll();
+		final List<Countries> all = countriesDao.findAll();
+		assertNotNull(all);
 	}
 }

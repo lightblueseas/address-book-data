@@ -24,6 +24,21 @@
  */
 package de.alpharogroup.address.book.init;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class GermanZipcodeBean
 {
 
@@ -38,80 +53,5 @@ public class GermanZipcodeBean
 	String federalStateKey;
 
 	String federalState;
-
-	public GermanZipcodeBean()
-	{
-	}
-
-	public GermanZipcodeBean(String zipcode, String city, String circleKey, String circle,
-		String federalStateKey, String federalState)
-	{
-		this.zipcode = zipcode;
-		this.city = city;
-		this.circleKey = circleKey;
-		this.circle = circle;
-		this.federalStateKey = federalStateKey;
-		this.federalState = federalState;
-	}
-
-	public String getCircle()
-	{
-		return circle;
-	}
-
-	public String getCircleKey()
-	{
-		return circleKey;
-	}
-
-	public String getCity()
-	{
-		return city;
-	}
-
-	public String getFederalState()
-	{
-		return federalState;
-	}
-
-	public String getFederalStateKey()
-	{
-		return federalStateKey;
-	}
-
-	public String getZipcode()
-	{
-		return zipcode;
-	}
-
-	public void setCircle(String circle)
-	{
-		this.circle = circle;
-	}
-
-	public void setCircleKey(String circleKey)
-	{
-		this.circleKey = circleKey;
-	}
-
-	public void setCity(String city)
-	{
-		this.city = city;
-	}
-
-	public void setFederalState(String federalState)
-	{
-		this.federalState = federalState;
-	}
-
-	public void setFederalStateKey(String federalStateKey)
-	{
-		this.federalStateKey = federalStateKey;
-	}
-
-	public void setZipcode(String zipcode)
-	{
-		this.zipcode = zipcode;
-	}
 
 }

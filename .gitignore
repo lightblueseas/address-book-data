@@ -21,6 +21,7 @@
 # maven generated files #
 #########################
 /target
+*.versionsBackup
 
 #############
 # Zip files #
@@ -57,3 +58,8 @@
 /gradle
 /reports
 /.dbeaver-data-sources.xml
+
+################
+# travis files #
+################
+/.travis

@@ -24,6 +24,8 @@
  */
 package de.alpharogroup.address.book.daos;
 
+import static org.testng.AssertJUnit.assertNotNull;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +42,10 @@ public class ZipcodesDaoTest extends AbstractTestNGSpringContextTests
 	private ZipcodesDao zipcodesDao;
 
 	@Test(enabled = false)
-	public List<Zipcodes> testFindAll()
+	public void testFindAll()
 	{
-		return zipcodesDao.findAll();
+		final List<Zipcodes> all = zipcodesDao.findAll();
+		assertNotNull(all);
 	}
 
 }

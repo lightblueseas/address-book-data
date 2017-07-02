@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>address-book-data</artifactId>
-		<version>3.11.0</version>
+		<version>3.12.0</version>
 	</parent>
 
 	<artifactId>address-book-init</artifactId>
@@ -24,27 +24,12 @@
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>address-book-domain</artifactId>
+			<artifactId>address-book-business</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>address-book-business</artifactId>
-		</dependency>
-		<!-- JDBC DEPENDENCIES -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
+			<artifactId>address-book-domain</artifactId>
 		</dependency>
 		<!-- HIBERNATE DEPENDENCIES -->
 		<dependency>
@@ -75,6 +60,22 @@
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>randomizer</artifactId>
+		</dependency>
+		<!-- JDBC DEPENDENCIES -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+		<!-- H2 DEPENDENCIES -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
 		</dependency>
 		<!-- CONNECTION-POOL DEPENDENCIES -->
 		<dependency>
