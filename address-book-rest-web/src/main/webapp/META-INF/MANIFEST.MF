@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Class-Path: address-book-rest-api.jar rest-api-3.30.0.jar domain-api-3
- .30.0.jar data-api-3.30.0.jar hibernate-core-4.3.11.Final.jar jboss-l
+Class-Path: address-book-rest-api.jar rest-api-3.33.0.jar domain-api-3
+ .33.0.jar data-api-3.33.0.jar hibernate-core-4.3.11.Final.jar jboss-l
  ogging-3.1.3.GA.jar jboss-logging-annotations-1.2.0.Beta1.jar jboss-t
  ransaction-api_1.2_spec-1.0.0.Final.jar dom4j-1.6.1.jar xml-apis-1.4.
  01.jar hibernate-commons-annotations-4.0.5.Final.jar hibernate-jpa-2.
@@ -24,9 +24,9 @@ Class-Path: address-book-rest-api.jar rest-api-3.30.0.jar domain-api-3
  ee-api-7.0.jar javax.mail-1.5.0.jar activation-1.1.jar address-book-d
  omain.jar address-book-entities.jar spring-context-4.3.9.RELEASE.jar 
  spring-aop-4.3.9.RELEASE.jar spring-expression-4.3.9.RELEASE.jar addr
- ess-book-business.jar business-api-3.30.0.jar jgeohash-core-2.4.0.jar
+ ess-book-business.jar business-api-3.33.0.jar jgeohash-core-2.4.0.jar
   geoip-api-1.2.14.jar org.torpedoquery-2.5.0.jar objenesis-1.3.jar gu
- ava-19.0.jar address-book-rest-client.jar rest-client-3.30.0.jar cxf-
+ ava-19.0.jar address-book-rest-client.jar rest-client-3.33.0.jar cxf-
  rt-rs-client-3.1.12.jar cxf-rt-transports-http-3.1.12.jar cxf-core-3.
  1.12.jar woodstox-core-asl-4.4.1.jar stax2-api-3.1.4.jar xmlschema-co
  re-2.2.2.jar cxf-rt-frontend-jaxrs-3.1.12.jar javax.annotation-api-1.
