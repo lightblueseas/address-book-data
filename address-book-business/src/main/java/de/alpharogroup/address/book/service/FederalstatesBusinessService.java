@@ -37,7 +37,7 @@ import de.alpharogroup.address.book.daos.FederalstatesDao;
 import de.alpharogroup.address.book.entities.Countries;
 import de.alpharogroup.address.book.entities.Federalstates;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 
 /**

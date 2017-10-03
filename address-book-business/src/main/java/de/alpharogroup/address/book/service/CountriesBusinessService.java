@@ -52,7 +52,7 @@ import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 import lombok.Getter;
@@ -164,7 +164,7 @@ public class CountriesBusinessService
 		{
 			query.setParameter("name", name);
 		}
-		List<Countries> countries = query.getResultList();
+		final List<Countries> countries = query.getResultList();
 		return countries;
 	}
 
@@ -186,14 +186,14 @@ public class CountriesBusinessService
 		if (this.countriesToFederalstatesAsStringList == null)
 		{
 			this.countriesToFederalstatesAsStringList = new ArrayList<>();
-			List<KeyValuesPair<Countries, Federalstates>> countriesToFederalstatesList = getCountriesToFederalstatesList();
+			final List<KeyValuesPair<Countries, Federalstates>> countriesToFederalstatesList = getCountriesToFederalstatesList();
 
-			for (KeyValuesPair<Countries, Federalstates> entry : countriesToFederalstatesList)
+			for (final KeyValuesPair<Countries, Federalstates> entry : countriesToFederalstatesList)
 			{
-				Countries country = entry.getKey();
-				Collection<Federalstates> federalstates = entry.getValues();
-				List<String> fd = new ArrayList<String>();
-				for (Federalstates federalstate : federalstates)
+				final Countries country = entry.getKey();
+				final Collection<Federalstates> federalstates = entry.getValues();
+				final List<String> fd = new ArrayList<>();
+				for (final Federalstates federalstate : federalstates)
 				{
 					fd.add(federalstate.getIso3166A2code());
 				}
@@ -214,16 +214,16 @@ public class CountriesBusinessService
 	{
 		if (this.countriesToFederalstatesAsStringMap == null)
 		{
-			this.countriesToFederalstatesAsStringMap = new HashMap<String, List<String>>();
-			Map<Countries, List<Federalstates>> countriesToFederalstatesMap = getCountriesToFederalstatesMap();
+			this.countriesToFederalstatesAsStringMap = new HashMap<>();
+			final Map<Countries, List<Federalstates>> countriesToFederalstatesMap = getCountriesToFederalstatesMap();
 
-			for (Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap
+			for (final Entry<Countries, List<Federalstates>> entry : countriesToFederalstatesMap
 				.entrySet())
 			{
-				Countries country = entry.getKey();
-				List<Federalstates> federalstates = entry.getValue();
-				List<String> fd = new ArrayList<String>();
-				for (Federalstates federalstate : federalstates)
+				final Countries country = entry.getKey();
+				final List<Federalstates> federalstates = entry.getValue();
+				final List<String> fd = new ArrayList<>();
+				for (final Federalstates federalstate : federalstates)
 				{
 					fd.add(federalstate.getIso3166A2code());
 				}
@@ -242,7 +242,7 @@ public class CountriesBusinessService
 		if (this.countriesToFederalstatesList == null)
 		{
 			this.countriesToFederalstatesList = new ArrayList<>();
-			List<Countries> countries = findAll();
+			final List<Countries> countries = findAll();
 			Collections.sort(countries, new Comparator<Countries>()
 			{
 				@Override
@@ -251,7 +251,7 @@ public class CountriesBusinessService
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
-			for (Countries country : countries)
+			for (final Countries country : countries)
 			{
 				this.countriesToFederalstatesList.add(KeyValuesPair
 					.<Countries, Federalstates> builder().key(country)
@@ -271,7 +271,7 @@ public class CountriesBusinessService
 		if (this.countriesToFederalstatesMap == null)
 		{
 			this.countriesToFederalstatesMap = new LinkedHashMap<>();
-			List<Countries> countries = findAll();
+			final List<Countries> countries = findAll();
 			Collections.sort(countries, new Comparator<Countries>()
 			{
 				@Override
@@ -280,9 +280,9 @@ public class CountriesBusinessService
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
-			for (Countries country : countries)
+			for (final Countries country : countries)
 			{
-				List<Federalstates> federalstates = federalstatesService
+				final List<Federalstates> federalstates = federalstatesService
 					.findFederalstatesFromCountry(country);
 				this.countriesToFederalstatesMap.put(country, federalstates);
 			}
@@ -299,13 +299,13 @@ public class CountriesBusinessService
 		if (this.countriesToZipcodesAndCitiesAsStringList == null)
 		{
 			this.countriesToZipcodesAndCitiesAsStringList = new ArrayList<>();
-			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesList();
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
+			final List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesList();
+			for (final KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
 			{
-				Countries country = entry.getKey();
-				Collection<Zipcodes> zipcodes = entry.getValues();
-				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes)
+				final Countries country = entry.getKey();
+				final Collection<Zipcodes> zipcodes = entry.getValues();
+				final List<String> zc = new ArrayList<>();
+				for (final Zipcodes zipcode : zipcodes)
 				{
 					zc.add(zipcode.getZipcode() + " " + zipcode.getCity());
 					zc.add(zipcode.getCity() + " " + zipcode.getZipcode());
@@ -325,14 +325,14 @@ public class CountriesBusinessService
 	{
 		if (this.countriesToZipcodesAndCitiesAsStringMap == null)
 		{
-			this.countriesToZipcodesAndCitiesAsStringMap = new HashMap<String, List<String>>();
-			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
+			this.countriesToZipcodesAndCitiesAsStringMap = new HashMap<>();
+			final Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
+			for (final Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
 			{
-				Countries country = entry.getKey();
-				List<Zipcodes> zipcodes = entry.getValue();
-				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes)
+				final Countries country = entry.getKey();
+				final List<Zipcodes> zipcodes = entry.getValue();
+				final List<String> zc = new ArrayList<>();
+				for (final Zipcodes zipcode : zipcodes)
 				{
 					zc.add(zipcode.getZipcode() + " " + zipcode.getCity());
 					zc.add(zipcode.getCity() + " " + zipcode.getZipcode());
@@ -352,14 +352,14 @@ public class CountriesBusinessService
 		if (this.countriesToZipcodesAsStringList == null)
 		{
 			this.countriesToZipcodesAsStringList = new ArrayList<>();
-			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeList = getCountriesToZipcodesList();
+			final List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeList = getCountriesToZipcodesList();
 
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeList)
+			for (final KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeList)
 			{
-				Countries country = entry.getKey();
-				Collection<Zipcodes> zipcodes = entry.getValues();
-				List<String> zc = new ArrayList<>();
-				for (Zipcodes zipcode : zipcodes)
+				final Countries country = entry.getKey();
+				final Collection<Zipcodes> zipcodes = entry.getValues();
+				final List<String> zc = new ArrayList<>();
+				for (final Zipcodes zipcode : zipcodes)
 				{
 					zc.add(zipcode.getZipcode());
 				}
@@ -380,14 +380,14 @@ public class CountriesBusinessService
 	{
 		if (this.countriesToZipcodesAsStringMap == null)
 		{
-			this.countriesToZipcodesAsStringMap = new HashMap<String, List<String>>();
-			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
+			this.countriesToZipcodesAsStringMap = new HashMap<>();
+			final Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getCountriesToZipcodesMap();
+			for (final Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
 			{
-				Countries country = entry.getKey();
-				List<Zipcodes> zipcodes = entry.getValue();
-				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes)
+				final Countries country = entry.getKey();
+				final List<Zipcodes> zipcodes = entry.getValue();
+				final List<String> zc = new ArrayList<>();
+				for (final Zipcodes zipcode : zipcodes)
 				{
 					zc.add(zipcode.getZipcode());
 				}
@@ -406,7 +406,7 @@ public class CountriesBusinessService
 		if (this.countriesToZipcodesList == null)
 		{
 			this.countriesToZipcodesList = new ArrayList<>();
-			List<Countries> countries = findAll();
+			final List<Countries> countries = findAll();
 			Collections.sort(countries, new Comparator<Countries>()
 			{
 				@Override
@@ -415,9 +415,9 @@ public class CountriesBusinessService
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
-			for (Countries country : countries)
+			for (final Countries country : countries)
 			{
-				List<Zipcodes> zipcodes = zipcodesService.find(country);
+				final List<Zipcodes> zipcodes = zipcodesService.find(country);
 				this.countriesToZipcodesList.add(KeyValuesPair.<Countries, Zipcodes> builder()
 					.key(country).values(zipcodes).build());
 			}
@@ -434,8 +434,8 @@ public class CountriesBusinessService
 	{
 		if (this.countriesToZipcodesMap == null)
 		{
-			this.countriesToZipcodesMap = new LinkedHashMap<Countries, List<Zipcodes>>();
-			List<Countries> countries = findAll();
+			this.countriesToZipcodesMap = new LinkedHashMap<>();
+			final List<Countries> countries = findAll();
 			Collections.sort(countries, new Comparator<Countries>()
 			{
 				@Override
@@ -444,9 +444,9 @@ public class CountriesBusinessService
 					return o1.getName().compareTo(o2.getName());
 				}
 			});
-			for (Countries country : countries)
+			for (final Countries country : countries)
 			{
-				List<Zipcodes> zipcodes = zipcodesService.find(country);
+				final List<Zipcodes> zipcodes = zipcodesService.find(country);
 				this.countriesToZipcodesMap.put(country, zipcodes);
 			}
 		}
@@ -462,13 +462,13 @@ public class CountriesBusinessService
 		if (this.germanCountriesToZipcodesAndCitiesAsStringList == null)
 		{
 			this.germanCountriesToZipcodesAndCitiesAsStringList = new ArrayList<>();
-			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesList();
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
+			final List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesList();
+			for (final KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
 			{
-				Countries country = entry.getKey();
-				Collection<Zipcodes> zipcodes = entry.getValues();
-				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes)
+				final Countries country = entry.getKey();
+				final Collection<Zipcodes> zipcodes = entry.getValues();
+				final List<String> zc = new ArrayList<>();
+				for (final Zipcodes zipcode : zipcodes)
 				{
 					zc.add(zipcode.getZipcode() + " " + zipcode.getCity());
 					zc.add(zipcode.getCity() + " " + zipcode.getZipcode());
@@ -488,14 +488,14 @@ public class CountriesBusinessService
 	{
 		if (this.germanCountriesToZipcodesAndCitiesAsStringMap == null)
 		{
-			this.germanCountriesToZipcodesAndCitiesAsStringMap = new HashMap<String, List<String>>();
-			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
+			this.germanCountriesToZipcodesAndCitiesAsStringMap = new HashMap<>();
+			final Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
+			for (final Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
 			{
-				Countries country = entry.getKey();
-				List<Zipcodes> zipcodes = entry.getValue();
-				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes)
+				final Countries country = entry.getKey();
+				final List<Zipcodes> zipcodes = entry.getValue();
+				final List<String> zc = new ArrayList<>();
+				for (final Zipcodes zipcode : zipcodes)
 				{
 					zc.add(zipcode.getZipcode() + " " + zipcode.getCity());
 					zc.add(zipcode.getCity() + " " + zipcode.getZipcode());
@@ -515,13 +515,13 @@ public class CountriesBusinessService
 		if (this.germanCountriesToZipcodesAsStringList == null)
 		{
 			this.germanCountriesToZipcodesAsStringList = new ArrayList<>();
-			List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesList();
-			for (KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
+			final List<KeyValuesPair<Countries, Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesList();
+			for (final KeyValuesPair<Countries, Zipcodes> entry : countriesToZipcodeMap)
 			{
-				Countries country = entry.getKey();
-				Collection<Zipcodes> zipcodes = entry.getValues();
-				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes)
+				final Countries country = entry.getKey();
+				final Collection<Zipcodes> zipcodes = entry.getValues();
+				final List<String> zc = new ArrayList<>();
+				for (final Zipcodes zipcode : zipcodes)
 				{
 					zc.add(zipcode.getZipcode());
 				}
@@ -541,14 +541,14 @@ public class CountriesBusinessService
 	{
 		if (this.germanCountriesToZipcodesAsStringMap == null)
 		{
-			this.germanCountriesToZipcodesAsStringMap = new HashMap<String, List<String>>();
-			Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
-			for (Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
+			this.germanCountriesToZipcodesAsStringMap = new HashMap<>();
+			final Map<Countries, List<Zipcodes>> countriesToZipcodeMap = getGermanCountriesToZipcodesMap();
+			for (final Entry<Countries, List<Zipcodes>> entry : countriesToZipcodeMap.entrySet())
 			{
-				Countries country = entry.getKey();
-				List<Zipcodes> zipcodes = entry.getValue();
-				List<String> zc = new ArrayList<String>();
-				for (Zipcodes zipcode : zipcodes)
+				final Countries country = entry.getKey();
+				final List<Zipcodes> zipcodes = entry.getValue();
+				final List<String> zc = new ArrayList<>();
+				for (final Zipcodes zipcode : zipcodes)
 				{
 					zc.add(zipcode.getZipcode());
 				}
@@ -567,7 +567,7 @@ public class CountriesBusinessService
 		if (this.germanCountriesToZipcodesList == null)
 		{
 			this.germanCountriesToZipcodesList = new ArrayList<>();
-			List<Countries> countries = new ArrayList<>();
+			final List<Countries> countries = new ArrayList<>();
 			countries.add(find("DE"));
 			countries.add(find("AT"));
 			countries.add(find("CH"));
@@ -593,9 +593,9 @@ public class CountriesBusinessService
 					return object.getName().compareTo(compareWithObject.getName());
 				}
 			});
-			for (Countries country : countries)
+			for (final Countries country : countries)
 			{
-				List<Zipcodes> zipcodes = zipcodesService.find(country);
+				final List<Zipcodes> zipcodes = zipcodesService.find(country);
 				this.germanCountriesToZipcodesList.add(KeyValuesPair.<Countries, Zipcodes> builder()
 					.key(country).values(zipcodes).build());
 			}
@@ -613,7 +613,7 @@ public class CountriesBusinessService
 		if (this.germanCountriesToZipcodesMap == null)
 		{
 			this.germanCountriesToZipcodesMap = new LinkedHashMap<>();
-			List<Countries> countries = new ArrayList<Countries>();
+			final List<Countries> countries = new ArrayList<>();
 			countries.add(find("DE"));
 			countries.add(find("AT"));
 			countries.add(find("CH"));
@@ -639,9 +639,9 @@ public class CountriesBusinessService
 					return object.getName().compareTo(compareWithObject.getName());
 				}
 			});
-			for (Countries country : countries)
+			for (final Countries country : countries)
 			{
-				List<Zipcodes> zipcodes = zipcodesService.find(country);
+				final List<Zipcodes> zipcodes = zipcodesService.find(country);
 				this.germanCountriesToZipcodesMap.put(country, zipcodes);
 			}
 		}
@@ -674,12 +674,12 @@ public class CountriesBusinessService
 		}
 		else
 		{
-			Countries country = findByName(modelObject.getSelectedCountryName());
-			Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country, zc);
+			final Countries country = findByName(modelObject.getSelectedCountryName());
+			final Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country, zc);
 			if (zipcode != null)
 			{
-				List<Addresses> addresses = getAddressesService().find(zipcode);
-				Addresses address = ListExtensions.getFirst(addresses);
+				final List<Addresses> addresses = getAddressesService().find(zipcode);
+				final Addresses address = ListExtensions.getFirst(addresses);
 				if (address != null)
 				{
 					modelObject.setAddress(address);
@@ -710,13 +710,13 @@ public class CountriesBusinessService
 		}
 		else
 		{
-			Countries country = findByName(modelObject.getLocation().getSelectedCountryName());
-			Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country,
+			final Countries country = findByName(modelObject.getLocation().getSelectedCountryName());
+			final Zipcodes zipcode = getZipcodesService().findCityFromZipcode(country,
 				modelObject.getZipcode());
 			if (zipcode != null)
 			{
-				List<Addresses> addresses = getAddressesService().find(zipcode);
-				Addresses address = ListExtensions.getFirst(addresses);
+				final List<Addresses> addresses = getAddressesService().find(zipcode);
+				final Addresses address = ListExtensions.getFirst(addresses);
 				if (address != null)
 				{
 					modelObject.getLocation().setAddress(address);

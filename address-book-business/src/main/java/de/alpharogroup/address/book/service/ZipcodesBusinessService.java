@@ -39,7 +39,7 @@ import de.alpharogroup.address.book.entities.Zipcodes;
 import de.alpharogroup.address.book.factories.AddressBookFactory;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 
 /**

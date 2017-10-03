@@ -32,7 +32,7 @@ import de.alpharogroup.address.book.domain.Zipcode;
 import de.alpharogroup.address.book.rest.api.AddressesResource;
 import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
 import de.alpharogroup.address.book.service.api.AddressService;
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.service.rs.AbstractRestfulResource;
 
 /**
@@ -68,7 +68,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public List<Address> find(AddressSearchCriteria addressSearchCriteria)
 	{
-		List<Address> addresses = getDomainService().find(addressSearchCriteria.getCountry(),
+		final List<Address> addresses = getDomainService().find(addressSearchCriteria.getCountry(),
 			addressSearchCriteria.getZipcode(), addressSearchCriteria.getCity());
 		return addresses;
 	}
@@ -76,9 +76,10 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<Address> find(String geohash)
 	{
-		List<Address> addresses = getDomainService().find(geohash);
+		final List<Address> addresses = getDomainService().find(geohash);
 		return addresses;
 	}
 
@@ -88,7 +89,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public List<Address> find(String latitude, String longitude)
 	{
-		List<Address> addresses = getDomainService().find(latitude, longitude);
+		final List<Address> addresses = getDomainService().find(latitude, longitude);
 		return addresses;
 	}
 
@@ -107,7 +108,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public List<Address> findAll(Country country)
 	{
-		List<Address> addresses = getDomainService().findAll(country);
+		final List<Address> addresses = getDomainService().findAll(country);
 		return addresses;
 	}
 
@@ -117,7 +118,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public List<Zipcode> findAllAddressesWithCountry(Country country)
 	{
-		List<Zipcode> zipcodes = getDomainService().findAllAddressesWithCountry(country);
+		final List<Zipcode> zipcodes = getDomainService().findAllAddressesWithCountry(country);
 		return zipcodes;
 	}
 
@@ -127,7 +128,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public Address findFirst(AddressSearchCriteria addressSearchCriteria)
 	{
-		List<Address> addresses = find(addressSearchCriteria);
+		final List<Address> addresses = find(addressSearchCriteria);
 		return ListExtensions.getFirst(addresses);
 	}
 
@@ -137,7 +138,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public List<Address> findFirstAndSecondRingNeighbourhood(String geohash)
 	{
-		List<Address> addresses = getDomainService().findFirstAndSecondRingNeighbourhood(geohash);
+		final List<Address> addresses = getDomainService().findFirstAndSecondRingNeighbourhood(geohash);
 		return addresses;
 	}
 
@@ -147,7 +148,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public List<Address> findFirstRingNeighbourhood(String geohash)
 	{
-		List<Address> addresses = getDomainService().findFirstRingNeighbourhood(geohash);
+		final List<Address> addresses = getDomainService().findFirstRingNeighbourhood(geohash);
 		return addresses;
 	}
 
@@ -157,7 +158,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public List<Address> findGeohashIsNull()
 	{
-		List<Address> addresses = getDomainService().findGeohashIsNull();
+		final List<Address> addresses = getDomainService().findGeohashIsNull();
 		return addresses;
 	}
 
@@ -167,7 +168,7 @@ public class AddressesRestResource extends AbstractRestfulResource<Integer, Addr
 	@Override
 	public List<Address> findNeighbourhood(String geohash)
 	{
-		List<Address> addresses = getDomainService().findNeighbourhood(geohash);
+		final List<Address> addresses = getDomainService().findNeighbourhood(geohash);
 		return addresses;
 	}
 

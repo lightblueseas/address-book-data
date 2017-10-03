@@ -45,7 +45,7 @@ import de.alpharogroup.address.book.service.api.AddressesService;
 import de.alpharogroup.address.book.service.api.FederalstatesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
 import de.alpharogroup.address.book.service.util.HqlStringCreator;
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.db.service.jpa.AbstractBusinessService;
 import de.alpharogroup.jgeohash.Adjacent;
 import de.alpharogroup.jgeohash.GeoHashExtensions;
@@ -85,7 +85,7 @@ public class AddressesBusinessService
 	@Override
 	public Addresses contains(String latitude, String longitude)
 	{
-		List<Addresses> addresses = find(latitude, longitude);
+		final List<Addresses> addresses = find(latitude, longitude);
 		return ListExtensions.getFirst(addresses);
 	}
 
@@ -95,7 +95,7 @@ public class AddressesBusinessService
 	@Override
 	public Addresses contains(Zipcodes zipcode)
 	{
-		List<Addresses> addresses = find(zipcode);
+		final List<Addresses> addresses = find(zipcode);
 		return ListExtensions.getFirst(addresses);
 	}
 
@@ -166,7 +166,7 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(Countries country, String zipcode, String city)
 	{
-		String hqlString = HqlStringCreator.forAddresses(country, zipcode, city);
+		final String hqlString = HqlStringCreator.forAddresses(country, zipcode, city);
 		final Query query = getQuery(hqlString);
 		if (country != null)
 		{
@@ -180,7 +180,7 @@ public class AddressesBusinessService
 		{
 			query.setParameter("city", city);
 		}
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -191,14 +191,14 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(String geohash)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.geohash=:geohash");
 		final String hqlString = sb.toString();
 		final Query query = getQuery(hqlString);
 		query.setParameter("geohash", geohash);
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -209,7 +209,7 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(String latitude, String longitude)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.latitude=:latitude");
@@ -219,7 +219,7 @@ public class AddressesBusinessService
 		final Query query = getQuery(hqlString);
 		query.setParameter("latitude", latitude);
 		query.setParameter("longitude", longitude);
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -230,7 +230,7 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(String geohash, String latitude, String longitude)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.geohash=:geohash");
@@ -243,7 +243,7 @@ public class AddressesBusinessService
 		query.setParameter("geohash", geohash);
 		query.setParameter("latitude", latitude);
 		query.setParameter("longitude", longitude);
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -254,14 +254,14 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> find(Zipcodes zipcode)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.zipcode=:zipcode");
 		final String hqlString = sb.toString();
 		final Query query = getQuery(hqlString);
 		query.setParameter("zipcode", zipcode);
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -272,7 +272,7 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findAddressesWithSameCityname(Countries country, String city)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.zipcode.country=:country");
@@ -282,7 +282,7 @@ public class AddressesBusinessService
 		final Query query = getQuery(hqlString);
 		query.setParameter("country", country);
 		query.setParameter("city", city);
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -293,7 +293,7 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findAddressesWithSameZipcode(Countries country, String zipcode)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.zipcode.country=:country");
@@ -303,7 +303,7 @@ public class AddressesBusinessService
 		final Query query = getQuery(hqlString);
 		query.setParameter("country", country);
 		query.setParameter("zipcode", zipcode);
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -314,9 +314,9 @@ public class AddressesBusinessService
 	public List<Addresses> findAll(Countries country)
 	{
 		List<Addresses> addresses = null;
-		Addresses from = Torpedo.from(Addresses.class);
+		final Addresses from = Torpedo.from(Addresses.class);
 		Torpedo.where(from.getZipcode().getCountry()).eq(country);
-		org.torpedoquery.jpa.Query<Addresses> select = Torpedo.select(from);
+		final org.torpedoquery.jpa.Query<Addresses> select = Torpedo.select(from);
 		addresses = select.list(getDao().getEntityManager());
 		return addresses;
 	}
@@ -328,14 +328,14 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Zipcodes> findAllAddressesWithCountry(Countries country)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a.zipcode from Addresses a");
 		sb.append(" ");
 		sb.append("where a.zipcode.country=:country");
 		final String hqlString = sb.toString();
 		final Query query = getQuery(hqlString);
 		query.setParameter("country", country);
-		List<Zipcodes> zipcodes = query.getResultList();
+		final List<Zipcodes> zipcodes = query.getResultList();
 		return zipcodes;
 	}
 
@@ -345,7 +345,7 @@ public class AddressesBusinessService
 	@Override
 	public Addresses findFirst(Countries country, String zipcode)
 	{
-		List<Addresses> addresses = find(country, zipcode);
+		final List<Addresses> addresses = find(country, zipcode);
 		return ListExtensions.getFirst(addresses);
 	}
 
@@ -361,13 +361,13 @@ public class AddressesBusinessService
 		{
 			adjacentAreas = GeoHashExtensions.getTwentyFiveAreasMap(geohash);
 		}
-		String hqlString = HqlStringCreator.getGeohashFirstAndSecondRingQuery(true);
+		final String hqlString = HqlStringCreator.getGeohashFirstAndSecondRingQuery(true);
 		final Query query = getQuery(hqlString);
-		for (Entry<String, String> entry : adjacentAreas.entrySet())
+		for (final Entry<String, String> entry : adjacentAreas.entrySet())
 		{
 			query.setParameter(entry.getKey(), entry.getValue() + "%");
 		}
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -383,13 +383,13 @@ public class AddressesBusinessService
 		{
 			adjacentAreas = GeoHashExtensions.getAllAdjacentAreasMap(geohash);
 		}
-		String hqlString = HqlStringCreator.getGeohashFirstRingQuery(true);
+		final String hqlString = HqlStringCreator.getGeohashFirstRingQuery(true);
 		final Query query = getQuery(hqlString);
-		for (Entry<String, String> entry : adjacentAreas.entrySet())
+		for (final Entry<String, String> entry : adjacentAreas.entrySet())
 		{
 			query.setParameter(entry.getKey(), entry.getValue() + "%");
 		}
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -400,13 +400,13 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findGeohashIsNull()
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.geohash is null");
 		final String hqlString = sb.toString();
 		final Query query = getQuery(hqlString);
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 
 	}
@@ -427,7 +427,7 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findInvalidAddresses(Countries country, String geohash, boolean not)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("select a from Addresses a");
 		sb.append(" ");
 		sb.append("where a.zipcode.country=:country");
@@ -442,7 +442,7 @@ public class AddressesBusinessService
 		final Query query = getQuery(hqlString);
 		query.setParameter("country", country);
 		query.setParameter("geohash", geohash + "%");
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
@@ -453,11 +453,11 @@ public class AddressesBusinessService
 	@SuppressWarnings("unchecked")
 	public List<Addresses> findNeighbourhood(String geohash)
 	{
-		String hqlString = "select address from Addresses address " + "where address.geohash like :"
+		final String hqlString = "select address from Addresses address " + "where address.geohash like :"
 			+ Adjacent.CENTER;
 		final Query query = getQuery(hqlString);
 		query.setParameter("center", geohash + "%");
-		List<Addresses> addresses = query.getResultList();
+		final List<Addresses> addresses = query.getResultList();
 		return addresses;
 	}
 
