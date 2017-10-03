@@ -41,7 +41,7 @@ import de.alpharogroup.address.book.init.DeZipcodeBean;
 import de.alpharogroup.address.book.service.api.AddressesService;
 import de.alpharogroup.address.book.service.api.CountriesService;
 import de.alpharogroup.address.book.service.api.ZipcodesService;
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.jgeohash.GeoHashPoint;

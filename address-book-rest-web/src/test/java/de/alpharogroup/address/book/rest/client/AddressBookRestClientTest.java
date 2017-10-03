@@ -46,7 +46,7 @@ import de.alpharogroup.address.book.rest.api.CountriesResource;
 import de.alpharogroup.address.book.rest.api.FederalstatesResource;
 import de.alpharogroup.address.book.rest.api.ZipcodesResource;
 import de.alpharogroup.address.book.rest.beanparams.AddressSearchCriteria;
-import de.alpharogroup.collections.ListExtensions;
+import de.alpharogroup.collections.list.ListExtensions;
 import de.alpharogroup.collections.pairs.KeyValuePair;
 import de.alpharogroup.collections.pairs.KeyValuesPair;
 import de.alpharogroup.collections.pairs.Triple;

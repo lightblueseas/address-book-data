@@ -42,7 +42,7 @@ import de.alpharogroup.jetty9.runner.config.ServletContextHandlerConfiguration;
 import de.alpharogroup.jetty9.runner.config.ServletHolderConfiguration;
 import de.alpharogroup.jetty9.runner.factories.ServletContextHandlerFactory;
 import de.alpharogroup.log.LoggerExtensions;
-import de.alpharogroup.resourcebundle.properties.PropertiesExtensions;
+import de.alpharogroup.resourcebundle.properties.PropertiesFileExtensions;
 
 /**
  * The Class {@link ApplicationJettyRunner} holds the main method that starts a jetty server with
@@ -60,7 +60,7 @@ public class ApplicationJettyRunner
 	 */
 	protected static String getProjectName() throws IOException
 	{
-		final Properties projectProperties = PropertiesExtensions
+		final Properties projectProperties = PropertiesFileExtensions
 			.loadProperties("project.properties");
 		final String projectName = projectProperties.getProperty("artifactId");
 		return projectName;
