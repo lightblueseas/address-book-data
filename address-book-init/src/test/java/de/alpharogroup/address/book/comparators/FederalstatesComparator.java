@@ -26,7 +26,7 @@ package de.alpharogroup.address.book.comparators;
 
 import java.util.Comparator;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import de.alpharogroup.address.book.entities.Federalstates;
 
