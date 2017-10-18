@@ -34,6 +34,32 @@ import de.alpharogroup.jgeohash.Adjacent;
  */
 public class HqlStringCreator
 {
+	
+	/**
+	 * Decides over the given flags if a where or and will be return.
+	 *
+	 * @param flags
+	 *            the flags
+	 * @return the where if all false or empty otherwise and.
+	 */
+	public static String whereOrAnd(boolean... flags) 
+	{
+		boolean interlink = false;
+		for (int i = 0; i < flags.length; i++) 
+		{
+			if (i == 0) 
+			{
+				interlink = !flags[i];
+				continue;
+			}
+			interlink &= !flags[i];
+		}
+		if (interlink) 
+		{
+			return "where";
+		}
+		return "and";
+	}
 
 	/**
 	 * Generates hql script for addresses.
