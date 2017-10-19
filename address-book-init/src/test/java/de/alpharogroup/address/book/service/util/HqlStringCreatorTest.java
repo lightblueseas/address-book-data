@@ -30,6 +30,39 @@ import org.testng.annotations.Test;
 public class HqlStringCreatorTest
 {
 
+	@Test
+	public void testWhereOrAnd() {
+		String expected;
+		String actual;
+		expected = "where";
+		actual = HqlStringCreator.whereOrAnd();
+		assertEquals(expected, actual);
+
+		expected = "and";
+		actual = HqlStringCreator.whereOrAnd(true);
+		assertEquals(expected, actual);
+
+		expected = "where";
+		actual = HqlStringCreator.whereOrAnd(false, false);
+		assertEquals(expected, actual);
+
+		expected = "and";
+		actual = HqlStringCreator.whereOrAnd(true, false);
+		assertEquals(expected, actual);
+
+		expected = "and";
+		actual = HqlStringCreator.whereOrAnd(true, false, false);
+		assertEquals(expected, actual);
+
+		expected = "and";
+		actual = HqlStringCreator.whereOrAnd(true, true, false);
+		assertEquals(expected, actual);
+
+		expected = "where";
+		actual = HqlStringCreator.whereOrAnd(false, false, false);
+		assertEquals(expected, actual);
+	}
+
 	@Test(enabled = true)
 	public void testForCountries()
 	{
