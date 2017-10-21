@@ -34,7 +34,7 @@ import de.alpharogroup.jgeohash.Adjacent;
  */
 public class HqlStringCreator
 {
-	
+
 	/**
 	 * Decides over the given flags if a where or and will be return.
 	 *
@@ -42,23 +42,37 @@ public class HqlStringCreator
 	 *            the flags
 	 * @return the where if all false or empty otherwise and.
 	 */
-	public static String whereOrAnd(boolean... flags) 
+	public static String whereOrAnd(boolean... flags)
+	{
+		return trueOrFalse("and", "where", flags);
+	}
+
+	/**
+	 * Decides over the given flags if the true-case or the false-case will be return.
+	 *
+	 * @param flags
+	 *            the flags
+	 * @return the false-case if all false or empty otherwise the true-case.
+	 * @deprecated use instead same name method in BooleanExtensions.
+	 */
+	@Deprecated
+	public static <T> T trueOrFalse(final T trueCase, final T falseCase, final boolean... flags)
 	{
 		boolean interlink = false;
-		for (int i = 0; i < flags.length; i++) 
+		for (int i = 0; i < flags.length; i++)
 		{
-			if (i == 0) 
+			if (i == 0)
 			{
 				interlink = !flags[i];
 				continue;
 			}
 			interlink &= !flags[i];
 		}
-		if (interlink) 
+		if (interlink)
 		{
-			return "where";
+			return falseCase;
 		}
-		return "and";
+		return trueCase;
 	}
 
 	/**
